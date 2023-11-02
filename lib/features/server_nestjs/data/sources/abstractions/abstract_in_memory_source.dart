@@ -1,0 +1,9 @@
+import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
+import 'package:retrofit/dio.dart';
+
+/// Détails des méthodes à implementer :
+/// - get(GetParams params)
+abstract class AbstractInMemorySource {
+  Future<HttpResponse<dynamic>> get(GetParams params);
+  Future<HttpResponse<dynamic>> post(UpsertParams params);
+}

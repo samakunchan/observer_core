@@ -1,0 +1,36 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Creation d'un tag
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  create-tags:
+#    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get version from pubspec.yaml
+        id: version
+        run: |
+          $version = (Get-Content pubspec.yaml | Select-String 'version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim() })
+          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Use the value
+        run: |
+          echo "${{ env.APP_VERSION }}"
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.APP_VERSION }}
+          name: observer_core_v${{ env.APP_VERSION }}
+          body: ${{ steps.tag_version.outputs.changelog }}
