@@ -10,8 +10,8 @@ CategoryUpsertDto _$CategoryUpsertDtoFromJson(Map<String, dynamic> json) =>
     CategoryUpsertDto(
       title: json['title'] as String,
       content: json['content'] as String,
-      environment: json['environment'] as int,
-      id: json['id'] as int?,
+      environment: (json['environment'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$CategoryUpsertDtoToJson(CategoryUpsertDto instance) =>

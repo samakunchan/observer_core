@@ -8,7 +8,7 @@ part of 'siege_model.dart';
 
 SiegeModel _$SiegeModelFromJson(Map<String, dynamic> json) => SiegeModel(
       siret: json['siret'] as String,
-      streetNumber: json['numero_voie'] as int,
+      streetNumber: (json['numero_voie'] as num).toInt(),
       indiceRepetition: json['indice_repetition'] as String?,
       streetType: json['type_voie'] as String,
       streetLabel: json['libelle_voie'] as String,
@@ -21,7 +21,7 @@ SiegeModel _$SiegeModelFromJson(Map<String, dynamic> json) => SiegeModel(
       countryCode: json['code_pays'] as String,
       lat: json['latitude'] as String,
       lng: json['longitude'] as String,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SiegeModelToJson(SiegeModel instance) =>

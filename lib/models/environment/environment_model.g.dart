@@ -9,7 +9,7 @@ part of 'environment_model.dart';
 EnvironmentModel _$EnvironmentModelFromJson(Map<String, dynamic> json) =>
     EnvironmentModel(
       title: json['title'] as String,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       categories: (json['categories'] as List<dynamic>?)
           ?.map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
           .toList(),

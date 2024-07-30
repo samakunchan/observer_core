@@ -23,7 +23,7 @@ ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) => ProjectModel(
               ?.map((e) => PictureModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           PictureModel.listWithDefaultPicture,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ProjectModelToJson(ProjectModel instance) =>
