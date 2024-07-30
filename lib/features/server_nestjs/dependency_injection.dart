@@ -1,6 +1,6 @@
-import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
 
 Future<void> initServerNestJs({required String wsBaseUrl}) async {
   final Dio dio = Dio();
