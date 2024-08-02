@@ -26,7 +26,7 @@ class ServerFeature {
   /// Pour ajouter et/ou mettre a jour un élément:<br>
   /// Future<Either<Failure, HttpResponse<dynamic>>> upsertResponses(UpsertParams params);
   /// <br>-----<br><br>
-  static AbstractInMemoryRepository get instanceOfPPGLocalRepository => sl<AbstractInMemoryRepository>();
+  static AbstractInMemoryApiNestjsRepository get instanceOfPPGLocalRepository => sl<AbstractInMemoryApiNestjsRepository>();
 
   static Future<void> initServerNestJs({required String wsBaseUrl}) async {
     await dependency_injection.initServerNestJs(wsBaseUrl: wsBaseUrl);
