@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos.dart';
 import 'package:observer_core/enums/enums.dart';
+import 'package:observer_core/features/authentication/authentication_feature.dart';
+import 'package:observer_core/features/authentication/feature_auth_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
 import 'package:retrofit/dio.dart';
@@ -34,13 +36,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   /// GRID VIEW API
   Future<void> _showAllCategoriesInGridView(CategoriesInGridTriggered event, Emitter<CategoryState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
         ..call(CategoryIsLoading())
         ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, selectedId: 1));
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        const GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: accessToken),
+        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
       );
 
       switch (responses) {
@@ -62,13 +65,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   /// GRID VIEW LOCAL
   Future<void> _showAllCategoriesInMemoryInGridView(CategoriesInGridTriggeredInMemory event, Emitter<CategoryState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
         ..call(CategoryIsLoading())
         ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, selectedId: 1));
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
-        const GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: accessToken),
+        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
       );
 
       switch (responses) {
@@ -90,13 +94,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   /// List VIEW API
   Future<void> _showAllCategoriesListView(CategoriesInListTriggered event, Emitter<CategoryState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
         ..call(CategoryIsLoading())
         ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, screenMode: ScreenMode.list, selectedId: 1));
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        const GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: accessToken),
+        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
       );
 
       switch (responses) {
@@ -119,13 +124,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
 
   /// List VIEW LOCAL
   Future<void> _showAllCategoriesInMemoryListView(CategoriesInListTriggeredInMemory event, Emitter<CategoryState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
         ..call(CategoryIsLoading())
         ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, screenMode: ScreenMode.list, selectedId: 1));
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
-        const GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: accessToken),
+        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
       );
 
       switch (responses) {
@@ -146,8 +152,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   Future<void> _reloadCategories(CategoriesReloaded event, Emitter<CategoryState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-      const GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: accessToken),
+      GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
     );
 
     switch (responses) {
@@ -183,8 +190,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   Future<void> _upsertCategory(CategorySubmitted event, Emitter<CategoryState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.upsertOne(
-      UpsertParams(accessToken: accessToken, endPoint: MainProject.categoriesEndPoint, body: jsonEncode(event.categoryForUpsert.toJson())),
+      UpsertParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.categoriesEndPoint,
+        body: jsonEncode(event.categoryForUpsert.toJson()),
+      ),
     );
 
     await CategoryHandler.withReponse(
@@ -271,8 +283,13 @@ class CategoryHandler {
   }
 
   static Future<void> storeCategories({required List<CategoryModel> categories}) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
-      UpsertParams(endPoint: MainProject.categoriesEndPoint, accessToken: accessToken, body: jsonEncode(categories)),
+      UpsertParams(
+        endPoint: MainProject.categoriesEndPoint,
+        accessToken: authTokenModel.accessToken,
+        body: jsonEncode(categories),
+      ),
     );
   }
 }

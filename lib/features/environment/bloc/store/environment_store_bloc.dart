@@ -5,6 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
+import 'package:observer_core/features/authentication/authentication_feature.dart';
+import 'package:observer_core/features/authentication/feature_auth_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
 import 'package:retrofit/retrofit.dart';
@@ -20,6 +22,7 @@ class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreS
   }
 
   Future<void> _openEnvironmentsStore(EnvironmentsStoreTriggered event, Emitter<EnvironmentStoreState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
         ..call(EnvironmentStoreIsLoading())
@@ -27,7 +30,7 @@ class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreS
     } else {
       emit.call(EnvironmentStoreIsLoading());
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        const GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: accessToken),
+        GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
       );
 
       await EnvironementStoreHandler.withReponse(
@@ -44,9 +47,10 @@ class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreS
         ..call(EnvironmentStoreIsLoading())
         ..call(EnvironmentsStoreIsOpen(environments: event.environments, selectedId: 3));
     } else {
+      final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
       emit.call(EnvironmentStoreIsLoading());
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
-        const GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: accessToken),
+        GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
       );
 
       await EnvironementStoreHandler.withReponse(
@@ -58,9 +62,10 @@ class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreS
   }
 
   Future<void> _reloadEnvironmentsStore(EnvironmentsStoreReloaded event, Emitter<EnvironmentStoreState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     emit.call(EnvironmentStoreIsLoading());
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-      const GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: accessToken),
+      GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
     );
 
     await EnvironementStoreHandler.withReponse(
@@ -94,6 +99,7 @@ class EnvironementStoreHandler {
   }
 
   static Future<void> handleAllFailures({required Failure failure, required Emitter<EnvironmentStoreState> emit}) async {
+    print(failure);
     switch (failure) {
       case ServerFailure():
         return emit.call(EnvironementsStoreIsClosed(message: failure.message));
@@ -149,8 +155,13 @@ class EnvironementStoreHandler {
   }
 
   static Future<void> storeEnvironments({required List<EnvironmentModel> environments}) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
-      UpsertParams(endPoint: MainProject.environmentsEndPoint, accessToken: accessToken, body: jsonEncode(environments)),
+      UpsertParams(
+        endPoint: MainProject.environmentsEndPoint,
+        accessToken: authTokenModel.accessToken,
+        body: jsonEncode(environments),
+      ),
     );
   }
 }

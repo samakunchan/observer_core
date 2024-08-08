@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
+import 'package:observer_core/features/authentication/authentication_feature.dart';
+import 'package:observer_core/features/authentication/feature_auth_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
 import 'package:retrofit/dio.dart';
@@ -18,8 +20,9 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
   }
 
   Future<void> _showArticleInGridMode(ArticleInGridModeTriggered event, Emitter<ArticleState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-      const GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: accessToken),
+      GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
     );
     switch (responses) {
       case Left():

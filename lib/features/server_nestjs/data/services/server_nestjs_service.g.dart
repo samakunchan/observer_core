@@ -13,7 +13,7 @@ class _ServerNestjsService implements ServerNestjsService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:3000';
+    baseUrl ??= 'http://localhost:3005';
   }
 
   final Dio _dio;
