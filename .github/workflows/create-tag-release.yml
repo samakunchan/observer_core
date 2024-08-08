@@ -3,11 +3,17 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Creation d'un tag
+name: Test de l'existance du tag.
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - 'feat/**'
+      - 'features/**'
+      - 'fix/**'
+      - 'docs/**'
+      - 'ci/**'
+      - 'test/**'
   pull_request:
     branches: [ "main" ]
 
@@ -28,9 +34,19 @@ jobs:
         run: |
           echo "${{ env.APP_VERSION }}"
 
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
+      - name: Test if the current tag exists.
+      - uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
         with:
           tag: ${{ env.APP_VERSION }}
-          name: observer_core_v${{ env.APP_VERSION }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+          repo: 'samakunchan/observer_core'
+
+      - run: echo "Tag exists!"
+        if: steps.check-tag.outputs.exists == 'true'
+
+#      - name: Create a GitHub release
+#        uses: ncipollo/release-action@v1
+#        with:
+#          tag: ${{ env.APP_VERSION }}
+#          name: observer_core_v${{ env.APP_VERSION }}
+#          body: ${{ steps.tag_version.outputs.changelog }}
