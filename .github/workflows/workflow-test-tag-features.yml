@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Test de l'existance du tag.
 
 on:
@@ -14,13 +9,9 @@ on:
       - 'docs/**'
       - 'ci/**'
       - 'test/**'
-  pull_request:
-    branches:
-      - main
 
 jobs:
   create-tags:
-#    runs-on: ubuntu-latest
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -46,14 +37,4 @@ jobs:
         if: steps.check-tag.outputs.exists == 'true'
         with:
           script: |
-            core.setFailed("Le tag ${{ env.APP_VERSION }} existe déjà.")
-#      - name: Test if the current tag exists.
-#        run: echo "Tag exists!" exit 1
-#        if: steps.check-tag.outputs.exists == 'true'
-
-#      - name: Create a GitHub release
-#        uses: ncipollo/release-action@v1
-#        with:
-#          tag: ${{ env.APP_VERSION }}
-#          name: observer_core_v${{ env.APP_VERSION }}
-#          body: ${{ steps.tag_version.outputs.changelog }}
+            core.setFailed("Le tag ${{ env.APP_VERSION }} existe déjà. Veuillez mettre à jour la version dans le pubspec.yaml. Fais gaffe au CHANGELOG et au README au passage.")
