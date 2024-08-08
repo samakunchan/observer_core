@@ -39,11 +39,11 @@ jobs:
         id: check-tag
         with:
           tag: ${{ env.APP_VERSION }}
-          repo: 'samakunchan/observer_core'
+          repo: ${{ github.repository }}
 
       - name: Test if the current tag exists.
         run: echo "Tag exists!"
-        if: steps.check-tag.outputs.exists == 'true'
+        if: steps.check-tag.outputs.exists == 'false'
 
 #      - name: Create a GitHub release
 #        uses: ncipollo/release-action@v1
