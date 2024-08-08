@@ -15,7 +15,8 @@ on:
       - 'ci/**'
       - 'test/**'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   create-tags:
@@ -34,14 +35,14 @@ jobs:
         run: |
           echo "${{ env.APP_VERSION }}"
 
-      - name: Test if the current tag exists.
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
         with:
           tag: ${{ env.APP_VERSION }}
           repo: 'samakunchan/observer_core'
 
-      - run: echo "Tag exists!"
+      - name: Test if the current tag exists.
+        run: echo "Tag exists!"
         if: steps.check-tag.outputs.exists == 'true'
 
 #      - name: Create a GitHub release
