@@ -1,5 +1,18 @@
 # Observer core
 
+## 🚀 0.5.1 - 08/08/2024
+### Nouveautés
+
+- Pas de nouveautés.
+
+### Changements
+
+- Mise à jour du readme sur au passage du projet en publique.
+
+### Correctifs
+
+- Pas de fixes
+
 ## 🚀 0.5.0 - 08/08/2024
 ### Nouveautés
 
