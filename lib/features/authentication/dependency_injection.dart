@@ -15,7 +15,3 @@ Future<void> initAuthenticationManager() async {
     ..registerSingleton<AbstractAuthTokenSource>(AuthTokenSource(authTokenService: AuthenticationFeature.sl()))
     ..registerSingleton<AbstractUserInfosSource>(UserInfosSource(userInfosService: AuthenticationFeature.sl()));
 }
-
-// TODO Trouver des infos sur l'expiration du refresh token. A quel moment il n'est plus valide.
-// TODO Faire le get profile user. (voir si le bouton pourrait aussi passer le profil user aussi).
-// TODO Debugger la double auth sur keycloak. Utilise "event" pour record les processus d'authentification.
