@@ -1,0 +1,40 @@
+name: Test de l'existance du tag.
+
+on:
+  push:
+    branches:
+      - 'feat/**'
+      - 'features/**'
+      - 'fix/**'
+      - 'docs/**'
+      - 'ci/**'
+      - 'test/**'
+
+jobs:
+  create-tags:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get version from pubspec.yaml
+        id: version
+        run: |
+          $version = (Get-Content pubspec.yaml | Select-String 'version:[^^]*' | ForEach-Object { $_.ToString().Split(":")[1].Trim() })
+          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Use the value
+        run: |
+          echo "${{ env.APP_VERSION }}"
+
+      - uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
+        with:
+          tag: ${{ env.APP_VERSION }}
+          repo: ${{ github.repository }}
+
+      - name: Test if the current tag exists.
+        uses: actions/github-script@v3
+        if: steps.check-tag.outputs.exists == 'true'
+        with:
+          script: |
+            core.setFailed("Le tag ${{ env.APP_VERSION }} existe déjà. Veuillez mettre à jour la version dans le pubspec.yaml. Fais gaffe au CHANGELOG et au README au passage.")

@@ -3,13 +3,12 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Creation d'un tag
+name: Création automatique d'un tag.
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   create-tags:
