@@ -11,9 +11,9 @@ import 'package:retrofit/dio.dart';
 /// final sl = GetIt.instance;
 /// sl.registerSingleton<AbstractLocalRepository>(LocalRepository(localSource: sl()));
 /// ```
-class InMemoryRepository implements AbstractInMemoryRepository {
-  const InMemoryRepository({required this.inMemorySource});
-  final AbstractInMemorySource inMemorySource;
+class InMemoryApiNestjsRepository implements AbstractInMemoryApiNestjsRepository {
+  const InMemoryApiNestjsRepository({required this.inMemorySource});
+  final AbstractInMemoryApiNestjsSource inMemorySource;
 
   /// Grâce à la [BaseRepository] qui agit comme un layout pour les call API, on fait un call avec la méthode ['GET'] à l'[AbstractInMemorySource]<br>
   /// A cette étape les données vont vers le [Bloc] ou les [Widget]

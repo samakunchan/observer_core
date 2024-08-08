@@ -7,7 +7,7 @@ part of 'http_error.dart';
 // **************************************************************************
 
 HttpError _$HttpErrorFromJson(Map<String, dynamic> json) => HttpError(
-      statusCode: json['statusCode'] as int? ?? 0,
+      statusCode: (json['statusCode'] as num?)?.toInt() ?? 0,
       errorName: json['errorName'] as String? ??
           'Le nom de l‘exception n‘a pas été définis',
       description: json['description'] as String? ??

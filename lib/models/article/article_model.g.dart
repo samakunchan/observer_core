@@ -16,7 +16,7 @@ ArticleModel _$ArticleModelFromJson(Map<String, dynamic> json) => ArticleModel(
       picture: PictureModel.fromJson(json['picture'] as Map<String, dynamic>),
       category:
           CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ArticleModelToJson(ArticleModel instance) =>
