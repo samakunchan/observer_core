@@ -1,0 +1,29 @@
+on:
+  push:
+    branches:
+      - 'feat/**'
+      - 'features/**'
+      - 'fix/**'
+      - 'docs/**'
+      - 'ci/**'
+
+name: 🚀 [PUSH] Workflow pour le lancement des tests sur Observer Auth
+jobs:
+  observer_platform_macos:
+    name: 🛂 Librairie d'authentification avec Keycloak
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 Bravo 🎉. Le job se lance sur l'évènement ${{ github.event_name }}."
+      - run: echo "Le nom de la branche est ${{ github.ref }} et le nom du repository est ${{ github.repository }}."
+
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        id: flutter-action
+        with:
+          architecture: x64
+      - run: |
+          git config --global --add safe.directory /opt/hostedtoolcache/flutter/${{ steps.flutter-action.outputs.CHANNEL }}-${{ steps.flutter-action.outputs.VERSION }}-${{ steps.flutter-action.outputs.ARCHITECTURE }}
+          flutter --version
