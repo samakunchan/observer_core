@@ -73,13 +73,13 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
         case MainProject.environmentsEndPoint:
           return await remoteService.upsertEnvironment(
             authorization: 'Bearer ${params.accessToken}',
-            contentType: MainProject.defaultContenType,
+            contentType: MainProject.defaultContentType,
             body: params.body,
           );
         case MainProject.categoriesEndPoint:
           return await remoteService.upsertCategory(
             authorization: 'Bearer ${params.accessToken}',
-            contentType: MainProject.defaultContenType,
+            contentType: MainProject.defaultContentType,
             body: params.body,
           );
         default:
@@ -97,7 +97,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
         case '/environments':
           return await remoteService.deleteEnvironment(
             authorization: 'Bearer ${params.accessToken}',
-            contentType: MainProject.defaultContenType,
+            contentType: MainProject.defaultContentType,
             body: params.body,
           );
         default:
@@ -109,9 +109,6 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
   }
 
   Exception handleAllException(DioException e) {
-    // logger
-    //   ..f('DIO')
-    //   ..f(e.response);
     final Map<String, dynamic> jsonError = e.response != null ? jsonDecode(e.response.toString()) as Map<String, dynamic> : {};
     final HttpError httpError = jsonError.isNotEmpty
         ? HttpError.fromJson({

@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos.dart';
+import 'package:observer_core/features/authentication/authentication_feature.dart';
+import 'package:observer_core/features/authentication/feature_auth_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
 import 'package:retrofit/retrofit.dart';
@@ -58,10 +60,11 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
   }
 
   Future<void> _upsertEnvironmentDatas(EnvironmentsDatasSubmitted event, Emitter<EnvironmentDatasState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     emit.call(EnvironmentsDatasIsSubmitting());
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.upsertOne(
       UpsertParams(
-        accessToken: accessToken,
+        accessToken: authTokenModel.accessToken,
         endPoint: MainProject.environmentsEndPoint,
         body: jsonEncode(event.environmentForUpsert.toJson()),
       ),
@@ -75,10 +78,11 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
   }
 
   Future<void> _deleteEnvironmentDatas(EnvironmentsDatasDeleted event, Emitter<EnvironmentDatasState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     emit.call(EnvironmentsDatasIsSubmitting());
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.deleteOne(
       DeleteParams(
-        accessToken: accessToken,
+        accessToken: authTokenModel.accessToken,
         endPoint: MainProject.environmentsEndPoint,
         body: jsonEncode(event.environmentForDelete.toJson()),
       ),

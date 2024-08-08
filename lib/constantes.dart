@@ -5,8 +5,8 @@ class MainProject {
   /// Value = "dashboard papangue"
   static String title = 'dashboard papangue';
 
-  /// API Url = "http://localhost:3000"
-  static const String apiUrl = 'http://localhost:3000';
+  /// API Url = "http://localhost:3005"
+  static const String apiUrl = 'http://localhost:3005';
 
   /// Endpoint = /articles
   static const String articlesEndPoint = '/articles';
@@ -29,7 +29,7 @@ class MainProject {
   /// Endpoint = /documents
   static const String documentsEndPoint = '/documents';
 
-  static String defaultContenType = 'application/json';
+  static String defaultContentType = 'application/json';
 }
 
 class MenuText {

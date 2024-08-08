@@ -1,5 +1,23 @@
 # Observer core
 
+## 🚀 0.5.0 - 08/08/2024
+### Nouveautés
+
+- Ajout de la fonctionnalité pour lire et sauvegarder les tokens.
+- Ajout de la fonctionnalité pour lire et sauvegarder les infos utilisateur.
+- Ajout des singleton pour le token et l'utilisateur, ainsi que l'injection de dépendance.
+
+### Changements
+
+- Suppression de la variable `access_token` pour la remplacer avec l'instance sauvegarder en local storage dans toutes les requêtes HTTP.
+- Renommage des Abstractions pour plus de clarté.
+- Initialisation de la fonctionnalité en même temps que le serverNestjs.
+
+### Correctifs
+
+- Fix: Changement de port pour le serveur local situer sur docker.
+
+
 ## 🚀 0.4.0 - 08/08/2024
 ### Nouveautés
 
@@ -13,6 +31,7 @@
 ### Correctifs
 
 - Pas de fixes
+
 
 ## 🚀 0.3.0 - 08/08/2024
 ### Nouveautés
@@ -36,6 +55,7 @@
 
 - Fix: Bug de retrofit.
 - Fix: version Intl.
+
 
 ## 🚀 0.2.0 - 03/11/2023
 ### Nouveautés

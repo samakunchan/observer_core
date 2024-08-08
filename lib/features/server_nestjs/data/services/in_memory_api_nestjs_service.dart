@@ -8,8 +8,6 @@ import 'package:retrofit/dio.dart';
 abstract class InMemoryApiNestjsService {
   factory InMemoryApiNestjsService(FlutterSecureStorage secureStorage, {String baseUrl}) = _InMemoryApiNestjsService;
 
-  Future<HttpResponse<dynamic>> getTokens();
-  Future<HttpResponse<dynamic>> postTokens({required String body});
   Future<HttpResponse<dynamic>> getEnvironments();
   Future<HttpResponse<dynamic>> postEnvironments({required String body});
 }
@@ -22,23 +20,6 @@ class _InMemoryApiNestjsService implements InMemoryApiNestjsService {
   String? baseUrl;
 
   final FlutterSecureStorage _secureStorage;
-
-  @override
-  Future<HttpResponse<dynamic>> getTokens() async {
-    final String tokensInString = await _secureStorage.read(key: 'REFRESH_TOKEN') ?? '{}';
-    // final Map<String, dynamic> tokensResponse = jsonDecode(tokensInString) as Map<String, dynamic>;
-    return HttpResponse<dynamic>(tokensInString, Response<dynamic>(requestOptions: RequestOptions()));
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> postTokens({required String body}) async {
-    await _secureStorage.delete(key: 'REFRESH_TOKEN');
-    await _secureStorage.write(key: 'REFRESH_TOKEN', value: body);
-    return HttpResponse<dynamic>(
-      <String, dynamic>{'message': 'success de l‘ajout des tokens dans le storage'},
-      Response<dynamic>(requestOptions: RequestOptions()),
-    );
-  }
 
   @override
   Future<HttpResponse<dynamic>> getEnvironments() async {

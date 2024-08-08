@@ -1,6 +1,6 @@
 name: observer_core
 description: Ce projet contient les models et le dialogue avec l'API.
-version: 0.4.0
+version: 0.5.0
 homepage: https://github.com/samakunchan/observer_core
 
 environment:
