@@ -18,6 +18,16 @@ abstract class ServerNestjsService {
   @GET('')
   Future<HttpResponse<dynamic>> getHome();
 
+  // /// Sert à récupérer les tokens de connexion depuis l'API. Pas Keycloak. Keycloak s'arrête à la transmission du [code].
+  // /// - Avec le [code] et la [redirect_uri] on fait la 1ère connexion.
+  // /// - Avec le [refresh_token] on régénère l'access token.
+  // @POST('/ authentication/credentials')
+  // Future<HttpResponse<dynamic>> upsertWithCodeOrRefreshToken({
+  //   @Header('Authorization') required String authorization,
+  //   @Header('Content-Type') required String contentType,
+  //   @Body() required String body,
+  // });
+
   @GET('environments/all')
   Future<HttpResponse<dynamic>> getEnvironments({
     @Header('Authorization') required String authorization,

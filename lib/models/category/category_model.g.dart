@@ -10,7 +10,7 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
     CategoryModel(
       title: json['title'] as String,
       content: json['content'] as String,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       articles: (json['articles'] as List<dynamic>?)
               ?.map((e) => ArticleModel.fromJson(e as Map<String, dynamic>))
               .toList() ??

@@ -4,7 +4,7 @@ import 'package:retrofit/dio.dart';
 
 /// Détails des méthodes à implementer :
 /// - getResponses(GetParams params)
-abstract class AbstractInMemoryRepository {
+abstract class AbstractInMemoryApiNestjsRepository {
   Future<Either<Failure, HttpResponse<dynamic>>> getResponses(GetParams params);
   Future<Either<Failure, HttpResponse<dynamic>>> upsertResponses(UpsertParams params);
 }

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:observer_core/constantes.dart';
+import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
 import 'package:retrofit/dio.dart';
 
@@ -9,12 +10,12 @@ import 'package:retrofit/dio.dart';
 /// final sl = GetIt.instance;
 /// sl.registerSingleton<AbstractApiRepository>(ApiRepository(apiSource: sl()));
 /// ```
-class InMemorySource implements AbstractInMemorySource {
-  InMemorySource({required this.secureStorage});
+class InMemoryApiNestjsSource implements AbstractInMemoryApiNestjsSource {
+  InMemoryApiNestjsSource({required this.secureStorage});
 
-  final InMemoryService secureStorage;
+  final InMemoryApiNestjsService secureStorage;
 
-  /// Le service [InMemoryService] exécute les requêtes ['GET']
+  /// Le service [InMemoryApiNestjsService] exécute les requêtes ['GET']
   @override
   Future<HttpResponse<dynamic>> get(GetParams params) async {
     try {
@@ -40,7 +41,7 @@ class InMemorySource implements AbstractInMemorySource {
     }
   }
 
-  /// Le service [InMemoryService] exécute les requêtes ['GET']
+  /// Le service [InMemoryApiNestjsService] exécute les requêtes ['GET']
   @override
   Future<HttpResponse<dynamic>> post(UpsertParams params) async {
     try {
