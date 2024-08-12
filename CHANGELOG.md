@@ -1,5 +1,21 @@
 # Observer core
 
+## 🚀 0.6.0 - 12/08/2024
+### Nouveautés
+
+- Création d'un bloc pour gérer la validité des tokens à partir des érreurs 401 et 403 des calls HTTP.
+
+### Changements
+
+- Changement de port par défaut pour le serveur local.
+- Suppression de `refresh_expires_in` qui sert à rien.
+- Rangement des exports tokens et users.
+
+### Correctifs
+
+- Pas de fixes.
+
+
 ## 🚀 0.5.1 - 08/08/2024
 ### Nouveautés
 
@@ -11,7 +27,7 @@
 
 ### Correctifs
 
-- Pas de fixes
+- Pas de fixes.
 
 ## 🚀 0.5.0 - 08/08/2024
 ### Nouveautés
