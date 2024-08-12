@@ -6,7 +6,6 @@ abstract class AbstractAuthTokenModel {
   const AbstractAuthTokenModel({
     required this.accessToken,
     required this.expiresIn,
-    required this.refreshExpiresIn,
     required this.refreshToken,
     required this.tokenType,
     required this.idToken,
@@ -19,9 +18,6 @@ abstract class AbstractAuthTokenModel {
 
   @JsonKey(name: 'expires_in')
   final int expiresIn;
-
-  @JsonKey(name: 'refresh_expires_in')
-  final int refreshExpiresIn;
 
   @JsonKey(name: 'refresh_token')
   final String refreshToken;
@@ -47,7 +43,6 @@ class AuthTokenModel extends AbstractAuthTokenModel {
   const AuthTokenModel({
     required super.accessToken,
     required super.expiresIn,
-    required super.refreshExpiresIn,
     required super.refreshToken,
     required super.tokenType,
     required super.idToken,
@@ -66,7 +61,6 @@ class FakeAuthTokenModel extends AbstractAuthTokenModel {
   const FakeAuthTokenModel({
     required super.accessToken,
     required super.expiresIn,
-    required super.refreshExpiresIn,
     required super.refreshToken,
     required super.tokenType,
     required super.idToken,
@@ -80,7 +74,6 @@ class FakeAuthTokenModel extends AbstractAuthTokenModel {
   static FakeAuthTokenModel example = FakeAuthTokenModel.fromJson(<String, dynamic>{
     'access_token': 'fake-access-token',
     'expires_in': 300,
-    'refresh_expires_in': 0,
     'refresh_token': 'fake-refresh-token',
     'token_type': 'Bearer',
     'id_token': 'fake-id-token',
