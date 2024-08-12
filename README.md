@@ -1,5 +1,5 @@
 [![Owner](https://img.shields.io/badge/Owner-Samakunchan%20Technology-blue)](https://samakunchan-technology.com/)
-[![Owner](https://img.shields.io/badge/OBSERVER--CORE-v0.5.1-orange)](https://samakunchan-technology.com/)
+[![Owner](https://img.shields.io/badge/OBSERVER--CORE-v0.6.0-orange)](https://samakunchan-technology.com/)
 ## Features
 
 Ceci est le core de mon projet dashboard.
