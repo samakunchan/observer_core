@@ -1,5 +1,23 @@
 # Observer core
 
+## 🚀 0.7.0 - 29/08/2024
+### Nouveautés
+
+- Création d'un endpoint search.
+- Création d'un bloc search environnement.
+- Ajout de la gestion du search pour les environnements.
+- Ajout de la fonctionnalité pour delete une catégorie.
+
+### Changements
+
+- Ajout de la possibilité de supprimer les id quand ils sont null dans les models.
+- Suppression des fichiers inutiles.
+
+### Correctifs
+
+- Pas de fixes.
+
+
 ## 🚀 0.6.0 - 12/08/2024
 ### Nouveautés
 
