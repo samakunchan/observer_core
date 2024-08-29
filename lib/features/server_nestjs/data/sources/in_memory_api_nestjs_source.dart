@@ -65,4 +65,28 @@ class InMemoryApiNestjsSource implements AbstractInMemoryApiNestjsSource {
       }
     }
   }
+
+  @override
+  Future<HttpResponse> search(SearchParams params) async {
+    try {
+      switch (params.endPoint) {
+        case MainProject.environmentsSearchEndPoint:
+          return await secureStorage.searchEnvironments(body: 'A revoir pour le in memory');
+        default:
+          throw const NotFoundException();
+      }
+    } catch (e) {
+      if (e.toString().contains('401')) {
+        throw const UnAuthorizedException();
+      } else if (e.toString().contains('403')) {
+        throw const ForbiddenException();
+      } else if (e.toString().contains('503')) {
+        throw ServerException();
+      } else if (e is NotFoundException) {
+        throw const NotFoundException();
+      } else {
+        throw IDontKnowWhatImDoingException();
+      }
+    }
+  }
 }

@@ -30,4 +30,9 @@ class ServerNestjsRepository implements AbstractServerNestjsRepository {
   Future<Either<Failure, HttpResponse<dynamic>>> deleteOne(DeleteParams params) {
     return BaseRepository.requestRemoteApi<HttpResponse<dynamic>>(() => remoteSource.delete(params));
   }
+
+  @override
+  Future<Either<Failure, HttpResponse<dynamic>>> search(SearchParams params) {
+    return BaseRepository.requestRemoteApi<HttpResponse<dynamic>>(() => remoteSource.search(params));
+  }
 }

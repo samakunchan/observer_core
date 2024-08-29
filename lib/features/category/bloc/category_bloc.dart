@@ -19,7 +19,7 @@ part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
-    on<CategoriesInitialized>(_reinitilizeCategories);
+    on<CategoriesInitialized>(_reInitilizeCategories);
     on<CategoriesInGridTriggered>(_showAllCategoriesInGridView);
     on<CategoriesInGridTriggeredInMemory>(_showAllCategoriesInMemoryInGridView);
     on<CategoriesInListTriggered>(_showAllCategoriesListView);
@@ -28,9 +28,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategoryDeleted>(_deleteCategory);
     on<CategoryFiltered>(_filterCategories);
     on<CategorySubmitted>(_upsertCategory);
+    on<CategoriesTested>(_testCategory);
   }
 
-  Future<void> _reinitilizeCategories(CategoriesInitialized event, Emitter<CategoryState> emit) async {
+  Future<void> _testCategory(CategoriesTested event, Emitter<CategoryState> emit) async {
+    emit.call(const CategoryIsDeletedSuccessfully(categoryDeleted: CategoryModel.empty));
+  }
+
+  Future<void> _reInitilizeCategories(CategoriesInitialized event, Emitter<CategoryState> emit) async {
     emit.call(CategoryInitial());
   }
 
@@ -174,6 +179,29 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   Future<void> _deleteCategory(CategoryDeleted event, Emitter<CategoryState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+    emit.call(CategoryIsLoading());
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.deleteOne(
+      DeleteParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.categoriesEndPoint,
+        body: jsonEncode(
+          {
+            'categoriesIds': [event.categoryForDelete.id],
+          },
+        ),
+      ),
+    );
+
+    await CategoryHandler.withReponse(
+      responses: responses,
+      ifFailure: (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
+      ifSuccess: (HttpResponse<dynamic> response) => CategoryHandler.handleDeleteSuccess(
+        response: response,
+        emit: emit,
+        categoryDeleted: event.categoryForDelete,
+      ),
+    );
     emit.call(CategoryIsRemovedSuccessfully());
   }
 
@@ -291,5 +319,21 @@ class CategoryHandler {
         body: jsonEncode(categories),
       ),
     );
+  }
+
+  static Future<void> handleDeleteSuccess({
+    required HttpResponse<dynamic> response,
+    required Emitter<CategoryState> emit,
+    required CategoryModel categoryDeleted,
+  }) async {
+    emit.call(CategoryIsDeletedSuccessfully(categoryDeleted: categoryDeleted));
+  }
+
+  static Future<void> handleSearchSuccess({
+    required HttpResponse<dynamic> response,
+    required Emitter<CategoryState> emit,
+  }) async {
+    debugPrint(response.data.toString());
+    // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
   }
 }

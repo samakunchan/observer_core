@@ -13,7 +13,7 @@ class CategoryUpsertDto {
 
   factory CategoryUpsertDto.fromJson(Map<String, dynamic> json) => _$CategoryUpsertDtoFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final int? id;
   @JsonKey(name: 'title')
   final String title;

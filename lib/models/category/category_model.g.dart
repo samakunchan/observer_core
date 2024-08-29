@@ -21,11 +21,19 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
           ProjectModel.emptyList,
     );
 
-Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'content': instance.content,
-      'articles': instance.articles,
-      'projects': instance.projects,
-    };
+Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['title'] = instance.title;
+  val['content'] = instance.content;
+  val['articles'] = instance.articles;
+  val['projects'] = instance.projects;
+  return val;
+}
