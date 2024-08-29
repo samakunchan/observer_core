@@ -33,6 +33,20 @@ abstract class ServerNestjsService {
     @Header('Authorization') required String authorization,
   });
 
+  @GET('environments/search')
+  Future<HttpResponse<dynamic>> searchEnvironments({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
+  @GET('environments/search/strict')
+  Future<HttpResponse<dynamic>> searchStrictEnvironments({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
   @POST('environments')
   Future<HttpResponse<dynamic>> upsertEnvironment({
     @Header('Authorization') required String authorization,
@@ -52,8 +66,29 @@ abstract class ServerNestjsService {
     @Header('Authorization') required String authorization,
   });
 
+  @GET('categories/search')
+  Future<HttpResponse<dynamic>> searchCategories({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
+  @GET('categories/search/strict')
+  Future<HttpResponse<dynamic>> searchStrictCategories({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
   @POST('categories')
   Future<HttpResponse<dynamic>> upsertCategory({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @DELETE('categories')
+  Future<HttpResponse<dynamic>> deleteCategory({
     @Header('Authorization') required String authorization,
     @Header('Content-Type') required String contentType,
     @Body() required String body,

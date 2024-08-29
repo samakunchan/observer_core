@@ -99,7 +99,6 @@ class EnvironementStoreHandler {
   }
 
   static Future<void> handleAllFailures({required Failure failure, required Emitter<EnvironmentStoreState> emit}) async {
-    print(failure);
     switch (failure) {
       case ServerFailure():
         return emit.call(EnvironementsStoreIsClosed(message: failure.message));

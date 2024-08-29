@@ -9,6 +9,11 @@ class CategoriesInitialized extends CategoryEvent {
   List<Object?> get props => [];
 }
 
+class CategoriesTested extends CategoryEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 class CategoriesInGridTriggeredInMemory extends CategoryEvent {
   const CategoriesInGridTriggeredInMemory({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
 
@@ -63,8 +68,12 @@ class CategorySubmitted extends CategoryEvent {
 }
 
 class CategoryDeleted extends CategoryEvent {
+  const CategoryDeleted({required this.categoryForDelete});
+
+  final CategoryModel categoryForDelete;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [categoryForDelete];
 }
 
 class CategoryFiltered extends CategoryEvent {
@@ -81,4 +90,13 @@ class CategoryFiltered extends CategoryEvent {
 
   @override
   List<Object?> get props => [categories, filterInText, screenMode];
+}
+
+class CategoriesOnSearch extends EnvironmentDatasEvent {
+  const CategoriesOnSearch({required this.input, this.strictMode = false});
+  final String input;
+  final bool strictMode;
+
+  @override
+  List<Object?> get props => [input];
 }

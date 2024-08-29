@@ -25,5 +25,8 @@ export 'project/project_model.dart';
 /// MODEL REPRESENTANT
 export 'representant/representant_model.dart';
 
+/// MODEL SEARCH
+export 'search/search_model.dart';
+
 /// MODEL SIEGE
 export 'siege/siege_model.dart';

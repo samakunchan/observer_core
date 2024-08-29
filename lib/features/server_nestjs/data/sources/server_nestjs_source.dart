@@ -100,6 +100,58 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
+        case '/categories':
+          return await remoteService.deleteCategory(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            body: params.body,
+          );
+        default:
+          throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+      }
+    } on DioException catch (e) {
+      throw handleAllException(e);
+    }
+  }
+
+  @override
+  Future<HttpResponse> search(SearchParams params) async {
+    try {
+      switch (params.endPoint) {
+        case '/environments/search':
+          switch (params.strictMode) {
+            case false:
+              return await remoteService.searchEnvironments(
+                authorization: 'Bearer ${params.accessToken}',
+                contentType: MainProject.defaultContentType,
+                input: params.input,
+              );
+            case true:
+              return await remoteService.searchStrictEnvironments(
+                authorization: 'Bearer ${params.accessToken}',
+                contentType: MainProject.defaultContentType,
+                input: params.input,
+              );
+            default:
+              throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+          }
+        case '/categories/search':
+          switch (params.strictMode) {
+            case false:
+              return await remoteService.searchCategories(
+                authorization: 'Bearer ${params.accessToken}',
+                contentType: MainProject.defaultContentType,
+                input: params.input,
+              );
+            case true:
+              return await remoteService.searchStrictCategories(
+                authorization: 'Bearer ${params.accessToken}',
+                contentType: MainProject.defaultContentType,
+                input: params.input,
+              );
+            default:
+              throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+          }
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }

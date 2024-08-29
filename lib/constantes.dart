@@ -17,6 +17,9 @@ class MainProject {
   /// Endpoint = /environments
   static const String environmentsEndPoint = '/environments';
 
+  /// Endpoint = /environments/search
+  static const String environmentsSearchEndPoint = '/environments/search';
+
   /// Endpoint = /categories
   static const String categoriesEndPoint = '/categories';
 
