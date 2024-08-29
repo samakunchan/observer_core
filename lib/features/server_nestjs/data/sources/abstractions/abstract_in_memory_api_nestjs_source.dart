@@ -6,4 +6,5 @@ import 'package:retrofit/dio.dart';
 abstract class AbstractInMemoryApiNestjsSource {
   Future<HttpResponse<dynamic>> get(GetParams params);
   Future<HttpResponse<dynamic>> post(UpsertParams params);
+  Future<HttpResponse<dynamic>> search(SearchParams params);
 }

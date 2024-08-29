@@ -113,3 +113,21 @@ class CategoryFormIsSubmittedSuccessfully extends CategoryState {
   @override
   List<Object> get props => [];
 }
+
+class CategoriesAreSearchSuccessfully extends CategoryState {
+  const CategoriesAreSearchSuccessfully({required this.searchModel});
+
+  final SearchModel searchModel;
+
+  @override
+  List<Object> get props => [searchModel];
+}
+
+class CategoryIsDeletedSuccessfully extends CategoryState {
+  const CategoryIsDeletedSuccessfully({required this.categoryDeleted});
+
+  final CategoryModel categoryDeleted;
+
+  @override
+  List<Object> get props => [categoryDeleted];
+}

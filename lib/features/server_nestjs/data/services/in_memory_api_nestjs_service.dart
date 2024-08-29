@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:observer_core/constantes.dart';
+import 'package:observer_core/models/environment/environment_model.dart';
 import 'package:retrofit/dio.dart';
 
 abstract class InMemoryApiNestjsService {
@@ -10,6 +11,8 @@ abstract class InMemoryApiNestjsService {
 
   Future<HttpResponse<dynamic>> getEnvironments();
   Future<HttpResponse<dynamic>> postEnvironments({required String body});
+  Future<HttpResponse<dynamic>> searchEnvironments({required String body});
+  Future<HttpResponse<dynamic>> searchStrictEnvironments({required String body});
 }
 
 class _InMemoryApiNestjsService implements InMemoryApiNestjsService {
@@ -34,6 +37,35 @@ class _InMemoryApiNestjsService implements InMemoryApiNestjsService {
     await _secureStorage.write(key: 'ENVIRONMENTS', value: body);
     // final String categoriesInString = await _secureStorage.read(key: 'ENVIRONMENTS') ?? '[]';
     // logger.f('Post des environnements dans la base local:\n $categoriesInString');
+    return HttpResponse<dynamic>(
+      <String, dynamic>{'message': 'success de l‘ajout dans le storage'},
+      Response<dynamic>(requestOptions: RequestOptions()),
+    );
+  }
+
+  // TODO Faire la même chose avec les données in memory concernant le search normal et strict.
+  @override
+  Future<HttpResponse<dynamic>> searchEnvironments({required String body}) async {
+    final String environmentsInString = await _secureStorage.read(key: 'ENVIRONMENTS') ?? '[]';
+    final List<dynamic> environmentsResponse = jsonDecode(environmentsInString) as List<dynamic>;
+
+    final List<EnvironmentModel> environments =
+        (environmentsResponse as List<Map<String, dynamic>>).map(EnvironmentModel.fromJson).toList();
+    final List<EnvironmentModel> environementFiltered = environments.where((EnvironmentModel env) {
+      return env.title == '';
+    }).toList();
+
+    return HttpResponse<dynamic>(
+      <String, dynamic>{'message': 'success de l‘ajout dans le storage'},
+      Response<dynamic>(requestOptions: RequestOptions()),
+    );
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> searchStrictEnvironments({required String body}) async {
+    await _secureStorage.delete(key: 'ENVIRONMENTS');
+    await _secureStorage.write(key: 'ENVIRONMENTS', value: body);
+
     return HttpResponse<dynamic>(
       <String, dynamic>{'message': 'success de l‘ajout dans le storage'},
       Response<dynamic>(requestOptions: RequestOptions()),

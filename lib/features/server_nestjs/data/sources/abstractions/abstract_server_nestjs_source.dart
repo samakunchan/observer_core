@@ -7,4 +7,5 @@ abstract class AbstractServerNestjsSource {
   Future<HttpResponse<dynamic>> get(GetParams params);
   Future<HttpResponse<dynamic>> upsert(UpsertParams params);
   Future<HttpResponse<dynamic>> delete(DeleteParams params);
+  Future<HttpResponse<dynamic>> search(SearchParams params);
 }
