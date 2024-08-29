@@ -15,7 +15,7 @@ class CategoryModel {
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final int? id;
   @JsonKey(name: 'title')
   final String title;
@@ -29,4 +29,5 @@ class CategoryModel {
   Map<String, dynamic> toJson() => _$CategoryModelToJson(this);
 
   static const emptyList = <CategoryModel>[];
+  static const empty = CategoryModel(title: '', content: '');
 }

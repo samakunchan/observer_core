@@ -14,10 +14,18 @@ CategoryUpsertDto _$CategoryUpsertDtoFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$CategoryUpsertDtoToJson(CategoryUpsertDto instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'content': instance.content,
-      'environment': instance.environment,
-    };
+Map<String, dynamic> _$CategoryUpsertDtoToJson(CategoryUpsertDto instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['title'] = instance.title;
+  val['content'] = instance.content;
+  val['environment'] = instance.environment;
+  return val;
+}

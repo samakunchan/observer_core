@@ -1,5 +1,5 @@
-import 'package:observer_core/models/models_export.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:observer_core/models/models_export.dart';
 
 part 'organisation_model.g.dart';
 
