@@ -4,8 +4,8 @@ abstract class EnvironmentDatasEvent extends Equatable {
   const EnvironmentDatasEvent();
 }
 
-class EnvironmentsDatasInMemoryTriggered extends EnvironmentDatasEvent {
-  const EnvironmentsDatasInMemoryTriggered({this.environments = EnvironmentModel.emptyList});
+class EnvironmentDatasInMemoryTriggered extends EnvironmentDatasEvent {
+  const EnvironmentDatasInMemoryTriggered({this.environments = EnvironmentModel.emptyList});
 
   final List<EnvironmentModel> environments;
 
@@ -13,8 +13,8 @@ class EnvironmentsDatasInMemoryTriggered extends EnvironmentDatasEvent {
   List<Object?> get props => [environments];
 }
 
-class EnvironmentsDatasTriggered extends EnvironmentDatasEvent {
-  const EnvironmentsDatasTriggered({this.environments = EnvironmentModel.emptyList});
+class EnvironmentDatasTriggered extends EnvironmentDatasEvent {
+  const EnvironmentDatasTriggered({this.environments = EnvironmentModel.emptyList});
 
   final List<EnvironmentModel> environments;
 
@@ -22,8 +22,8 @@ class EnvironmentsDatasTriggered extends EnvironmentDatasEvent {
   List<Object?> get props => [environments];
 }
 
-class EnvironmentsErrorsTriggered extends EnvironmentDatasEvent {
-  const EnvironmentsErrorsTriggered({this.message = ErrorMessage.noErrorMessageHandled});
+class EnvironmentErrorsTriggered extends EnvironmentDatasEvent {
+  const EnvironmentErrorsTriggered({this.message = ErrorMessage.noErrorMessageHandled});
 
   /// Tout les messages d'érreurs:
   /// - [ErrorMessage.noErrorMessageHandled]
@@ -39,8 +39,8 @@ class EnvironmentsErrorsTriggered extends EnvironmentDatasEvent {
   List<Object?> get props => [message];
 }
 
-class EnvironmentsDatasSelected extends EnvironmentDatasEvent {
-  const EnvironmentsDatasSelected({
+class EnvironmentDatasSelected extends EnvironmentDatasEvent {
+  const EnvironmentDatasSelected({
     required this.environments,
     required this.filterId,
     this.filteredEnvironments = EnvironmentModel.emptyList,
@@ -53,18 +53,27 @@ class EnvironmentsDatasSelected extends EnvironmentDatasEvent {
   List<Object?> get props => [environments, filterId];
 }
 
-class EnvironmentsDatasSubmitted extends EnvironmentDatasEvent {
-  const EnvironmentsDatasSubmitted({required this.environmentForUpsert});
+class EnvironmentDatasSubmitted extends EnvironmentDatasEvent {
+  const EnvironmentDatasSubmitted({required this.environmentForUpsert});
   final EnvironmentUpsertDto environmentForUpsert;
 
   @override
   List<Object?> get props => [environmentForUpsert];
 }
 
-class EnvironmentsDatasDeleted extends EnvironmentDatasEvent {
-  const EnvironmentsDatasDeleted({required this.environmentForDelete});
+class EnvironmentDatasDeleted extends EnvironmentDatasEvent {
+  const EnvironmentDatasDeleted({required this.environmentForDelete});
   final EnvironmentModel environmentForDelete;
 
   @override
   List<Object?> get props => [environmentForDelete];
+}
+
+class EnvironmentDatasOnSearch extends EnvironmentDatasEvent {
+  const EnvironmentDatasOnSearch({required this.input, this.strictMode = false});
+  final String input;
+  final bool strictMode;
+
+  @override
+  List<Object?> get props => [input];
 }

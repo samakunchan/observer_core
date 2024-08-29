@@ -17,15 +17,16 @@ part 'environment_datas_state.dart';
 
 class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasState> {
   EnvironmentDatasBloc() : super(const EnvironmentDatasIsSusscessfullyLoaded(selectedId: 3)) {
-    on<EnvironmentsDatasTriggered>(_showEnvironmentsDatas);
-    on<EnvironmentsDatasInMemoryTriggered>(_showEnvironmentsDatasInMemory);
-    on<EnvironmentsErrorsTriggered>(_showEnvironmentsErrors);
-    on<EnvironmentsDatasSelected>(_selectAndShowOneEnvironment);
-    on<EnvironmentsDatasSubmitted>(_upsertEnvironmentDatas);
-    on<EnvironmentsDatasDeleted>(_deleteEnvironmentDatas);
+    on<EnvironmentDatasTriggered>(_showEnvironmentsDatas);
+    on<EnvironmentDatasInMemoryTriggered>(_showEnvironmentsDatasInMemory);
+    on<EnvironmentErrorsTriggered>(_showEnvironmentsErrors);
+    on<EnvironmentDatasSelected>(_selectAndShowOneEnvironment);
+    on<EnvironmentDatasSubmitted>(_upsertEnvironmentDatas);
+    on<EnvironmentDatasDeleted>(_deleteEnvironmentDatas);
+    on<EnvironmentDatasOnSearch>(_searchEnvironmentDatas);
   }
 
-  Future<void> _showEnvironmentsDatas(EnvironmentsDatasTriggered event, Emitter<EnvironmentDatasState> emit) async {
+  Future<void> _showEnvironmentsDatas(EnvironmentDatasTriggered event, Emitter<EnvironmentDatasState> emit) async {
     emit.call(
       EnvironmentDatasIsSusscessfullyLoaded(
         selectedId: 3,
@@ -35,7 +36,7 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
     );
   }
 
-  Future<void> _showEnvironmentsDatasInMemory(EnvironmentsDatasInMemoryTriggered event, Emitter<EnvironmentDatasState> emit) async {
+  Future<void> _showEnvironmentsDatasInMemory(EnvironmentDatasInMemoryTriggered event, Emitter<EnvironmentDatasState> emit) async {
     emit.call(
       EnvironmentDatasIsSusscessfullyLoadedInMemory(
         selectedId: 3,
@@ -45,11 +46,11 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
     );
   }
 
-  Future<void> _showEnvironmentsErrors(EnvironmentsErrorsTriggered event, Emitter<EnvironmentDatasState> emit) async {
+  Future<void> _showEnvironmentsErrors(EnvironmentErrorsTriggered event, Emitter<EnvironmentDatasState> emit) async {
     emit.call(EnvironmentDatasHasFailure(message: event.message));
   }
 
-  Future<void> _selectAndShowOneEnvironment(EnvironmentsDatasSelected event, Emitter<EnvironmentDatasState> emit) async {
+  Future<void> _selectAndShowOneEnvironment(EnvironmentDatasSelected event, Emitter<EnvironmentDatasState> emit) async {
     emit.call(
       EnvironmentDatasIsSusscessfullyLoaded(
         environments: event.environments,
@@ -59,9 +60,9 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
     );
   }
 
-  Future<void> _upsertEnvironmentDatas(EnvironmentsDatasSubmitted event, Emitter<EnvironmentDatasState> emit) async {
+  Future<void> _upsertEnvironmentDatas(EnvironmentDatasSubmitted event, Emitter<EnvironmentDatasState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    emit.call(EnvironmentsDatasIsSubmitting());
+    emit.call(EnvironmentDatasIsSubmitting());
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.upsertOne(
       UpsertParams(
         accessToken: authTokenModel.accessToken,
@@ -77,9 +78,28 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
     );
   }
 
-  Future<void> _deleteEnvironmentDatas(EnvironmentsDatasDeleted event, Emitter<EnvironmentDatasState> emit) async {
+  Future<void> _searchEnvironmentDatas(EnvironmentDatasOnSearch event, Emitter<EnvironmentDatasState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    emit.call(EnvironmentsDatasIsSubmitting());
+
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.search(
+      SearchParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.environmentsSearchEndPoint,
+        strictMode: event.strictMode,
+        input: event.input,
+      ),
+    );
+
+    await EnvironementDatasHandler.withReponse(
+      responses: responses,
+      ifFailure: (Failure failure) => EnvironementDatasHandler.handleAllFailures(failure: failure, emit: emit),
+      ifSuccess: (HttpResponse<dynamic> response) => EnvironementDatasHandler.handleSearchSuccess(response: response, emit: emit),
+    );
+  }
+
+  Future<void> _deleteEnvironmentDatas(EnvironmentDatasDeleted event, Emitter<EnvironmentDatasState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+    emit.call(EnvironmentDatasIsSubmitting());
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.deleteOne(
       DeleteParams(
         accessToken: authTokenModel.accessToken,
@@ -91,7 +111,7 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
     await EnvironementDatasHandler.withReponse(
       responses: responses,
       ifFailure: (Failure failure) => EnvironementDatasHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => EnvironementDatasHandler.handledeleteSuccess(response: response, emit: emit),
+      ifSuccess: (HttpResponse<dynamic> response) => EnvironementDatasHandler.handleDeleteSuccess(response: response, emit: emit),
     );
   }
 }
@@ -137,7 +157,7 @@ class EnvironementDatasHandler {
       case IDontKnowWhatImDoingFailure():
         return emit.call(const EnvironmentDatasHasFailure());
       default:
-        return emit.call(EnvironmentsDatasIsSubmitting());
+        return emit.call(EnvironmentDatasIsSubmitting());
     }
   }
 
@@ -161,13 +181,21 @@ class EnvironementDatasHandler {
     required HttpResponse<dynamic> response,
     required Emitter<EnvironmentDatasState> emit,
   }) async {
-    emit.call(EnvironmentsDatasFormIsSubmittedSuccessfully(id: (response.data as Map<String, dynamic>)['id'] as int));
+    emit.call(EnvironmentDatasFormIsSubmittedSuccessfully(id: (response.data as Map<String, dynamic>)['id'] as int));
   }
 
-  static Future<void> handledeleteSuccess({
+  static Future<void> handleDeleteSuccess({
     required HttpResponse<dynamic> response,
     required Emitter<EnvironmentDatasState> emit,
   }) async {
-    emit.call(EnvironmentsDatasIsDeletedSuccessfully());
+    emit.call(EnvironmentDatasIsDeletedSuccessfully());
+  }
+
+  static Future<void> handleSearchSuccess({
+    required HttpResponse<dynamic> response,
+    required Emitter<EnvironmentDatasState> emit,
+  }) async {
+    debugPrint(response.data.toString());
+    // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
   }
 }

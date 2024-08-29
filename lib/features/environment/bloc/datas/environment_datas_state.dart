@@ -51,20 +51,29 @@ class EnvironmentDatasHasFailure extends EnvironmentDatasState {
   List<Object?> get props => [message];
 }
 
-class EnvironmentsDatasIsSubmitting extends EnvironmentDatasState {
+class EnvironmentDatasIsSubmitting extends EnvironmentDatasState {
   @override
   List<Object> get props => [];
 }
 
-class EnvironmentsDatasFormIsSubmittedSuccessfully extends EnvironmentDatasState {
-  const EnvironmentsDatasFormIsSubmittedSuccessfully({required this.id});
+class EnvironmentDatasFormIsSubmittedSuccessfully extends EnvironmentDatasState {
+  const EnvironmentDatasFormIsSubmittedSuccessfully({required this.id});
   final int id;
 
   @override
   List<Object> get props => [id];
 }
 
-class EnvironmentsDatasIsDeletedSuccessfully extends EnvironmentDatasState {
+class EnvironmentDatasIsDeletedSuccessfully extends EnvironmentDatasState {
   @override
   List<Object> get props => [];
+}
+
+class EnvironmentDatasIsSearchSuccessfully extends EnvironmentDatasState {
+  const EnvironmentDatasIsSearchSuccessfully({required this.searchModel});
+
+  final SearchModel searchModel;
+
+  @override
+  List<Object> get props => [searchModel];
 }
