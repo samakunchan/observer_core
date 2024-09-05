@@ -78,6 +78,7 @@ class CategoryDeleted extends CategoryEvent {
 
 class CategoryFiltered extends CategoryEvent {
   const CategoryFiltered({
+    required this.selectedId,
     required this.categories,
     required this.filterInText,
     this.filteredCategories = CategoryModel.emptyList,
@@ -87,12 +88,27 @@ class CategoryFiltered extends CategoryEvent {
   final List<CategoryModel> categories;
   final String filterInText;
   final ScreenMode screenMode;
+  final int selectedId;
 
   @override
   List<Object?> get props => [categories, filterInText, screenMode];
 }
 
-class CategoriesOnSearch extends EnvironmentDatasEvent {
+class CategoriesSelected extends CategoryEvent {
+  const CategoriesSelected({
+    required this.categories,
+    required this.filterId,
+    this.filteredCategories = CategoryModel.emptyList,
+  });
+  final List<CategoryModel> filteredCategories;
+  final List<CategoryModel> categories;
+  final int filterId;
+
+  @override
+  List<Object?> get props => [categories, filterId];
+}
+
+class CategoriesOnSearch extends CategoryEvent {
   const CategoriesOnSearch({required this.input, this.strictMode = false});
   final String input;
   final bool strictMode;
