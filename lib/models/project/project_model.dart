@@ -23,7 +23,7 @@ class ProjectModel {
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) => _$ProjectModelFromJson(json);
 
-  @JsonKey(name: 'id')
+  @JsonKey(name: 'id', includeIfNull: false)
   final int? id;
   @JsonKey(name: 'title')
   final String title;
@@ -43,9 +43,9 @@ class ProjectModel {
   final String createdAt;
   @JsonKey(name: 'updatedAt')
   final String updatedAt;
-  @JsonKey(name: 'deletedAt')
+  @JsonKey(name: 'deletedAt', includeIfNull: false)
   final String? deletedAt;
-  @JsonKey(name: 'picturesProject')
+  @JsonKey(name: 'picturesProject', includeIfNull: false)
   final List<PictureModel>? picturesProject;
   @JsonKey(name: 'category')
   final CategoryModel category;
