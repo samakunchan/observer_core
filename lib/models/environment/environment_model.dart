@@ -24,3 +24,18 @@ class EnvironmentModel {
 
   static const emptyList = <EnvironmentModel>[];
 }
+
+@JsonSerializable()
+class EnvironementAssociatedModel {
+  const EnvironementAssociatedModel({
+    required this.title,
+    this.id,
+  });
+  factory EnvironementAssociatedModel.fromJson(Map<String, dynamic> json) => _$EnvironementAssociatedModelFromJson(json);
+  @JsonKey(name: 'id', includeIfNull: false)
+  final int? id;
+  @JsonKey(name: 'title')
+  final String title;
+
+  Map<String, dynamic> toJson() => _$EnvironementAssociatedModelToJson(this);
+}
