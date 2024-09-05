@@ -9,7 +9,6 @@ import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos.dart';
 import 'package:observer_core/enums/enums.dart';
 import 'package:observer_core/features/authentication/authentication_feature.dart';
-import 'package:observer_core/features/authentication/feature_auth_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
 import 'package:retrofit/dio.dart';
@@ -28,6 +27,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategoryDeleted>(_deleteCategory);
     on<CategoryFiltered>(_filterCategories);
     on<CategorySubmitted>(_upsertCategory);
+    on<CategoriesSelected>(_selectAndShowOneCategorie);
     on<CategoriesTested>(_testCategory);
   }
 
@@ -133,7 +133,11 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     if (!event.isFetchingApi) {
       emit
         ..call(CategoryIsLoading())
-        ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, screenMode: ScreenMode.list, selectedId: 1));
+        ..call(CategoriesAreLoadedSuccessfully(
+          categories: event.categories,
+          screenMode: ScreenMode.list,
+          selectedId: 1,
+        ));
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
         GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
@@ -154,6 +158,16 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           emit.call(CategoryIsLoading());
       }
     }
+  }
+
+  Future<void> _selectAndShowOneCategorie(CategoriesSelected event, Emitter<CategoryState> emit) async {
+    emit.call(
+      CategoriesAreFilteredSuccessfully(
+        categories: event.categories,
+        selectedId: event.filterId,
+        filteredCategories: event.categories.where((CategoryModel category) => category.id == event.filterId).toList(),
+      ),
+    );
   }
 
   Future<void> _reloadCategories(CategoriesReloaded event, Emitter<CategoryState> emit) async {
@@ -213,6 +227,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         categories: event.categories,
         filteredCategories: event.filterInText.isNotEmpty ? filteredCategories : event.categories,
         screenMode: event.screenMode,
+        selectedId: event.selectedId,
       ),
     );
   }

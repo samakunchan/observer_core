@@ -18,18 +18,21 @@ class CategoriesAreLoadedSuccessfully extends CategoryState {
   const CategoriesAreLoadedSuccessfully({
     required this.selectedId,
     this.categories = CategoryModel.emptyList,
+    this.filteredCategories = CategoryModel.emptyList,
     this.screenMode = ScreenMode.grid,
   });
   final ScreenMode screenMode;
   final List<CategoryModel> categories;
   final int selectedId;
+  final List<CategoryModel> filteredCategories;
 
   @override
-  List<Object> get props => [categories, selectedId];
+  List<Object> get props => [categories, selectedId, filteredCategories];
 }
 
 class CategoriesAreFilteredSuccessfully extends CategoryState {
   const CategoriesAreFilteredSuccessfully({
+    required this.selectedId,
     this.categories = CategoryModel.emptyList,
     this.filteredCategories = CategoryModel.emptyList,
     this.screenMode = ScreenMode.grid,
@@ -37,9 +40,10 @@ class CategoriesAreFilteredSuccessfully extends CategoryState {
   final ScreenMode screenMode;
   final List<CategoryModel> categories;
   final List<CategoryModel> filteredCategories;
+  final int selectedId;
 
   @override
-  List<Object> get props => [categories, filteredCategories];
+  List<Object> get props => [categories, selectedId, filteredCategories];
 }
 
 class CategoriesInMemoryAreLoadedSuccessfully extends CategoryState {
