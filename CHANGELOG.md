@@ -1,5 +1,19 @@
 # Observer core
 
+## 🚀 0.9.0 - 05/09/2024
+### Nouveautés
+
+- Ajout d'un bloc/state/event pour la gestion des projets uniquement pour l'affiche pour le moment.
+
+### Changements
+
+- Ajout d'une gestion des propriétés nulles pour le model `ProjectModel`.
+
+### Correctifs
+
+- Pas de fixes.
+
+
 ## 🚀 0.8.0 - 05/09/2024
 ### Nouveautés
 

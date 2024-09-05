@@ -26,19 +26,27 @@ ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) => ProjectModel(
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$ProjectModelToJson(ProjectModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'slug': instance.slug,
-      'shortDescription': instance.shortDescription,
-      'fullDescription': instance.fullDescription,
-      'client': instance.client,
-      'dateDebutProjet': instance.dateDebutProjet,
-      'dateFinProjet': instance.dateFinProjet,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
-      'deletedAt': instance.deletedAt,
-      'picturesProject': instance.picturesProject,
-      'category': instance.category,
-    };
+Map<String, dynamic> _$ProjectModelToJson(ProjectModel instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['title'] = instance.title;
+  val['slug'] = instance.slug;
+  val['shortDescription'] = instance.shortDescription;
+  val['fullDescription'] = instance.fullDescription;
+  val['client'] = instance.client;
+  val['dateDebutProjet'] = instance.dateDebutProjet;
+  val['dateFinProjet'] = instance.dateFinProjet;
+  val['createdAt'] = instance.createdAt;
+  val['updatedAt'] = instance.updatedAt;
+  writeNotNull('deletedAt', instance.deletedAt);
+  writeNotNull('picturesProject', instance.picturesProject);
+  val['category'] = instance.category;
+  return val;
+}
