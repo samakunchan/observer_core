@@ -1,5 +1,21 @@
 # Observer core
 
+## 🚀 0.8.0 - 05/09/2024
+### Nouveautés
+
+- Pas de nouveautés.
+
+### Changements
+
+- Création du model `EnvironementAssociatedModel` pour l'ajouter aux catégories.
+- Ajout de propriétés supplémentaires pour les states des catégories afin de gérer le filtrage.
+- Ajout d'un event supplémentaire pour une catégorie selectionner (Ex: Angular qui montre que les projets Angular).
+
+### Correctifs
+
+- Pas de fixes.
+
+
 ## 🚀 0.7.0 - 29/08/2024
 ### Nouveautés
 

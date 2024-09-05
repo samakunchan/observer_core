@@ -19,6 +19,10 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => ProjectModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           ProjectModel.emptyList,
+      environment: json['environment'] == null
+          ? null
+          : EnvironementAssociatedModel.fromJson(
+              json['environment'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) {
@@ -35,5 +39,6 @@ Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) {
   val['content'] = instance.content;
   val['articles'] = instance.articles;
   val['projects'] = instance.projects;
+  writeNotNull('environment', instance.environment);
   return val;
 }

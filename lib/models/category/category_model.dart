@@ -11,6 +11,7 @@ class CategoryModel {
     this.id,
     this.articles = ArticleModel.emptyList,
     this.projects = ProjectModel.emptyList,
+    this.environment,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
@@ -25,6 +26,8 @@ class CategoryModel {
   final List<ArticleModel> articles;
   @JsonKey(name: 'projects')
   final List<ProjectModel> projects;
+  @JsonKey(name: 'environment', includeIfNull: false)
+  final EnvironementAssociatedModel? environment;
 
   Map<String, dynamic> toJson() => _$CategoryModelToJson(this);
 
