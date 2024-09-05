@@ -7,7 +7,7 @@
 
 ### Changements
 
-- Ajout d'une gestion des propriétés nulles pour le model `ProjectModel`
+- Ajout d'une gestion des propriétés nulles pour le model `ProjectModel`.
 
 ### Correctifs
 
