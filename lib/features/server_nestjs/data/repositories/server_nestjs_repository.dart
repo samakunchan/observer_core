@@ -35,4 +35,9 @@ class ServerNestjsRepository implements AbstractServerNestjsRepository {
   Future<Either<Failure, HttpResponse<dynamic>>> search(SearchParams params) {
     return BaseRepository.requestRemoteApi<HttpResponse<dynamic>>(() => remoteSource.search(params));
   }
+
+  @override
+  Future<Either<Failure, HttpResponse<dynamic>>> uploadFormData(UploadFormDataParams params) {
+    return BaseRepository.requestRemoteApi<HttpResponse<dynamic>>(() => remoteSource.uploadFile(params));
+  }
 }

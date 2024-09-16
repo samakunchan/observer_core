@@ -5,6 +5,7 @@ library;
 export 'models/delete_params.dart';
 export 'models/get_params.dart';
 export 'models/search_params.dart';
+export 'models/upload_file_params.dart';
 export 'models/upsert_params.dart';
 
 /// REPOSITORIES - INTERFACES

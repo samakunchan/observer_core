@@ -7,6 +7,7 @@ import 'package:retrofit/dio.dart';
 abstract class AbstractServerNestjsRepository {
   Future<Either<Failure, HttpResponse<dynamic>>> getResponses(GetParams params);
   Future<Either<Failure, HttpResponse<dynamic>>> upsertOne(UpsertParams params);
+  Future<Either<Failure, HttpResponse<dynamic>>> uploadFormData(UploadFormDataParams params);
   Future<Either<Failure, HttpResponse<dynamic>>> deleteOne(DeleteParams params);
   Future<Either<Failure, HttpResponse<dynamic>>> search(SearchParams params);
 }

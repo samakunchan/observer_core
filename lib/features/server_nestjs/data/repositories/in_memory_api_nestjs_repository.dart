@@ -16,7 +16,7 @@ class InMemoryApiNestjsRepository implements AbstractInMemoryApiNestjsRepository
   final AbstractInMemoryApiNestjsSource inMemorySource;
 
   /// Grâce à la [BaseRepository] qui agit comme un layout pour les call API, on fait un call avec la méthode ['GET'] à l'[AbstractInMemoryApiNestjsSource]<br>
-  /// A cette étape les données vont vers le [Bloc] ou les [Widget]
+  /// A cette étape les données vont vers le Bloc ou les [Widget]
   @override
   Future<Either<Failure, HttpResponse<dynamic>>> getResponses(GetParams params) {
     return BaseRepository.requestInMemoryStorage<HttpResponse<dynamic>>(() => inMemorySource.get(params));
@@ -27,8 +27,8 @@ class InMemoryApiNestjsRepository implements AbstractInMemoryApiNestjsRepository
     return BaseRepository.requestInMemoryStorage<HttpResponse<dynamic>>(() => inMemorySource.post(params));
   }
 
-  @override
-  Future<Either<Failure, HttpResponse<dynamic>>> search(SearchParams params) {
-    return BaseRepository.requestInMemoryStorage<HttpResponse<dynamic>>(() => inMemorySource.search(params));
-  }
+  // @override
+  // Future<Either<Failure, HttpResponse<dynamic>>> search(SearchParams params) {
+  //   return BaseRepository.requestInMemoryStorage<HttpResponse<dynamic>>(() => inMemorySource.search(params));
+  // }
 }

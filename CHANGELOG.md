@@ -1,5 +1,25 @@
 # Observer core
 
+## 🚀 0.10.0 - 16/09/2024
+### Nouveautés
+
+- Ajout d'un DTO one_document pour le formulaire en front
+- Ajout d'un DTO multiple_document pour le formulaire en front.
+- Ajout d'un model pour les documents.
+- Création d'un param spécifique pour la gestion des documents.
+- Ajout d'une méthode spécifique pour la gestion des documents dans la source et service.
+- Création des requêtes `upsertOneDocument`, `upsertMultipleDocuments` pour la requete HTTP Dio.
+- Ajout du systeme de state management pour les documents.
+
+### Changements
+
+- Rename du fichier export DTO.
+
+### Correctifs
+
+- Pas de fixes.
+
+
 ## 🚀 0.9.0 - 05/09/2024
 ### Nouveautés
 
