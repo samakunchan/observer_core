@@ -15,7 +15,7 @@ class PictureModel {
 
   Map<String, dynamic> toJson() => _$PictureModelToJson(this);
 
-  static const oneDefaultPicture = PictureModel(src: 'src', alt: 'Image par défaut');
+  static const oneDefaultPicture = PictureModel(src: 'default/image/world-map.png', alt: 'Image par défaut');
   static const listWithDefaultPicture = <PictureModel>[
     oneDefaultPicture,
   ];

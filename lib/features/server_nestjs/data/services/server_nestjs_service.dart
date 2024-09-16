@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:observer_core/constantes.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -102,6 +102,13 @@ abstract class ServerNestjsService {
   @GET('projects/all')
   Future<HttpResponse<dynamic>> getProjects({
     @Header('Authorization') required String authorization,
+  });
+
+  @POST('projects')
+  Future<HttpResponse<dynamic>> upsertProject({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
   });
 
   @GET('organisations/all')

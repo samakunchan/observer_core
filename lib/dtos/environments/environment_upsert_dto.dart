@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:observer_core/dtos/dtos.dart';
+import 'package:observer_core/dtos/dtos_export.dart';
 
 part 'environment_upsert_dto.g.dart';
 

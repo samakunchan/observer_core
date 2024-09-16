@@ -15,7 +15,7 @@ class ServerNestjsRepository implements AbstractServerNestjsRepository {
   final AbstractServerNestjsSource remoteSource;
 
   /// Grâce à la [BaseRepository] qui agit comme un layout pour les call API, on fait un call avec la méthode ['GET'] à l'[ServerNestjsSource]<br>
-  /// A cette étape les données vont vers le [Bloc] ou les [Widget]
+  /// A cette étape les données vont vers le Bloc ou les [Widget]
   @override
   Future<Either<Failure, HttpResponse<dynamic>>> getResponses(GetParams params) {
     return BaseRepository.requestRemoteApi<HttpResponse<dynamic>>(() => remoteSource.get(params));
