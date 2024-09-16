@@ -105,21 +105,21 @@ class DocumentHandler {
   static Future<void> handleAllFailures({required Failure failure, required Emitter<DocumentState> emit}) async {
     switch (failure) {
       case ServerFailure():
-        return emit.call(DocumentsAreNotLoaded(message: failure.message));
+        return emit.call(DocumentsHaveFailures(message: failure.message));
       case CacheFailure():
-        return emit.call(DocumentsAreNotLoaded(message: failure.message));
+        return emit.call(DocumentsHaveFailures(message: failure.message));
       case BadRequestFailure():
-        return emit.call(DocumentsAreNotLoaded(message: failure.message));
+        return emit.call(DocumentsHaveFailures(message: failure.message));
       case NetworkFailure():
-        return emit.call(DocumentsAreNotLoaded(message: failure.message));
+        return emit.call(DocumentsHaveFailures(message: failure.message));
       case NotFoundFailure():
-        return emit.call(DocumentsAreNotLoaded(message: failure.message));
+        return emit.call(DocumentsHaveFailures(message: failure.message));
       case UnAuthorizedFailure():
-        return emit.call(DocumentsAreNotLoaded(message: failure.message));
+        return emit.call(DocumentsHaveFailures(message: failure.message));
       case ForbiddenFailure():
-        return emit.call(DocumentsAreNotLoaded(message: failure.message));
+        return emit.call(DocumentsHaveFailures(message: failure.message));
       case IDontKnowWhatImDoingFailure():
-        return emit.call(const DocumentsAreNotLoaded());
+        return emit.call(const DocumentsHaveFailures());
       default:
         return emit.call(DocumentsAreLoading());
     }

@@ -19,9 +19,8 @@ final class DocumentsFormIsProcessing extends DocumentState {
   List<Object> get props => [];
 }
 
-// TODO Changer pour `DocumentsHaveFailures`
-final class DocumentsAreNotLoaded extends DocumentState {
-  const DocumentsAreNotLoaded({this.message = ErrorMessage.noErrorMessageHandled});
+final class DocumentsHaveFailures extends DocumentState {
+  const DocumentsHaveFailures({this.message = ErrorMessage.noErrorMessageHandled});
 
   /// Tout les messages d'érreurs:
   /// - [ErrorMessage.noErrorMessageHandled]
