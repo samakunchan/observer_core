@@ -104,6 +104,13 @@ abstract class ServerNestjsService {
     @Header('Authorization') required String authorization,
   });
 
+  @POST('projects')
+  Future<HttpResponse<dynamic>> upsertProject({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
   @GET('organisations/all')
   Future<HttpResponse<dynamic>> getOrganisation({
     @Header('Authorization') required String authorization,
