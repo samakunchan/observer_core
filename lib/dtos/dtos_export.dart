@@ -13,3 +13,6 @@ export 'documents/one_document_upsert_dto_dto.dart';
 
 /// ENVIRONMENTS DTO
 export 'environments/environment_upsert_dto.dart';
+
+/// PROJECT DTO
+export 'projects/project_dto.dart';
