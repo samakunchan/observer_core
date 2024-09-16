@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 int getCountAxis({required double sizeContentArea}) {
   switch (sizeContentArea) {
@@ -48,3 +49,10 @@ DateDTO formatCommonDate(String date) {
 /// - logger.d(<span style="color: white">"Cele sera comme ça"</span>) <span style="color: white">[Level.debug]</span>
 /// - logger.i(<span style="color: #4bb3d5">"Cele sera comme ça"</span>) <span style="color: #4bb3d5">[Level.info]</span>
 /// - logger.f(<span style="color: fuchsia">"Cele sera comme ça"</span>) <span style="color: fuchsia">[Level.fatal]</span>
+Logger logger = Logger(
+  printer: PrettyPrinter(
+    noBoxingByDefault: true, // Pour afficher les lignes du tableau
+    methodCount: 0, // Pour afficher la Stack Trace
+    // printTime: true,
+  ),
+);
