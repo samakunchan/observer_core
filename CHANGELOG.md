@@ -1,5 +1,19 @@
 # Observer core
 
+## 🚀 0.12.0 - 16/09/2024
+### Nouveautés
+
+- Création d'une ci pour proteger la branche main des PR inappropriées.
+
+### Changements
+
+- Mise à jour de la version de le ci qui test le changement de numéro de version.
+- Renommage de fichier et de job pour les autres fichiers.
+
+### Correctifs
+
+- Pas de fixes.
+
 ## 🚀 0.11.0 - 16/09/2024
 ### Nouveautés
 

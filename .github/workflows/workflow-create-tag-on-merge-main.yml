@@ -1,20 +1,17 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Création automatique d'un tag.
-
 on:
   push:
     branches:
       - main
 
+name: 📎 [MERGE] Création automatique d'un tag.
 jobs:
   create-tags:
-#    runs-on: ubuntu-latest
+    #    runs-on: ubuntu-latest
     runs-on: windows-latest
     steps:
+      - run: echo "🎉 Bravo 🎉. Le job se lance sur l'évènement ${{ github.event_name }}."
+      - run: echo "Le nom de la branche est ${{ github.ref }} et le nom du repository est ${{ github.repository }}."
+
       - uses: actions/checkout@v3
 
       - name: Get version from pubspec.yaml

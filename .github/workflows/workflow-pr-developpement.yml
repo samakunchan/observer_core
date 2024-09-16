@@ -3,10 +3,10 @@ on:
     branches:
       - developpement
 
-name: 🚚 [PR DEVELOPPEMENT] Workflow pour le lancement des tests sur Observer Auth
+name: 🚚 [PR DEVELOPPEMENT] Workflow pour le lancement des tests sur Observer Core
 jobs:
-  observer_platform_macos:
-    name: 🛂 Librairie d'authentification avec Keycloak
+  observer_core:
+    name: 🛂 Librairie State Management
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 Bravo 🎉. Le job se lance sur l'évènement ${{ github.event_name }}."
