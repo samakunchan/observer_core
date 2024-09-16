@@ -1,6 +1,13 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:mime/mime.dart';
+import 'package:observer_core/dtos/dtos_export.dart';
 
+/// Permet d'afficher 2, 3 ou 4 grid card pour les articles et projets.
 int getCountAxis({required double sizeContentArea}) {
   switch (sizeContentArea) {
     case > 1600:
@@ -12,6 +19,7 @@ int getCountAxis({required double sizeContentArea}) {
   }
 }
 
+// Espace entre chaque grid card pour les articles et projets.
 double getAspectRatio({required double sizeContentArea}) {
   switch (sizeContentArea) {
     case > 1200:
@@ -23,9 +31,8 @@ double getAspectRatio({required double sizeContentArea}) {
 
 /// Format les dates afin d'éviter de l'installer partout.
 String formatDate(String date) {
-  final dateTime = DateTime.parse(date);
-  final format = DateFormat.yMMMMd('fr_FR');
   final DateTime dateTime = DateTime.parse(date);
+  final DateFormat format = DateFormat.yMMMMd('fr_FR');
   return format.format(dateTime);
 }
 
@@ -56,3 +63,44 @@ Logger logger = Logger(
     // printTime: true,
   ),
 );
+
+String? getMimeType({required String file}) {
+  return lookupMimeType(file);
+}
+
+Future<MultipartFile> _getMultipartFile({required File file}) async {
+  final mimeType = lookupMimeType(file.path);
+
+  return MultipartFile.fromFile(
+    file.path,
+    filename: file.path.split('/').last,
+    contentType: MediaType.parse(mimeType ?? 'application/octet-stream'),
+  );
+}
+
+Future<FormData> getFormDataOneFile({required File file}) async {
+  final MultipartFile multipartFile = await _getMultipartFile(file: file);
+  return FormData.fromMap({
+    'file': multipartFile,
+  });
+}
+
+Future<FormData> getFormDataMultipleFile({required List<String> files}) async {
+  final FormData formData = FormData();
+  for (final String file in files) {
+    final mimeType = getMimeType(file: file) ?? 'application/octet-stream';
+
+    formData.files.addAll([
+      MapEntry(
+        'files',
+        await MultipartFile.fromFile(
+          file,
+          filename: file.split('/').last,
+          contentType: MediaType.parse(mimeType),
+        ),
+      ),
+    ]);
+  }
+
+  return formData;
+}
