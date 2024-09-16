@@ -1,5 +1,26 @@
 # Observer core
 
+## 🚀 0.11.0 - 16/09/2024
+### Nouveautés
+
+- Ajout d'un DTO pour la gestion des dates des projets.
+- Création d'un utils pour facilement formatter les dates.
+- Ajout du logger dans le core pour être directement utilisable dans les projets front.
+- Ajout d'une extension pour mettre en majuscule les jours et mois d'une date.
+- Ajout d'un DTO pour le formulaire upsert des projets. (Uniquement la création à été tester).
+- Gestion du formulaire de création de projet (bloc/dio).
+- Ajout de selector pour les catégories afin de fournir les catégories depuis le core.
+
+### Changements
+
+- Ajout d'un path vers une image par défaut dans le picture_model.dart pour les projets qui n'ont pas de photo.
+
+### Correctifs
+
+- Ajout des méthodes oubliées pour les documents.
+- Fix divers chemins.
+
+
 ## 🚀 0.10.0 - 16/09/2024
 ### Nouveautés
 
