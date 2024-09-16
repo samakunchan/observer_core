@@ -1,5 +1,13 @@
-import 'package:intl/intl.dart';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
+import 'package:mime/mime.dart';
+import 'package:observer_core/dtos/dtos_export.dart';
+
+/// Permet d'afficher 2, 3 ou 4 grid card pour les articles et projets.
 int getCountAxis({required double sizeContentArea}) {
   switch (sizeContentArea) {
     case > 1600:
@@ -11,6 +19,7 @@ int getCountAxis({required double sizeContentArea}) {
   }
 }
 
+// Espace entre chaque grid card pour les articles et projets.
 double getAspectRatio({required double sizeContentArea}) {
   switch (sizeContentArea) {
     case > 1200:
@@ -20,8 +29,78 @@ double getAspectRatio({required double sizeContentArea}) {
   }
 }
 
+/// Format les dates afin d'éviter de l'installer partout.
 String formatDate(String date) {
-  final dateTime = DateTime.parse(date);
-  final format = DateFormat.yMMMMd('fr_FR');
+  final DateTime dateTime = DateTime.parse(date);
+  final DateFormat format = DateFormat.yMMMMd('fr_FR');
   return format.format(dateTime);
+}
+
+String formatFullDate(String date) {
+  final DateTime dateTime = DateTime.parse(date);
+  final DateFormat format = DateFormat.yMMMMEEEEd('fr_FR');
+  return format.format(dateTime);
+}
+
+DateDTO formatCommonDate(String date) {
+  final DateTime dateTime = DateTime.parse(date);
+  final DateFormat format = DateFormat.yMd('fr_FR');
+  return DateDTO(dateTime: dateTime, dateFormated: format.format(dateTime));
+}
+
+/// Exemple:
+/// - logger.log()
+/// - logger.e(<span style="color: red">"Cele sera comme ça"</span>) <span style="color: red">[Level.error]</span>
+/// - logger.w(<span style="color: orange">"Cele sera comme ça"</span>) <span style="color: orange">[Level.warning]</span>
+/// - logger.t(<span style="color: gray">"Cele sera comme ça"</span>) <span style="color: gray">[Level.trace]</span>
+/// - logger.d(<span style="color: white">"Cele sera comme ça"</span>) <span style="color: white">[Level.debug]</span>
+/// - logger.i(<span style="color: #4bb3d5">"Cele sera comme ça"</span>) <span style="color: #4bb3d5">[Level.info]</span>
+/// - logger.f(<span style="color: fuchsia">"Cele sera comme ça"</span>) <span style="color: fuchsia">[Level.fatal]</span>
+Logger logger = Logger(
+  printer: PrettyPrinter(
+    noBoxingByDefault: true, // Pour afficher les lignes du tableau
+    methodCount: 0, // Pour afficher la Stack Trace
+    // printTime: true,
+  ),
+);
+
+String? getMimeType({required String file}) {
+  return lookupMimeType(file);
+}
+
+Future<MultipartFile> _getMultipartFile({required File file}) async {
+  final mimeType = lookupMimeType(file.path);
+
+  return MultipartFile.fromFile(
+    file.path,
+    filename: file.path.split('/').last,
+    contentType: MediaType.parse(mimeType ?? 'application/octet-stream'),
+  );
+}
+
+Future<FormData> getFormDataOneFile({required File file}) async {
+  final MultipartFile multipartFile = await _getMultipartFile(file: file);
+  return FormData.fromMap({
+    'file': multipartFile,
+  });
+}
+
+Future<FormData> getFormDataMultipleFile({required List<String> files}) async {
+  final FormData formData = FormData();
+  for (final String file in files) {
+    final mimeType = getMimeType(file: file) ?? 'application/octet-stream';
+
+    formData.files.addAll([
+      MapEntry(
+        'files',
+        await MultipartFile.fromFile(
+          file,
+          filename: file.split('/').last,
+          contentType: MediaType.parse(mimeType),
+        ),
+      ),
+    ]);
+  }
+
+  return formData;
 }

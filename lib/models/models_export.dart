@@ -7,6 +7,9 @@ export 'article/article_model.dart';
 /// MODEL CATEGORY
 export 'category/category_model.dart';
 
+/// MODEL DOCUMENT
+export 'document/document_model.dart';
+
 /// MODEL ENVIRONMENT
 export 'environment/environment_model.dart';
 

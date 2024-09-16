@@ -10,6 +10,9 @@ export 'authentication/feature_auth_export.dart';
 /// CATEGORIES
 export 'category/feature_category_export.dart';
 
+/// DOCUMENTS
+export 'document/feature_document_export.dart';
+
 /// ENVIRONNEMENTS
 export 'environment/feature_environment_export.dart';
 

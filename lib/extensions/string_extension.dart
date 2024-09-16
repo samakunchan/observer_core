@@ -11,6 +11,16 @@ extension StringExtension on String {
     return '${this[0].toUpperCase()}${substring(1)}';
   }
 
+  /// Permet de mettre la 1ère lettre en majuscule
+  /// ```dart
+  /// String text = "jeudi 12 septembre 2024";
+  /// print(text.capitalize());
+  /// // "Jeudi 12 Septembre 2024"
+  /// ```
+  String capitalize() {
+    return this.split(' ').map((String text) => text.ucFirst()).toList().join(' ');
+  }
+
   /// Permet de colorer du text dans la console
   /// ```dart
   /// String text = "Hello world";

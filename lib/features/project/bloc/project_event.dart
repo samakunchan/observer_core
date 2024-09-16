@@ -21,8 +21,11 @@ class ProjectsInListModeTriggered extends ProjectEvent {
 }
 
 class ProjectSubmitted extends ProjectEvent {
+  const ProjectSubmitted({required this.projectDTOForUpsert});
+  final ProjectDTO projectDTOForUpsert;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [projectDTOForUpsert];
 }
 
 class ProjectDeleted extends ProjectEvent {
@@ -36,4 +39,19 @@ class ProjectsFiltered extends ProjectEvent {
   final List<ProjectModel> projects;
   @override
   List<Object?> get props => [projects];
+}
+
+class ProjectInProgress extends ProjectEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class ProjectFormReset extends ProjectEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class ProjectReloaded extends ProjectEvent {
+  @override
+  List<Object?> get props => [];
 }
