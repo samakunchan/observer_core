@@ -82,6 +82,34 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
+        case MainProject.projectsEndPoint:
+          return await remoteService.upsertProject(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            body: params.body,
+          );
+        default:
+          throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+      }
+    } on DioException catch (e) {
+      throw handleAllException(e);
+    }
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> uploadFile(UploadFormDataParams params) async {
+    try {
+      switch (params.endPoint) {
+        case MainProject.documentsUploadEndPoint:
+          return await remoteService.upsertOneDocument(
+            authorization: 'Bearer ${params.accessToken}',
+            formData: params.formData,
+          );
+        case MainProject.documentsMultiUploadEndPoint:
+          return await remoteService.upsertMultipleDocuments(
+            authorization: 'Bearer ${params.accessToken}',
+            formData: params.formData,
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -115,7 +143,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
   }
 
   @override
-  Future<HttpResponse> search(SearchParams params) async {
+  Future<HttpResponse<dynamic>> search(SearchParams params) async {
     try {
       switch (params.endPoint) {
         case '/environments/search':

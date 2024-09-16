@@ -32,7 +32,16 @@ class MainProject {
   /// Endpoint = /documents
   static const String documentsEndPoint = '/documents';
 
+  /// Endpoint = '/documents/upload'
+  static const String documentsUploadEndPoint = '/documents/upload';
+
+  /// Endpoint = '/documents/multi-upload'
+  static const String documentsMultiUploadEndPoint = '/documents/multi-upload';
+
+  /// Name = [application/json]
   static String defaultContentType = 'application/json';
+
+  static String formDataContentType = 'multipart/form-data';
 }
 
 class MenuText {

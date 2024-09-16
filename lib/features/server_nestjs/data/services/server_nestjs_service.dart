@@ -118,4 +118,16 @@ abstract class ServerNestjsService {
   Future<HttpResponse<dynamic>> getDocuments({
     @Header('Authorization') required String authorization,
   });
+
+  @POST('documents/upload')
+  Future<HttpResponse<dynamic>> upsertOneDocument({
+    @Header('Authorization') required String authorization,
+    @Body() required FormData formData,
+  });
+
+  @POST('documents/multi-upload')
+  Future<HttpResponse<dynamic>> upsertMultipleDocuments({
+    @Header('Authorization') required String authorization,
+    @Body() required FormData formData,
+  });
 }
