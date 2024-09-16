@@ -1,0 +1,31 @@
+on:
+  pull_request:
+    branches:
+      - main
+
+name: 🚓 [PROTECTION MAIN] Workflow qui test la PR.
+jobs:
+  good_branch:
+    name: 📟 Destination de la PR.
+    runs-on: windows-latest
+
+    steps:
+      - run: echo "🎉 Bravo 🎉. Le job se lance sur l'évènement ${{ github.event_name }}."
+      - run: echo "Le nom de la ref est ${{ github.ref }}."
+      - run: echo "Le nom du repository est ${{ github.repository }}."
+      - run: echo "Le nom de la branche d'origine est ${{ github.event.pull_request.head.ref }}."
+      - run: echo "Le nom de la branche de destination est ${{ github.event.pull_request.base.ref }}."
+
+      - name: Test de la branche d'origine.
+        uses: actions/github-script@v7
+        if: github.event.pull_request.head.ref != 'developpement'
+        with:
+          script: |
+            core.setFailed("La branche d'origine doit être : 'developpement'. Actuellement la branche c'est '${{ github.event.pull_request.head.ref }}'.")
+
+      - name: Test de la branche de destination.
+        uses: actions/github-script@v7
+        if: github.event.pull_request.base.ref != 'main'
+        with:
+          script: |
+            core.setFailed("La branche de destination doit être : 'main'. Actuellement la branche c'est '${{ github.event.pull_request.base.ref }}'.")
