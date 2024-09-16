@@ -1,5 +1,3 @@
-name: Test de l'existance du tag.
-
 on:
   push:
     branches:
@@ -10,10 +8,14 @@ on:
       - 'ci/**'
       - 'test/**'
 
+name: 🔎 [VERSION] Peut on créer un nouveau tag ?
 jobs:
-  create-tags:
+  test-tag-avaibility:
     runs-on: windows-latest
     steps:
+      - run: echo "🎉 Bravo 🎉. Le job se lance sur l'évènement ${{ github.event_name }}."
+      - run: echo "Le nom de la branche est ${{ github.ref }} et le nom du repository est ${{ github.repository }}."
+
       - uses: actions/checkout@v3
 
       - name: Get version from pubspec.yaml
@@ -33,7 +35,7 @@ jobs:
           repo: ${{ github.repository }}
 
       - name: Test if the current tag exists.
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         if: steps.check-tag.outputs.exists == 'true'
         with:
           script: |
