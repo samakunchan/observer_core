@@ -49,11 +49,8 @@ class ProjectIsNotRemoved extends ProjectState {
 }
 
 class ProjectFormIsSubmittedSuccessfully extends ProjectState {
-  const ProjectFormIsSubmittedSuccessfully({required this.id});
-  final int id;
-
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [];
 }
 
 class ProjectFormIsDeletedSuccessfully extends ProjectState {
