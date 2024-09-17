@@ -8,7 +8,7 @@
 ### Changements
 
 - Documentation du pubspec.yaml.
-- - Mise à jour des models et dtos avec freezed
+- - Mise à jour des models et dtos avec freezed.
 
 ### Correctifs
 
