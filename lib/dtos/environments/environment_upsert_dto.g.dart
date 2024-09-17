@@ -6,28 +6,20 @@ part of 'environment_upsert_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EnvironmentUpsertDto _$EnvironmentUpsertDtoFromJson(
+_$EnvironmentUpsertDTOImpl _$$EnvironmentUpsertDTOImplFromJson(
         Map<String, dynamic> json) =>
-    EnvironmentUpsertDto(
+    _$EnvironmentUpsertDTOImpl(
       title: json['title'] as String,
-      id: (json['id'] as num?)?.toInt(),
       categories: (json['categories'] as List<dynamic>?)
-          ?.map((e) => CategoryUpsertDto.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => CategoryUpsertDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$EnvironmentUpsertDtoToJson(
-    EnvironmentUpsertDto instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['title'] = instance.title;
-  writeNotNull('categories', instance.categories);
-  return val;
-}
+Map<String, dynamic> _$$EnvironmentUpsertDTOImplToJson(
+        _$EnvironmentUpsertDTOImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'categories': instance.categories,
+      'id': instance.id,
+    };
