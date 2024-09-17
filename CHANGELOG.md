@@ -1,5 +1,20 @@
 # Observer core
 
+## 🚀 0.13.0 - 17/09/2024
+### Nouveautés
+
+- Ajout de la dépendance `freezed` et `freezed_annotation`.
+
+### Changements
+
+- Documentation du pubspec.yaml.
+- - Mise à jour des models et dtos avec freezed
+
+### Correctifs
+
+- Fix typo sur les noms dtos.
+
+
 ## 🚀 0.12.0 - 16/09/2024
 ### Nouveautés
 
