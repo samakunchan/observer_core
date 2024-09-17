@@ -1,6 +1,6 @@
 name: observer_core
 description: Ce projet contient les models et le dialogue avec l'API.
-version: 0.12.0
+version: 0.13.0
 homepage: https://github.com/samakunchan/observer_core
 
 environment:
@@ -10,21 +10,41 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  # UI de macos pour le KWiget
   macos_ui: ^2.0.0
+
+  # Dates
   intl: ^0.19.0
-  json_annotation: ^4.9.0
+
+  # Injection de dépendance
   dartz: ^0.10.1
   get_it: ^7.6.0
-  dio: ^5.3.2
+
+  # Storage
   flutter_secure_storage: ^9.0.0
+
+  # State manager
   flutter_bloc: ^8.1.3
   equatable: ^2.0.5
+
+  # HTTP Request
+  dio: ^5.3.2
   retrofit: ^4.3.0
   retrofit_generator: ^8.1.2
+
+  # Debugger
   logger: ^2.4.0
+
+  # Gestion des fichiers
   cross_file: ^0.3.4+2
   mime: ^1.0.6
   http_parser: ^4.0.2
+
+  # Code generation
+  json_annotation: ^4.9.0
+  freezed: ^2.5.7
+  freezed_annotation: ^2.4.4
 
 
 dev_dependencies:

@@ -6,8 +6,8 @@ part of 'category_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
-    CategoryModel(
+_$CategoryModelImpl _$$CategoryModelImplFromJson(Map<String, dynamic> json) =>
+    _$CategoryModelImpl(
       title: json['title'] as String,
       content: json['content'] as String,
       id: (json['id'] as num?)?.toInt(),
@@ -21,24 +21,16 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
           ProjectModel.emptyList,
       environment: json['environment'] == null
           ? null
-          : EnvironementAssociatedModel.fromJson(
+          : EnvironmentAssociatedModel.fromJson(
               json['environment'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['title'] = instance.title;
-  val['content'] = instance.content;
-  val['articles'] = instance.articles;
-  val['projects'] = instance.projects;
-  writeNotNull('environment', instance.environment);
-  return val;
-}
+Map<String, dynamic> _$$CategoryModelImplToJson(_$CategoryModelImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'content': instance.content,
+      'id': instance.id,
+      'articles': instance.articles,
+      'projects': instance.projects,
+      'environment': instance.environment,
+    };

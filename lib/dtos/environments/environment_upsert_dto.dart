@@ -1,27 +1,47 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
 
+part 'environment_upsert_dto.freezed.dart';
 part 'environment_upsert_dto.g.dart';
 
-@JsonSerializable()
-class EnvironmentUpsertDto {
-  const EnvironmentUpsertDto({
-    required this.title,
-    this.id,
-    this.categories,
-  });
+@freezed
+class EnvironmentUpsertDTO with _$EnvironmentUpsertDTO {
+  /// ## Exemple
+  /// ## Création d'un environnement
+  /// ```dart
+  /// {
+  ///   "title": "Un titre"
+  /// }
+  /// ```
+  /// ## Mise à jour d'un environnement
+  /// ```dart
+  /// {
+  ///   "id": 1,
+  ///   "title": "Un titre"
+  /// }
+  /// ```
+  /// ## Mise à jour d'un environnement et ses catégories associées.
+  /// ```dart
+  /// {
+  ///   "id": 1, // Requis pour la mise à jour
+  ///   "title": "Un titre",
+  ///   "categories": [
+  ///      {
+  ///        "id": 1,
+  ///        "title": "Titre de la catégorie",
+  ///        "content": "Description de la catégorie",
+  ///        "environment": 3
+  ///      }
+  ///   ]
+  /// }
+  /// ```
+  const factory EnvironmentUpsertDTO({
+    required String title,
+    List<CategoryUpsertDTO>? categories,
+    int? id,
+  }) = _EnvironmentUpsertDTO;
 
-  factory EnvironmentUpsertDto.fromJson(Map<String, dynamic> json) => _$EnvironmentUpsertDtoFromJson(json);
+  factory EnvironmentUpsertDTO.fromJson(Map<String, dynamic> json) => _$EnvironmentUpsertDTOFromJson(json);
 
-  @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
-  @JsonKey(name: 'title')
-  final String title;
-
-  @JsonKey(name: 'categories', includeIfNull: false)
-  final List<CategoryUpsertDto>? categories;
-
-  Map<String, dynamic> toJson() => _$EnvironmentUpsertDtoToJson(this);
-
-  static const emptyList = <EnvironmentUpsertDto>[];
+  static const emptyList = <EnvironmentUpsertDTO>[];
 }

@@ -6,12 +6,14 @@ part of 'date_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DateDTO _$DateDTOFromJson(Map<String, dynamic> json) => DateDTO(
+_$DateDTOImpl _$$DateDTOImplFromJson(Map<String, dynamic> json) =>
+    _$DateDTOImpl(
       dateTime: DateTime.parse(json['dateTime'] as String),
       dateFormated: json['dateFormated'] as String,
     );
 
-Map<String, dynamic> _$DateDTOToJson(DateDTO instance) => <String, dynamic>{
+Map<String, dynamic> _$$DateDTOImplToJson(_$DateDTOImpl instance) =>
+    <String, dynamic>{
       'dateTime': instance.dateTime.toIso8601String(),
       'dateFormated': instance.dateFormated,
     };

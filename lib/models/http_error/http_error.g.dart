@@ -6,7 +6,8 @@ part of 'http_error.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-HttpError _$HttpErrorFromJson(Map<String, dynamic> json) => HttpError(
+_$HttpErrorImpl _$$HttpErrorImplFromJson(Map<String, dynamic> json) =>
+    _$HttpErrorImpl(
       statusCode: (json['statusCode'] as num?)?.toInt() ?? 0,
       errorName: json['errorName'] as String? ??
           'Le nom de l‘exception n‘a pas été définis',
@@ -18,7 +19,8 @@ HttpError _$HttpErrorFromJson(Map<String, dynamic> json) => HttpError(
           'La date n‘a pas été définis dans les exceptions',
     );
 
-Map<String, dynamic> _$HttpErrorToJson(HttpError instance) => <String, dynamic>{
+Map<String, dynamic> _$$HttpErrorImplToJson(_$HttpErrorImpl instance) =>
+    <String, dynamic>{
       'statusCode': instance.statusCode,
       'errorName': instance.errorName,
       'description': instance.description,

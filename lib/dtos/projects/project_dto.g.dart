@@ -6,7 +6,8 @@ part of 'project_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProjectDTO _$ProjectDTOFromJson(Map<String, dynamic> json) => ProjectDTO(
+_$ProjectDTOImpl _$$ProjectDTOImplFromJson(Map<String, dynamic> json) =>
+    _$ProjectDTOImpl(
       title: json['title'] as String,
       shortDescription: json['shortDescription'] as String,
       fullDescription: json['fullDescription'] as String,
@@ -22,34 +23,28 @@ ProjectDTO _$ProjectDTOFromJson(Map<String, dynamic> json) => ProjectDTO(
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$ProjectDTOToJson(ProjectDTO instance) {
-  final val = <String, dynamic>{};
+Map<String, dynamic> _$$ProjectDTOImplToJson(_$ProjectDTOImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'shortDescription': instance.shortDescription,
+      'fullDescription': instance.fullDescription,
+      'client': instance.client,
+      'dateDebutProjet': instance.dateDebutProjet,
+      'dateFinProjet': instance.dateFinProjet,
+      'category': instance.category,
+      'picturesProject': instance.picturesProject,
+      'id': instance.id,
+    };
 
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['title'] = instance.title;
-  val['shortDescription'] = instance.shortDescription;
-  val['fullDescription'] = instance.fullDescription;
-  val['client'] = instance.client;
-  val['dateDebutProjet'] = instance.dateDebutProjet;
-  val['dateFinProjet'] = instance.dateFinProjet;
-  writeNotNull('picturesProject', instance.picturesProject);
-  val['category'] = instance.category;
-  return val;
-}
-
-PicturesProjectDTO _$PicturesProjectDTOFromJson(Map<String, dynamic> json) =>
-    PicturesProjectDTO(
-      id: (json['id'] as num).toInt(),
+_$PicturesProjectDTOImpl _$$PicturesProjectDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PicturesProjectDTOImpl(
+      id: (json['id'] as num?)?.toInt(),
       description: json['description'] as String,
     );
 
-Map<String, dynamic> _$PicturesProjectDTOToJson(PicturesProjectDTO instance) =>
+Map<String, dynamic> _$$PicturesProjectDTOImplToJson(
+        _$PicturesProjectDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'description': instance.description,

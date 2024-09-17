@@ -55,7 +55,7 @@ class EnvironmentDatasSelected extends EnvironmentDatasEvent {
 
 class EnvironmentDatasSubmitted extends EnvironmentDatasEvent {
   const EnvironmentDatasSubmitted({required this.environmentForUpsert});
-  final EnvironmentUpsertDto environmentForUpsert;
+  final EnvironmentUpsertDTO environmentForUpsert;
 
   @override
   List<Object?> get props => [environmentForUpsert];

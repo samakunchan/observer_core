@@ -1,41 +1,49 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:observer_core/models/models_export.dart';
 
+part 'environment_model.freezed.dart';
 part 'environment_model.g.dart';
 
-@JsonSerializable()
-class EnvironmentModel {
-  const EnvironmentModel({
-    required this.title,
-    this.id,
-    this.categories,
-  });
+@freezed
+class EnvironmentModel with _$EnvironmentModel {
+  /// Exemple :
+  ///```dart
+  ///  {
+  ///    "id": 3,
+  ///    "title": "Titre de l'environnement",
+  ///    "categories": [
+  ///        {
+  ///            "id": 1,
+  ///            "title": "Titre de la catégorie",
+  ///            "content": "Description de la catégorie"
+  ///        },
+  ///    ]
+  ///  },
+  ///```
+  const factory EnvironmentModel({
+    required String title,
+    int? id,
+    List<CategoryModel>? categories,
+  }) = _EnvironmentModel;
 
   factory EnvironmentModel.fromJson(Map<String, dynamic> json) => _$EnvironmentModelFromJson(json);
-
-  @JsonKey(name: 'id')
-  final int? id;
-  @JsonKey(name: 'title')
-  final String title;
-  @JsonKey(name: 'categories')
-  final List<CategoryModel>? categories;
-
-  Map<String, dynamic> toJson() => _$EnvironmentModelToJson(this);
 
   static const emptyList = <EnvironmentModel>[];
 }
 
-@JsonSerializable()
-class EnvironementAssociatedModel {
-  const EnvironementAssociatedModel({
-    required this.title,
-    this.id,
-  });
-  factory EnvironementAssociatedModel.fromJson(Map<String, dynamic> json) => _$EnvironementAssociatedModelFromJson(json);
-  @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
-  @JsonKey(name: 'title')
-  final String title;
+@freezed
+class EnvironmentAssociatedModel with _$EnvironmentAssociatedModel {
+  /// Exemple :
+  ///```dart
+  ///  {
+  ///     "id": 3,
+  ///     "title": "Titre de l'environnement associer à la catégorie",
+  ///  },
+  ///```
+  const factory EnvironmentAssociatedModel({
+    required String title,
+    int? id,
+  }) = _EnvironmentAssociatedModel;
 
-  Map<String, dynamic> toJson() => _$EnvironementAssociatedModelToJson(this);
+  factory EnvironmentAssociatedModel.fromJson(Map<String, dynamic> json) => _$EnvironmentAssociatedModelFromJson(json);
 }
