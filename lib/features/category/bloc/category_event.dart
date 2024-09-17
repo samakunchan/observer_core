@@ -61,7 +61,7 @@ class CategoriesReloaded extends CategoryEvent {
 
 class CategorySubmitted extends CategoryEvent {
   const CategorySubmitted({required this.categoryForUpsert});
-  final CategoryUpsertDto categoryForUpsert;
+  final CategoryUpsertDTO categoryForUpsert;
 
   @override
   List<Object?> get props => [categoryForUpsert];
