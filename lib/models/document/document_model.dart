@@ -1,9 +1,10 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'document_model.freezed.dart';
 part 'document_model.g.dart';
 
-@JsonSerializable()
-class DocumentModel {
+@freezed
+class DocumentModel with _$DocumentModel {
   /// Exemple :
   /// ```dart
   /// {
@@ -16,34 +17,17 @@ class DocumentModel {
   ///   "id": 1 # Optionnel
   /// ```
   /// },
-  const DocumentModel({
-    required this.mimetype,
-    required this.filename,
-    required this.description,
-    required this.folder,
-    required this.path,
-    required this.size,
-    this.id,
-  });
+  const factory DocumentModel({
+    required String mimetype,
+    required String filename,
+    required String description,
+    required String folder,
+    required String path,
+    required int size,
+    int? id,
+  }) = _DocumentModel;
 
   factory DocumentModel.fromJson(Map<String, dynamic> json) => _$DocumentModelFromJson(json);
-
-  @JsonKey(name: 'id', includeIfNull: false)
-  final int? id;
-  @JsonKey(name: 'mimetype')
-  final String mimetype;
-  @JsonKey(name: 'filename')
-  final String filename;
-  @JsonKey(name: 'description')
-  final String description;
-  @JsonKey(name: 'folder')
-  final String folder;
-  @JsonKey(name: 'path')
-  final String path;
-  @JsonKey(name: 'size')
-  final int size;
-
-  Map<String, dynamic> toJson() => _$DocumentModelToJson(this);
 
   static const empty = DocumentModel(
     mimetype: '',

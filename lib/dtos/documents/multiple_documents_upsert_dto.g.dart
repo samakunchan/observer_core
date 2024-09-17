@@ -6,16 +6,16 @@ part of 'multiple_documents_upsert_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MultipleDocumentsUpsertDto _$MultipleDocumentsUpsertDtoFromJson(
+_$MultipleDocumentsUpsertDTOImpl _$$MultipleDocumentsUpsertDTOImplFromJson(
         Map<String, dynamic> json) =>
-    MultipleDocumentsUpsertDto(
+    _$MultipleDocumentsUpsertDTOImpl(
       documents: (json['documents'] as List<dynamic>)
-          .map((e) => OneDocumentUpsertDto.fromJson(e as Map<String, dynamic>))
+          .map((e) => OneDocumentUpsertDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$MultipleDocumentsUpsertDtoToJson(
-        MultipleDocumentsUpsertDto instance) =>
+Map<String, dynamic> _$$MultipleDocumentsUpsertDTOImplToJson(
+        _$MultipleDocumentsUpsertDTOImpl instance) =>
     <String, dynamic>{
       'documents': instance.documents,
     };

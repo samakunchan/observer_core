@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'document_model.dart';
+part of 'one_document_upsert_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$DocumentModelImpl _$$DocumentModelImplFromJson(Map<String, dynamic> json) =>
-    _$DocumentModelImpl(
+_$OneDocumentUpsertDTOImpl _$$OneDocumentUpsertDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$OneDocumentUpsertDTOImpl(
       mimetype: json['mimetype'] as String,
       filename: json['filename'] as String,
       description: json['description'] as String,
@@ -17,7 +18,8 @@ _$DocumentModelImpl _$$DocumentModelImplFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$DocumentModelImplToJson(_$DocumentModelImpl instance) =>
+Map<String, dynamic> _$$OneDocumentUpsertDTOImplToJson(
+        _$OneDocumentUpsertDTOImpl instance) =>
     <String, dynamic>{
       'mimetype': instance.mimetype,
       'filename': instance.filename,
