@@ -6,8 +6,9 @@ part of 'environment_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EnvironmentModel _$EnvironmentModelFromJson(Map<String, dynamic> json) =>
-    EnvironmentModel(
+_$EnvironmentModelImpl _$$EnvironmentModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$EnvironmentModelImpl(
       title: json['title'] as String,
       id: (json['id'] as num?)?.toInt(),
       categories: (json['categories'] as List<dynamic>?)
@@ -15,31 +16,24 @@ EnvironmentModel _$EnvironmentModelFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$EnvironmentModelToJson(EnvironmentModel instance) =>
+Map<String, dynamic> _$$EnvironmentModelImplToJson(
+        _$EnvironmentModelImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'title': instance.title,
+      'id': instance.id,
       'categories': instance.categories,
     };
 
-EnvironementAssociatedModel _$EnvironementAssociatedModelFromJson(
+_$EnvironmentAssociatedModelImpl _$$EnvironmentAssociatedModelImplFromJson(
         Map<String, dynamic> json) =>
-    EnvironementAssociatedModel(
+    _$EnvironmentAssociatedModelImpl(
       title: json['title'] as String,
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$EnvironementAssociatedModelToJson(
-    EnvironementAssociatedModel instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['title'] = instance.title;
-  return val;
-}
+Map<String, dynamic> _$$EnvironmentAssociatedModelImplToJson(
+        _$EnvironmentAssociatedModelImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'id': instance.id,
+    };

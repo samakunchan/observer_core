@@ -6,8 +6,8 @@ part of 'document_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DocumentModel _$DocumentModelFromJson(Map<String, dynamic> json) =>
-    DocumentModel(
+_$DocumentModelImpl _$$DocumentModelImplFromJson(Map<String, dynamic> json) =>
+    _$DocumentModelImpl(
       mimetype: json['mimetype'] as String,
       filename: json['filename'] as String,
       description: json['description'] as String,
@@ -17,21 +17,13 @@ DocumentModel _$DocumentModelFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$DocumentModelToJson(DocumentModel instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['mimetype'] = instance.mimetype;
-  val['filename'] = instance.filename;
-  val['description'] = instance.description;
-  val['folder'] = instance.folder;
-  val['path'] = instance.path;
-  val['size'] = instance.size;
-  return val;
-}
+Map<String, dynamic> _$$DocumentModelImplToJson(_$DocumentModelImpl instance) =>
+    <String, dynamic>{
+      'mimetype': instance.mimetype,
+      'filename': instance.filename,
+      'description': instance.description,
+      'folder': instance.folder,
+      'path': instance.path,
+      'size': instance.size,
+      'id': instance.id,
+    };

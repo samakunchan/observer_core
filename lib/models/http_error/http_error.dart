@@ -1,31 +1,29 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'http_error.freezed.dart';
 part 'http_error.g.dart';
 
-@JsonSerializable()
-class HttpError {
-  const HttpError({
-    this.statusCode = 0,
-    this.errorName = 'Le nom de l‘exception n‘a pas été définis',
-    this.description = 'La description n‘a pas été définis dans les exceptions',
-    this.path = 'Le path n‘a pas été définis dans les exceptions',
-    this.date = 'La date n‘a pas été définis dans les exceptions',
-  });
+@freezed
+class HttpError with _$HttpError {
+  /// Exemple :
+  /// ```
+  /// {
+  ///    "statusCode": 0,
+  ///    "errorName": "XXXXXXXException",
+  ///    "description": 'Description de l'érreur.',
+  ///    "path": '/',
+  ///    "date": '',
+  /// }
+  /// ```
+  const factory HttpError({
+    @Default(0) int statusCode,
+    @Default('Le nom de l‘exception n‘a pas été définis') String errorName,
+    @Default('La description n‘a pas été définis dans les exceptions') String description,
+    @Default('Le path n‘a pas été définis dans les exceptions') String path,
+    @Default('La date n‘a pas été définis dans les exceptions') String date,
+  }) = _HttpError;
 
   factory HttpError.fromJson(Map<String, dynamic> json) => _$HttpErrorFromJson(json);
-
-  @JsonKey(name: 'statusCode')
-  final int statusCode;
-  @JsonKey(name: 'errorName')
-  final String errorName;
-  @JsonKey(name: 'description')
-  final String description;
-  @JsonKey(name: 'path')
-  final String path;
-  @JsonKey(name: 'date')
-  final String date;
-
-  Map<String, dynamic> toJson() => _$HttpErrorToJson(this);
 
   static const Map<String, dynamic> customNotFoundError = <String, dynamic>{
     'statusCode': 404,
