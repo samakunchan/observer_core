@@ -122,18 +122,21 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
   Future<HttpResponse<dynamic>> delete(DeleteParams params) async {
     try {
       switch (params.endPoint) {
-        case '/environments':
+        case MainProject.environmentsEndPoint:
           return await remoteService.deleteEnvironment(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
-        case '/categories':
+        case MainProject.categoriesEndPoint:
           return await remoteService.deleteCategory(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
+        case MainProject.projectsEndPoint:
+          return await remoteService.deleteProject(
+              authorization: 'Bearer ${params.accessToken}', contentType: MainProject.defaultContentType, id: params.body);
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
