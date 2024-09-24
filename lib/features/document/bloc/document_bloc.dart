@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
+import 'package:observer_core/enums/enums.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/document/document_model.dart';
 import 'package:retrofit/dio.dart';
@@ -18,6 +19,8 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<DocumentsFormReset>(_resetStateForm);
     on<DocumentsDeleted>(_handleDeleteState);
     on<DocumentsInProgress>(_showLoader);
+    on<DocumentActionCreateCalled>(_showCreateAction);
+    on<DocumentActionUpdateCalled>(_showUpdateAction);
     on<DocumentsAreCalled>(_requestAllDocuments);
     on<DocumentIsCalled>(_requestOneDocument);
     on<OneDocumentToUpload>(_uploadOneDocument);
@@ -29,7 +32,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   }
 
   FutureOr<void> _showLoader(DocumentsInProgress event, Emitter<DocumentState> emit) async {
-    emit(DocumentsFormIsProcessing());
+    emit(DocumentsFormIsProcessing(formProcess: event.formProcess));
   }
 
   FutureOr<void> _handleDeleteState(DocumentsDeleted event, Emitter<DocumentState> emit) async {
@@ -42,6 +45,14 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
 
   FutureOr<void> _requestOneDocument(DocumentIsCalled event, Emitter<DocumentState> emit) async {
     // TODO: implement event handler
+  }
+
+  FutureOr<void> _showCreateAction(DocumentActionCreateCalled event, Emitter<DocumentState> emit) async {
+    emit.call(const DocumentToCreateForm());
+  }
+
+  FutureOr<void> _showUpdateAction(DocumentActionUpdateCalled event, Emitter<DocumentState> emit) async {
+    emit.call(const DocumentToUpdateForm());
   }
 
   FutureOr<void> _uploadOneDocument(OneDocumentToUpload event, Emitter<DocumentState> emit) async {

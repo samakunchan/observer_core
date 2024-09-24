@@ -18,7 +18,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
 
   final ServerNestjsService remoteService;
 
-  /// Le service [ServerNestjsService] exécute les requêtes ['GET']
+  /// Le service [ServerNestjsService] exécute les requêtes ['GET'].
   @override
   Future<HttpResponse<dynamic>> get(GetParams params) async {
     try {
@@ -66,6 +66,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
     }
   }
 
+  /// Le service [ServerNestjsService] exécute les requêtes ['POST'].
   @override
   Future<HttpResponse<dynamic>> upsert(UpsertParams params) async {
     try {
@@ -96,6 +97,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
     }
   }
 
+  /// Le service [ServerNestjsService] exécute les requêtes ['POST'] pour les fichiers.
   @override
   Future<HttpResponse<dynamic>> uploadFile(UploadFormDataParams params) async {
     try {
@@ -118,22 +120,26 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
     }
   }
 
+  /// Le service [ServerNestjsService] exécute les requêtes ['DELETE'].
   @override
   Future<HttpResponse<dynamic>> delete(DeleteParams params) async {
     try {
       switch (params.endPoint) {
-        case '/environments':
+        case MainProject.environmentsEndPoint:
           return await remoteService.deleteEnvironment(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
-        case '/categories':
+        case MainProject.categoriesEndPoint:
           return await remoteService.deleteCategory(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
+        case MainProject.projectsEndPoint:
+          return await remoteService.deleteProject(
+              authorization: 'Bearer ${params.accessToken}', contentType: MainProject.defaultContentType, id: params.body);
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -142,6 +148,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
     }
   }
 
+  /// Le service [ServerNestjsService] exécute les requêtes ['GET'] pour le search.
   @override
   Future<HttpResponse<dynamic>> search(SearchParams params) async {
     try {
@@ -188,6 +195,13 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
     }
   }
 
+  /// Gère tout les exceptions. (Si besoin, on le rajoute dans la liste).
+  /// - 400: BadRequestException
+  /// - 401: UnAuthorizedException
+  /// - 403: ForbiddenException
+  /// - 503: ServerException
+  /// - 404: NotFoundException
+  /// - IDontKnowWhatImDoingException
   Exception handleAllException(DioException e) {
     final Map<String, dynamic> jsonError = e.response != null ? jsonDecode(e.response.toString()) as Map<String, dynamic> : {};
     final HttpError httpError = jsonError.isNotEmpty
