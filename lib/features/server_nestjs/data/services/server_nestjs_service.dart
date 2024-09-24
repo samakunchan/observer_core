@@ -111,6 +111,13 @@ abstract class ServerNestjsService {
     @Body() required String body,
   });
 
+  @DELETE('projects/{id}')
+  Future<HttpResponse<dynamic>> deleteProject({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Path('id') required String id,
+  });
+
   @GET('organisations/all')
   Future<HttpResponse<dynamic>> getOrganisation({
     @Header('Authorization') required String authorization,
