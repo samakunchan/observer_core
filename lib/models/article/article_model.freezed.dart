@@ -57,6 +57,7 @@ abstract class $ArticleModelCopyWith<$Res> {
       CategoryModel category,
       int? id});
 
+  $PictureModelCopyWith<$Res> get picture;
   $CategoryModelCopyWith<$Res> get category;
 }
 
@@ -129,6 +130,16 @@ class _$ArticleModelCopyWithImpl<$Res, $Val extends ArticleModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $PictureModelCopyWith<$Res> get picture {
+    return $PictureModelCopyWith<$Res>(_value.picture, (value) {
+      return _then(_value.copyWith(picture: value) as $Val);
+    });
+  }
+
+  /// Create a copy of ArticleModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $CategoryModelCopyWith<$Res> get category {
     return $CategoryModelCopyWith<$Res>(_value.category, (value) {
       return _then(_value.copyWith(category: value) as $Val);
@@ -155,6 +166,8 @@ abstract class _$$ArticleModelImplCopyWith<$Res>
       CategoryModel category,
       int? id});
 
+  @override
+  $PictureModelCopyWith<$Res> get picture;
   @override
   $CategoryModelCopyWith<$Res> get category;
 }
