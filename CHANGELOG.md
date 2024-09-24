@@ -1,5 +1,23 @@
 # Observer core
 
+## 🚀 0.14.0 - 24/09/2024
+### Nouveautés
+
+- Ajout de l'étape de suppression d'un projet dans la source.
+- Ajout de deux états supplémentaire afin de savoir si le formulaire est en mode create ou update.
+- Ajout de deux états supplémentaire afin de savoir la page est en mode édition ou non.
+
+### Changements
+
+- Modification du selector catégory afin de selectionner la catégorie du project afficher.
+- Documentation du code.
+- Gestion des états lors de la suppression d'un projet.
+
+### Correctifs
+
+- Pas de fixes.
+
+
 ## 🚀 0.13.1 - 24/09/2024
 ### Nouveautés
 
