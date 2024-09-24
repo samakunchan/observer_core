@@ -20,18 +20,29 @@ OrganisationModel _$OrganisationModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$OrganisationModel {
-  String get siren => throw _privateConstructorUsedError;
+  int get siren => throw _privateConstructorUsedError;
+  @JsonKey(name: 'nom_entreprise')
   String get companyName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'code_naf')
   String get codeNaf => throw _privateConstructorUsedError;
+  @JsonKey(name: 'libelle_code_naf')
   String get codeNafLabel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'domaine_activite')
   String get activity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'date_creation')
   String get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'categorie_juridique')
   int get legalCategory => throw _privateConstructorUsedError;
+  @JsonKey(name: 'forme_juridique')
   String get legalForm => throw _privateConstructorUsedError;
+  @JsonKey(name: 'entreprise_employeuse')
   bool get isHiring => throw _privateConstructorUsedError;
   int get capital => throw _privateConstructorUsedError;
+  @JsonKey(name: 'derniere_mise_a_jour_sirene')
   String get lastUpdateToSiren => throw _privateConstructorUsedError;
+  @JsonKey(name: 'dernier_traitement')
   String get lastRecord => throw _privateConstructorUsedError;
+  @JsonKey(name: 'numero_tva_intracommunautaire')
   String get vta => throw _privateConstructorUsedError;
   List<RepresentantModel> get representants =>
       throw _privateConstructorUsedError;
@@ -55,19 +66,19 @@ abstract class $OrganisationModelCopyWith<$Res> {
       _$OrganisationModelCopyWithImpl<$Res, OrganisationModel>;
   @useResult
   $Res call(
-      {String siren,
-      String companyName,
-      String codeNaf,
-      String codeNafLabel,
-      String activity,
-      String createdAt,
-      int legalCategory,
-      String legalForm,
-      bool isHiring,
+      {int siren,
+      @JsonKey(name: 'nom_entreprise') String companyName,
+      @JsonKey(name: 'code_naf') String codeNaf,
+      @JsonKey(name: 'libelle_code_naf') String codeNafLabel,
+      @JsonKey(name: 'domaine_activite') String activity,
+      @JsonKey(name: 'date_creation') String createdAt,
+      @JsonKey(name: 'categorie_juridique') int legalCategory,
+      @JsonKey(name: 'forme_juridique') String legalForm,
+      @JsonKey(name: 'entreprise_employeuse') bool isHiring,
       int capital,
-      String lastUpdateToSiren,
-      String lastRecord,
-      String vta,
+      @JsonKey(name: 'derniere_mise_a_jour_sirene') String lastUpdateToSiren,
+      @JsonKey(name: 'dernier_traitement') String lastRecord,
+      @JsonKey(name: 'numero_tva_intracommunautaire') String vta,
       List<RepresentantModel> representants,
       SiegeModel siege,
       int? id});
@@ -111,7 +122,7 @@ class _$OrganisationModelCopyWithImpl<$Res, $Val extends OrganisationModel>
       siren: null == siren
           ? _value.siren
           : siren // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       companyName: null == companyName
           ? _value.companyName
           : companyName // ignore: cast_nullable_to_non_nullable
@@ -195,19 +206,19 @@ abstract class _$$OrganisationModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String siren,
-      String companyName,
-      String codeNaf,
-      String codeNafLabel,
-      String activity,
-      String createdAt,
-      int legalCategory,
-      String legalForm,
-      bool isHiring,
+      {int siren,
+      @JsonKey(name: 'nom_entreprise') String companyName,
+      @JsonKey(name: 'code_naf') String codeNaf,
+      @JsonKey(name: 'libelle_code_naf') String codeNafLabel,
+      @JsonKey(name: 'domaine_activite') String activity,
+      @JsonKey(name: 'date_creation') String createdAt,
+      @JsonKey(name: 'categorie_juridique') int legalCategory,
+      @JsonKey(name: 'forme_juridique') String legalForm,
+      @JsonKey(name: 'entreprise_employeuse') bool isHiring,
       int capital,
-      String lastUpdateToSiren,
-      String lastRecord,
-      String vta,
+      @JsonKey(name: 'derniere_mise_a_jour_sirene') String lastUpdateToSiren,
+      @JsonKey(name: 'dernier_traitement') String lastRecord,
+      @JsonKey(name: 'numero_tva_intracommunautaire') String vta,
       List<RepresentantModel> representants,
       SiegeModel siege,
       int? id});
@@ -250,7 +261,7 @@ class __$$OrganisationModelImplCopyWithImpl<$Res>
       siren: null == siren
           ? _value.siren
           : siren // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       companyName: null == companyName
           ? _value.companyName
           : companyName // ignore: cast_nullable_to_non_nullable
@@ -320,18 +331,19 @@ class __$$OrganisationModelImplCopyWithImpl<$Res>
 class _$OrganisationModelImpl implements _OrganisationModel {
   const _$OrganisationModelImpl(
       {required this.siren,
-      required this.companyName,
-      required this.codeNaf,
-      required this.codeNafLabel,
-      required this.activity,
-      required this.createdAt,
-      required this.legalCategory,
-      required this.legalForm,
-      required this.isHiring,
+      @JsonKey(name: 'nom_entreprise') required this.companyName,
+      @JsonKey(name: 'code_naf') required this.codeNaf,
+      @JsonKey(name: 'libelle_code_naf') required this.codeNafLabel,
+      @JsonKey(name: 'domaine_activite') required this.activity,
+      @JsonKey(name: 'date_creation') required this.createdAt,
+      @JsonKey(name: 'categorie_juridique') required this.legalCategory,
+      @JsonKey(name: 'forme_juridique') required this.legalForm,
+      @JsonKey(name: 'entreprise_employeuse') required this.isHiring,
       required this.capital,
+      @JsonKey(name: 'derniere_mise_a_jour_sirene')
       required this.lastUpdateToSiren,
-      required this.lastRecord,
-      required this.vta,
+      @JsonKey(name: 'dernier_traitement') required this.lastRecord,
+      @JsonKey(name: 'numero_tva_intracommunautaire') required this.vta,
       required final List<RepresentantModel> representants,
       required this.siege,
       this.id})
@@ -341,30 +353,41 @@ class _$OrganisationModelImpl implements _OrganisationModel {
       _$$OrganisationModelImplFromJson(json);
 
   @override
-  final String siren;
+  final int siren;
   @override
+  @JsonKey(name: 'nom_entreprise')
   final String companyName;
   @override
+  @JsonKey(name: 'code_naf')
   final String codeNaf;
   @override
+  @JsonKey(name: 'libelle_code_naf')
   final String codeNafLabel;
   @override
+  @JsonKey(name: 'domaine_activite')
   final String activity;
   @override
+  @JsonKey(name: 'date_creation')
   final String createdAt;
   @override
+  @JsonKey(name: 'categorie_juridique')
   final int legalCategory;
   @override
+  @JsonKey(name: 'forme_juridique')
   final String legalForm;
   @override
+  @JsonKey(name: 'entreprise_employeuse')
   final bool isHiring;
   @override
   final int capital;
   @override
+  @JsonKey(name: 'derniere_mise_a_jour_sirene')
   final String lastUpdateToSiren;
   @override
+  @JsonKey(name: 'dernier_traitement')
   final String lastRecord;
   @override
+  @JsonKey(name: 'numero_tva_intracommunautaire')
   final String vta;
   final List<RepresentantModel> _representants;
   @override
@@ -457,19 +480,20 @@ class _$OrganisationModelImpl implements _OrganisationModel {
 
 abstract class _OrganisationModel implements OrganisationModel {
   const factory _OrganisationModel(
-      {required final String siren,
-      required final String companyName,
-      required final String codeNaf,
-      required final String codeNafLabel,
-      required final String activity,
-      required final String createdAt,
-      required final int legalCategory,
-      required final String legalForm,
-      required final bool isHiring,
+      {required final int siren,
+      @JsonKey(name: 'nom_entreprise') required final String companyName,
+      @JsonKey(name: 'code_naf') required final String codeNaf,
+      @JsonKey(name: 'libelle_code_naf') required final String codeNafLabel,
+      @JsonKey(name: 'domaine_activite') required final String activity,
+      @JsonKey(name: 'date_creation') required final String createdAt,
+      @JsonKey(name: 'categorie_juridique') required final int legalCategory,
+      @JsonKey(name: 'forme_juridique') required final String legalForm,
+      @JsonKey(name: 'entreprise_employeuse') required final bool isHiring,
       required final int capital,
+      @JsonKey(name: 'derniere_mise_a_jour_sirene')
       required final String lastUpdateToSiren,
-      required final String lastRecord,
-      required final String vta,
+      @JsonKey(name: 'dernier_traitement') required final String lastRecord,
+      @JsonKey(name: 'numero_tva_intracommunautaire') required final String vta,
       required final List<RepresentantModel> representants,
       required final SiegeModel siege,
       final int? id}) = _$OrganisationModelImpl;
@@ -478,30 +502,41 @@ abstract class _OrganisationModel implements OrganisationModel {
       _$OrganisationModelImpl.fromJson;
 
   @override
-  String get siren;
+  int get siren;
   @override
+  @JsonKey(name: 'nom_entreprise')
   String get companyName;
   @override
+  @JsonKey(name: 'code_naf')
   String get codeNaf;
   @override
+  @JsonKey(name: 'libelle_code_naf')
   String get codeNafLabel;
   @override
+  @JsonKey(name: 'domaine_activite')
   String get activity;
   @override
+  @JsonKey(name: 'date_creation')
   String get createdAt;
   @override
+  @JsonKey(name: 'categorie_juridique')
   int get legalCategory;
   @override
+  @JsonKey(name: 'forme_juridique')
   String get legalForm;
   @override
+  @JsonKey(name: 'entreprise_employeuse')
   bool get isHiring;
   @override
   int get capital;
   @override
+  @JsonKey(name: 'derniere_mise_a_jour_sirene')
   String get lastUpdateToSiren;
   @override
+  @JsonKey(name: 'dernier_traitement')
   String get lastRecord;
   @override
+  @JsonKey(name: 'numero_tva_intracommunautaire')
   String get vta;
   @override
   List<RepresentantModel> get representants;

@@ -6,7 +6,8 @@ part of 'project_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) => ProjectModel(
+_$ProjectModelImpl _$$ProjectModelImplFromJson(Map<String, dynamic> json) =>
+    _$ProjectModelImpl(
       title: json['title'] as String,
       slug: json['slug'] as String,
       shortDescription: json['shortDescription'] as String,
@@ -18,35 +19,27 @@ ProjectModel _$ProjectModelFromJson(Map<String, dynamic> json) => ProjectModel(
       updatedAt: json['updatedAt'] as String,
       category:
           CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
-      deletedAt: json['deletedAt'] as String?,
       picturesProject: (json['picturesProject'] as List<dynamic>?)
               ?.map((e) => PictureModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           PictureModel.listWithDefaultPicture,
+      deletedAt: json['deletedAt'] as String?,
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$ProjectModelToJson(ProjectModel instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['title'] = instance.title;
-  val['slug'] = instance.slug;
-  val['shortDescription'] = instance.shortDescription;
-  val['fullDescription'] = instance.fullDescription;
-  val['client'] = instance.client;
-  val['dateDebutProjet'] = instance.dateDebutProjet;
-  val['dateFinProjet'] = instance.dateFinProjet;
-  val['createdAt'] = instance.createdAt;
-  val['updatedAt'] = instance.updatedAt;
-  writeNotNull('deletedAt', instance.deletedAt);
-  writeNotNull('picturesProject', instance.picturesProject);
-  val['category'] = instance.category;
-  return val;
-}
+Map<String, dynamic> _$$ProjectModelImplToJson(_$ProjectModelImpl instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'slug': instance.slug,
+      'shortDescription': instance.shortDescription,
+      'fullDescription': instance.fullDescription,
+      'client': instance.client,
+      'dateDebutProjet': instance.dateDebutProjet,
+      'dateFinProjet': instance.dateFinProjet,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+      'category': instance.category,
+      'picturesProject': instance.picturesProject,
+      'deletedAt': instance.deletedAt,
+      'id': instance.id,
+    };

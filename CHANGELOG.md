@@ -1,5 +1,19 @@
 # Observer core
 
+## 🚀 0.13.1 - 24/09/2024
+### Nouveautés
+
+- Pas de nouveautés.
+
+### Changements
+
+- Ajout d'un fichier d'exemple dans le project DTO.
+
+### Correctifs
+
+- Mise à jour des models oubliés avec freezed.
+
+
 ## 🚀 0.13.0 - 17/09/2024
 ### Nouveautés
 
@@ -8,7 +22,7 @@
 ### Changements
 
 - Documentation du pubspec.yaml.
-- - Mise à jour des models et dtos avec freezed.
+- Mise à jour des models et dtos avec freezed.
 
 ### Correctifs
 
