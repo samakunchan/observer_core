@@ -20,13 +20,13 @@ class RepresentantModel with _$RepresentantModel {
   /// ```
   const factory RepresentantModel({
     required String uuid,
-    required String gender,
-    required bool isCompany,
-    required String dateStart,
-    required String title,
-    required String lastname,
-    required String firstname,
-    required String fullname,
+    @JsonKey(name: 'qualite') required String gender,
+    @JsonKey(name: 'personne_morale') required bool isCompany,
+    @JsonKey(name: 'date_prise_de_poste') required String dateStart,
+    @JsonKey(name: 'titre') required String title,
+    @JsonKey(name: 'nom') required String lastname,
+    @JsonKey(name: 'prenom') required String firstname,
+    @JsonKey(name: 'nom_complet') required String fullname,
   }) = _RepresentantModel;
 
   factory RepresentantModel.fromJson(Map<String, dynamic> json) => _$RepresentantModelFromJson(json);

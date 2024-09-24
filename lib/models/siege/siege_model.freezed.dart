@@ -21,18 +21,31 @@ SiegeModel _$SiegeModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$SiegeModel {
   String get siret => throw _privateConstructorUsedError;
+  @JsonKey(name: 'numero_voie')
   int get streetNumber => throw _privateConstructorUsedError;
-  String get indiceRepetition => throw _privateConstructorUsedError;
+  @JsonKey(name: 'indice_repetition')
+  String? get indiceRepetition => throw _privateConstructorUsedError;
+  @JsonKey(name: 'type_voie')
   String get streetType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'libelle_voie')
   String get streetLabel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'complement_adresse')
   String get additionnalAddressInfos => throw _privateConstructorUsedError;
+  @JsonKey(name: 'adresse_ligne_1')
   String get address1 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'adresse_ligne_2')
   String get address2 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'code_postal')
   String get zipCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ville')
   String get city => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pays')
   String get country => throw _privateConstructorUsedError;
+  @JsonKey(name: 'code_pays')
   String get countryCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latitude')
   String get lat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'longitude')
   String get lng => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
 
@@ -54,19 +67,19 @@ abstract class $SiegeModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String siret,
-      int streetNumber,
-      String indiceRepetition,
-      String streetType,
-      String streetLabel,
-      String additionnalAddressInfos,
-      String address1,
-      String address2,
-      String zipCode,
-      String city,
-      String country,
-      String countryCode,
-      String lat,
-      String lng,
+      @JsonKey(name: 'numero_voie') int streetNumber,
+      @JsonKey(name: 'indice_repetition') String? indiceRepetition,
+      @JsonKey(name: 'type_voie') String streetType,
+      @JsonKey(name: 'libelle_voie') String streetLabel,
+      @JsonKey(name: 'complement_adresse') String additionnalAddressInfos,
+      @JsonKey(name: 'adresse_ligne_1') String address1,
+      @JsonKey(name: 'adresse_ligne_2') String address2,
+      @JsonKey(name: 'code_postal') String zipCode,
+      @JsonKey(name: 'ville') String city,
+      @JsonKey(name: 'pays') String country,
+      @JsonKey(name: 'code_pays') String countryCode,
+      @JsonKey(name: 'latitude') String lat,
+      @JsonKey(name: 'longitude') String lng,
       int? id});
 }
 
@@ -87,7 +100,7 @@ class _$SiegeModelCopyWithImpl<$Res, $Val extends SiegeModel>
   $Res call({
     Object? siret = null,
     Object? streetNumber = null,
-    Object? indiceRepetition = null,
+    Object? indiceRepetition = freezed,
     Object? streetType = null,
     Object? streetLabel = null,
     Object? additionnalAddressInfos = null,
@@ -110,10 +123,10 @@ class _$SiegeModelCopyWithImpl<$Res, $Val extends SiegeModel>
           ? _value.streetNumber
           : streetNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      indiceRepetition: null == indiceRepetition
+      indiceRepetition: freezed == indiceRepetition
           ? _value.indiceRepetition
           : indiceRepetition // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       streetType: null == streetType
           ? _value.streetType
           : streetType // ignore: cast_nullable_to_non_nullable
@@ -176,19 +189,19 @@ abstract class _$$SiegeModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String siret,
-      int streetNumber,
-      String indiceRepetition,
-      String streetType,
-      String streetLabel,
-      String additionnalAddressInfos,
-      String address1,
-      String address2,
-      String zipCode,
-      String city,
-      String country,
-      String countryCode,
-      String lat,
-      String lng,
+      @JsonKey(name: 'numero_voie') int streetNumber,
+      @JsonKey(name: 'indice_repetition') String? indiceRepetition,
+      @JsonKey(name: 'type_voie') String streetType,
+      @JsonKey(name: 'libelle_voie') String streetLabel,
+      @JsonKey(name: 'complement_adresse') String additionnalAddressInfos,
+      @JsonKey(name: 'adresse_ligne_1') String address1,
+      @JsonKey(name: 'adresse_ligne_2') String address2,
+      @JsonKey(name: 'code_postal') String zipCode,
+      @JsonKey(name: 'ville') String city,
+      @JsonKey(name: 'pays') String country,
+      @JsonKey(name: 'code_pays') String countryCode,
+      @JsonKey(name: 'latitude') String lat,
+      @JsonKey(name: 'longitude') String lng,
       int? id});
 }
 
@@ -207,7 +220,7 @@ class __$$SiegeModelImplCopyWithImpl<$Res>
   $Res call({
     Object? siret = null,
     Object? streetNumber = null,
-    Object? indiceRepetition = null,
+    Object? indiceRepetition = freezed,
     Object? streetType = null,
     Object? streetLabel = null,
     Object? additionnalAddressInfos = null,
@@ -230,10 +243,10 @@ class __$$SiegeModelImplCopyWithImpl<$Res>
           ? _value.streetNumber
           : streetNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      indiceRepetition: null == indiceRepetition
+      indiceRepetition: freezed == indiceRepetition
           ? _value.indiceRepetition
           : indiceRepetition // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       streetType: null == streetType
           ? _value.streetType
           : streetType // ignore: cast_nullable_to_non_nullable
@@ -291,19 +304,20 @@ class __$$SiegeModelImplCopyWithImpl<$Res>
 class _$SiegeModelImpl implements _SiegeModel {
   const _$SiegeModelImpl(
       {required this.siret,
-      required this.streetNumber,
-      required this.indiceRepetition,
-      required this.streetType,
-      required this.streetLabel,
+      @JsonKey(name: 'numero_voie') required this.streetNumber,
+      @JsonKey(name: 'indice_repetition') this.indiceRepetition,
+      @JsonKey(name: 'type_voie') required this.streetType,
+      @JsonKey(name: 'libelle_voie') required this.streetLabel,
+      @JsonKey(name: 'complement_adresse')
       required this.additionnalAddressInfos,
-      required this.address1,
-      required this.address2,
-      required this.zipCode,
-      required this.city,
-      required this.country,
-      required this.countryCode,
-      required this.lat,
-      required this.lng,
+      @JsonKey(name: 'adresse_ligne_1') required this.address1,
+      @JsonKey(name: 'adresse_ligne_2') required this.address2,
+      @JsonKey(name: 'code_postal') required this.zipCode,
+      @JsonKey(name: 'ville') required this.city,
+      @JsonKey(name: 'pays') required this.country,
+      @JsonKey(name: 'code_pays') required this.countryCode,
+      @JsonKey(name: 'latitude') required this.lat,
+      @JsonKey(name: 'longitude') required this.lng,
       this.id});
 
   factory _$SiegeModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -312,30 +326,43 @@ class _$SiegeModelImpl implements _SiegeModel {
   @override
   final String siret;
   @override
+  @JsonKey(name: 'numero_voie')
   final int streetNumber;
   @override
-  final String indiceRepetition;
+  @JsonKey(name: 'indice_repetition')
+  final String? indiceRepetition;
   @override
+  @JsonKey(name: 'type_voie')
   final String streetType;
   @override
+  @JsonKey(name: 'libelle_voie')
   final String streetLabel;
   @override
+  @JsonKey(name: 'complement_adresse')
   final String additionnalAddressInfos;
   @override
+  @JsonKey(name: 'adresse_ligne_1')
   final String address1;
   @override
+  @JsonKey(name: 'adresse_ligne_2')
   final String address2;
   @override
+  @JsonKey(name: 'code_postal')
   final String zipCode;
   @override
+  @JsonKey(name: 'ville')
   final String city;
   @override
+  @JsonKey(name: 'pays')
   final String country;
   @override
+  @JsonKey(name: 'code_pays')
   final String countryCode;
   @override
+  @JsonKey(name: 'latitude')
   final String lat;
   @override
+  @JsonKey(name: 'longitude')
   final String lng;
   @override
   final int? id;
@@ -415,19 +442,20 @@ class _$SiegeModelImpl implements _SiegeModel {
 abstract class _SiegeModel implements SiegeModel {
   const factory _SiegeModel(
       {required final String siret,
-      required final int streetNumber,
-      required final String indiceRepetition,
-      required final String streetType,
-      required final String streetLabel,
+      @JsonKey(name: 'numero_voie') required final int streetNumber,
+      @JsonKey(name: 'indice_repetition') final String? indiceRepetition,
+      @JsonKey(name: 'type_voie') required final String streetType,
+      @JsonKey(name: 'libelle_voie') required final String streetLabel,
+      @JsonKey(name: 'complement_adresse')
       required final String additionnalAddressInfos,
-      required final String address1,
-      required final String address2,
-      required final String zipCode,
-      required final String city,
-      required final String country,
-      required final String countryCode,
-      required final String lat,
-      required final String lng,
+      @JsonKey(name: 'adresse_ligne_1') required final String address1,
+      @JsonKey(name: 'adresse_ligne_2') required final String address2,
+      @JsonKey(name: 'code_postal') required final String zipCode,
+      @JsonKey(name: 'ville') required final String city,
+      @JsonKey(name: 'pays') required final String country,
+      @JsonKey(name: 'code_pays') required final String countryCode,
+      @JsonKey(name: 'latitude') required final String lat,
+      @JsonKey(name: 'longitude') required final String lng,
       final int? id}) = _$SiegeModelImpl;
 
   factory _SiegeModel.fromJson(Map<String, dynamic> json) =
@@ -436,30 +464,43 @@ abstract class _SiegeModel implements SiegeModel {
   @override
   String get siret;
   @override
+  @JsonKey(name: 'numero_voie')
   int get streetNumber;
   @override
-  String get indiceRepetition;
+  @JsonKey(name: 'indice_repetition')
+  String? get indiceRepetition;
   @override
+  @JsonKey(name: 'type_voie')
   String get streetType;
   @override
+  @JsonKey(name: 'libelle_voie')
   String get streetLabel;
   @override
+  @JsonKey(name: 'complement_adresse')
   String get additionnalAddressInfos;
   @override
+  @JsonKey(name: 'adresse_ligne_1')
   String get address1;
   @override
+  @JsonKey(name: 'adresse_ligne_2')
   String get address2;
   @override
+  @JsonKey(name: 'code_postal')
   String get zipCode;
   @override
+  @JsonKey(name: 'ville')
   String get city;
   @override
+  @JsonKey(name: 'pays')
   String get country;
   @override
+  @JsonKey(name: 'code_pays')
   String get countryCode;
   @override
+  @JsonKey(name: 'latitude')
   String get lat;
   @override
+  @JsonKey(name: 'longitude')
   String get lng;
   @override
   int? get id;

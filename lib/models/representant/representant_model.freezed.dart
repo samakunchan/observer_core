@@ -21,12 +21,19 @@ RepresentantModel _$RepresentantModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RepresentantModel {
   String get uuid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'qualite')
   String get gender => throw _privateConstructorUsedError;
+  @JsonKey(name: 'personne_morale')
   bool get isCompany => throw _privateConstructorUsedError;
+  @JsonKey(name: 'date_prise_de_poste')
   String get dateStart => throw _privateConstructorUsedError;
+  @JsonKey(name: 'titre')
   String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: 'nom')
   String get lastname => throw _privateConstructorUsedError;
+  @JsonKey(name: 'prenom')
   String get firstname => throw _privateConstructorUsedError;
+  @JsonKey(name: 'nom_complet')
   String get fullname => throw _privateConstructorUsedError;
 
   /// Serializes this RepresentantModel to a JSON map.
@@ -47,13 +54,13 @@ abstract class $RepresentantModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String uuid,
-      String gender,
-      bool isCompany,
-      String dateStart,
-      String title,
-      String lastname,
-      String firstname,
-      String fullname});
+      @JsonKey(name: 'qualite') String gender,
+      @JsonKey(name: 'personne_morale') bool isCompany,
+      @JsonKey(name: 'date_prise_de_poste') String dateStart,
+      @JsonKey(name: 'titre') String title,
+      @JsonKey(name: 'nom') String lastname,
+      @JsonKey(name: 'prenom') String firstname,
+      @JsonKey(name: 'nom_complet') String fullname});
 }
 
 /// @nodoc
@@ -127,13 +134,13 @@ abstract class _$$RepresentantModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String uuid,
-      String gender,
-      bool isCompany,
-      String dateStart,
-      String title,
-      String lastname,
-      String firstname,
-      String fullname});
+      @JsonKey(name: 'qualite') String gender,
+      @JsonKey(name: 'personne_morale') bool isCompany,
+      @JsonKey(name: 'date_prise_de_poste') String dateStart,
+      @JsonKey(name: 'titre') String title,
+      @JsonKey(name: 'nom') String lastname,
+      @JsonKey(name: 'prenom') String firstname,
+      @JsonKey(name: 'nom_complet') String fullname});
 }
 
 /// @nodoc
@@ -200,13 +207,13 @@ class __$$RepresentantModelImplCopyWithImpl<$Res>
 class _$RepresentantModelImpl implements _RepresentantModel {
   const _$RepresentantModelImpl(
       {required this.uuid,
-      required this.gender,
-      required this.isCompany,
-      required this.dateStart,
-      required this.title,
-      required this.lastname,
-      required this.firstname,
-      required this.fullname});
+      @JsonKey(name: 'qualite') required this.gender,
+      @JsonKey(name: 'personne_morale') required this.isCompany,
+      @JsonKey(name: 'date_prise_de_poste') required this.dateStart,
+      @JsonKey(name: 'titre') required this.title,
+      @JsonKey(name: 'nom') required this.lastname,
+      @JsonKey(name: 'prenom') required this.firstname,
+      @JsonKey(name: 'nom_complet') required this.fullname});
 
   factory _$RepresentantModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RepresentantModelImplFromJson(json);
@@ -214,18 +221,25 @@ class _$RepresentantModelImpl implements _RepresentantModel {
   @override
   final String uuid;
   @override
+  @JsonKey(name: 'qualite')
   final String gender;
   @override
+  @JsonKey(name: 'personne_morale')
   final bool isCompany;
   @override
+  @JsonKey(name: 'date_prise_de_poste')
   final String dateStart;
   @override
+  @JsonKey(name: 'titre')
   final String title;
   @override
+  @JsonKey(name: 'nom')
   final String lastname;
   @override
+  @JsonKey(name: 'prenom')
   final String firstname;
   @override
+  @JsonKey(name: 'nom_complet')
   final String fullname;
 
   @override
@@ -277,14 +291,15 @@ class _$RepresentantModelImpl implements _RepresentantModel {
 
 abstract class _RepresentantModel implements RepresentantModel {
   const factory _RepresentantModel(
-      {required final String uuid,
-      required final String gender,
-      required final bool isCompany,
-      required final String dateStart,
-      required final String title,
-      required final String lastname,
-      required final String firstname,
-      required final String fullname}) = _$RepresentantModelImpl;
+          {required final String uuid,
+          @JsonKey(name: 'qualite') required final String gender,
+          @JsonKey(name: 'personne_morale') required final bool isCompany,
+          @JsonKey(name: 'date_prise_de_poste') required final String dateStart,
+          @JsonKey(name: 'titre') required final String title,
+          @JsonKey(name: 'nom') required final String lastname,
+          @JsonKey(name: 'prenom') required final String firstname,
+          @JsonKey(name: 'nom_complet') required final String fullname}) =
+      _$RepresentantModelImpl;
 
   factory _RepresentantModel.fromJson(Map<String, dynamic> json) =
       _$RepresentantModelImpl.fromJson;
@@ -292,18 +307,25 @@ abstract class _RepresentantModel implements RepresentantModel {
   @override
   String get uuid;
   @override
+  @JsonKey(name: 'qualite')
   String get gender;
   @override
+  @JsonKey(name: 'personne_morale')
   bool get isCompany;
   @override
+  @JsonKey(name: 'date_prise_de_poste')
   String get dateStart;
   @override
+  @JsonKey(name: 'titre')
   String get title;
   @override
+  @JsonKey(name: 'nom')
   String get lastname;
   @override
+  @JsonKey(name: 'prenom')
   String get firstname;
   @override
+  @JsonKey(name: 'nom_complet')
   String get fullname;
 
   /// Create a copy of RepresentantModel
