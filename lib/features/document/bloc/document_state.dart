@@ -14,9 +14,29 @@ final class DocumentsAreLoading extends DocumentState {
   List<Object> get props => [];
 }
 
-final class DocumentsFormIsProcessing extends DocumentState {
+final class DocumentToCreateForm extends DocumentState {
+  const DocumentToCreateForm({this.isProcessing = false});
+
+  final bool isProcessing;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isProcessing];
+}
+
+final class DocumentToUpdateForm extends DocumentState {
+  const DocumentToUpdateForm({this.isProcessing = false});
+
+  final bool isProcessing;
+  @override
+  List<Object> get props => [isProcessing];
+}
+
+final class DocumentsFormIsProcessing extends DocumentState {
+  const DocumentsFormIsProcessing({required this.formProcess});
+
+  final UpsertFormType formProcess;
+
+  @override
+  List<Object> get props => [formProcess];
 }
 
 final class DocumentsHaveFailures extends DocumentState {

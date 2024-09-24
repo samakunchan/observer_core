@@ -29,23 +29,70 @@ double getAspectRatio({required double sizeContentArea}) {
   }
 }
 
-/// Format les dates afin d'éviter de l'installer partout.
+/// ## Exemple
+/// ### Input
+/// ```dart
+/// 2024-09-29T00:00:00.000Z
+/// ```
+/// ### Output
+/// ```dart
+/// 29 septembre 2024
+/// ```
+/// Pour les majuscules, il faudra utiliser l'extension `.capitalize()`.
 String formatDate(String date) {
   final DateTime dateTime = DateTime.parse(date);
   final DateFormat format = DateFormat.yMMMMd('fr_FR');
   return format.format(dateTime);
 }
 
+/// ## Exemple
+/// ### Input
+/// ```dart
+/// 2024-09-29T00:00:00.000Z
+/// ```
+/// ### Output
+/// ```dart
+/// dimanche 29 septembre 2024
+/// ```
+/// Pour les majuscules, il faudra utiliser l'extension `.capitalize()`.
 String formatFullDate(String date) {
   final DateTime dateTime = DateTime.parse(date);
   final DateFormat format = DateFormat.yMMMMEEEEd('fr_FR');
   return format.format(dateTime);
 }
 
+/// ## Exemple
+/// ### Input
+/// ```dart
+/// 2024-09-29T00:00:00.000Z
+/// ```
+/// ### Output
+/// ```dart
+/// {
+///   "dateTime": DateTime.now() // ou DateTime.parse(date),
+///   "dateFormated": "2024-09-29",
+/// }
+/// ```
 DateDTO formatCommonDate(String date) {
   final DateTime dateTime = DateTime.parse(date);
   final DateFormat format = DateFormat.yMd('fr_FR');
   return DateDTO(dateTime: dateTime, dateFormated: format.format(dateTime));
+}
+
+/// ## Exemple
+/// ### Input
+/// ```dart
+/// 2024-09-29T00:00:00.000Z
+/// ```
+/// ### Output
+/// ```dart
+/// 29/09/2024
+/// ```
+/// Pour les majuscules, il faudra utiliser l'extension `.capitalize()`.
+String unFormatFullDate(String date) {
+  final DateTime dateTime = DateTime.parse(date);
+  final DateFormat format = DateFormat.yMd('fr_FR');
+  return format.format(dateTime);
 }
 
 /// Exemple:
