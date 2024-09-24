@@ -55,6 +55,16 @@ class ProjectDTO with _$ProjectDTO {
     int? id,
   }) = _ProjectDTO;
   factory ProjectDTO.fromJson(Map<String, dynamic> json) => _$ProjectDTOFromJson(json);
+
+  static const ProjectDTO firstSelected = ProjectDTO(
+    title: '',
+    shortDescription: '',
+    fullDescription: '',
+    client: '',
+    dateDebutProjet: '',
+    dateFinProjet: '',
+    category: 1,
+  );
 }
 
 @freezed
