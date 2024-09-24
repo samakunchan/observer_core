@@ -3,6 +3,10 @@ import 'package:retrofit/dio.dart';
 
 /// Détails des méthodes à implementer :
 /// - get(GetParams params)
+/// - upsert(UpsertParams params)
+/// - uploadFile(UploadFormDataParams params)
+/// - delete(DeleteParams params)
+/// - search(SearchParams params)
 abstract class AbstractServerNestjsSource {
   Future<HttpResponse<dynamic>> get(GetParams params);
   Future<HttpResponse<dynamic>> upsert(UpsertParams params);
