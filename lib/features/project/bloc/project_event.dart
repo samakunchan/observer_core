@@ -1,6 +1,6 @@
 part of 'project_bloc.dart';
 
-sealed class ProjectEvent extends Equatable {
+abstract class ProjectEvent extends Equatable {
   const ProjectEvent();
 }
 
@@ -29,8 +29,11 @@ class ProjectSubmitted extends ProjectEvent {
 }
 
 class ProjectDeleted extends ProjectEvent {
+  const ProjectDeleted({required this.id});
+
+  final int id;
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [id];
 }
 
 class ProjectsFiltered extends ProjectEvent {
@@ -52,6 +55,16 @@ class ProjectFormReset extends ProjectEvent {
 }
 
 class ProjectReloaded extends ProjectEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class ProjectItemEditableActived extends ProjectEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class ProjectItemEditableCanceled extends ProjectEvent {
   @override
   List<Object?> get props => [];
 }

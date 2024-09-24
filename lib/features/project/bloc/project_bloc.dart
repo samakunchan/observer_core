@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
@@ -8,7 +9,6 @@ import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
-import 'package:observer_core/utils.dart';
 import 'package:retrofit/dio.dart';
 
 part 'project_event.dart';
@@ -23,6 +23,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     on<ProjectsFiltered>(_filterProjects);
     on<ProjectDeleted>(_deleteProject);
     on<ProjectReloaded>(_reloadProjects);
+    on<ProjectItemEditableActived>(_activeEditableItem);
+    on<ProjectItemEditableCanceled>(_cancelEditableItem);
   }
 
   Future<void> _resetProjectForm(ProjectFormReset event, Emitter<ProjectState> emit) async {
@@ -55,7 +57,20 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   Future<void> _deleteProject(ProjectDeleted event, Emitter<ProjectState> emit) async {
-    emit.call(ProjectIsRemovedSuccessfully());
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.deleteOne(
+      DeleteParams(
+        accessToken: authTokenModel.accessToken,
+        body: event.id.toString(),
+        endPoint: MainProject.projectsEndPoint,
+      ),
+    );
+
+    await ProjectHandler.withReponse(
+      responses: responses,
+      ifFailure: (Failure failure) => ProjectHandler.handleAllFailures(failure: failure, emit: emit),
+      ifSuccess: (HttpResponse<dynamic> response) => ProjectHandler.handleDeleteSuccess(response: response, emit: emit),
+    );
   }
 
   Future<void> _filterProjects(ProjectsFiltered event, Emitter<ProjectState> emit) async {
@@ -85,7 +100,6 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
   }
 
   Future<void> _upsertProject(ProjectSubmitted event, Emitter<ProjectState> emit) async {
-    logger.i('Upsert detecter');
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
 
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.upsertOne(
@@ -122,6 +136,14 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       default:
         return emit.call(ProjectIsLoading());
     }
+  }
+
+  Future<void> _activeEditableItem(ProjectItemEditableActived event, Emitter<ProjectState> emit) async {
+    emit.call(ProjectItemIsEditable());
+  }
+
+  Future<void> _cancelEditableItem(ProjectItemEditableCanceled event, Emitter<ProjectState> emit) async {
+    emit.call(ProjectItemIsNotEditable());
   }
 }
 
@@ -170,22 +192,6 @@ class ProjectHandler {
     }
   }
 
-  static Future<void> handleAllSuccess({
-    required HttpResponse<dynamic> response,
-    required Emitter<ProjectState> emit,
-  }) async {
-    // final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-    // final List<CategoryModel> categories = datasJson.map<CategoryModel>(CategoryModel.fromJson).toList();
-    //
-    // if (screenMode == ScreenMode.grid) {
-    //   emit.call(CategoriesAreLoadedSuccessfully(categories: categories, selectedId: 1));
-    // } else {
-    //   emit.call(CategoriesAreLoadedSuccessfully(categories: categories, screenMode: ScreenMode.list, selectedId: 1));
-    // }
-
-    // await storeCategories(categories: categories);
-  }
-
   static Future<void> handleUpsertSuccess({
     required HttpResponse<dynamic> response,
     required Emitter<ProjectState> emit,
@@ -206,15 +212,14 @@ class ProjectHandler {
 
   static Future<void> handleDeleteSuccess({
     required HttpResponse<dynamic> response,
-    required Emitter<CategoryState> emit,
-    required CategoryModel categoryDeleted,
+    required Emitter<ProjectState> emit,
   }) async {
-    emit.call(CategoryIsDeletedSuccessfully(categoryDeleted: categoryDeleted));
+    emit.call(ProjectIsRemovedSuccessfully());
   }
 
   static Future<void> handleSearchSuccess({
     required HttpResponse<dynamic> response,
-    required Emitter<CategoryState> emit,
+    required Emitter<ProjectState> emit,
   }) async {
     debugPrint(response.data.toString());
     // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));

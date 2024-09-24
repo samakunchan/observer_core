@@ -84,3 +84,13 @@ class ProjectHasFailure extends ProjectState {
   @override
   List<Object?> get props => [message];
 }
+
+class ProjectItemIsEditable extends ProjectState {
+  @override
+  List<Object> get props => [];
+}
+
+class ProjectItemIsNotEditable extends ProjectState {
+  @override
+  List<Object> get props => [];
+}
