@@ -1,6 +1,6 @@
 part of 'document_bloc.dart';
 
-sealed class DocumentEvent extends Equatable {
+abstract class DocumentEvent extends Equatable {
   const DocumentEvent();
 }
 
@@ -16,6 +16,16 @@ class DocumentIsCalled extends DocumentEvent {
   final String url;
   @override
   List<Object?> get props => [url];
+}
+
+class DocumentActionCreateCalled extends DocumentEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class DocumentActionUpdateCalled extends DocumentEvent {
+  @override
+  List<Object?> get props => [];
 }
 
 class OneDocumentToUpload extends DocumentEvent {
@@ -40,8 +50,12 @@ class DocumentsFormReset extends DocumentEvent {
 }
 
 class DocumentsInProgress extends DocumentEvent {
+  const DocumentsInProgress({required this.formProcess});
+
+  final UpsertFormType formProcess;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [formProcess];
 }
 
 class DocumentsDeleted extends DocumentEvent {
