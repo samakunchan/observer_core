@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/enums/enums.dart';
 import 'package:observer_core/features/features_export.dart';
-import 'package:observer_core/models/document/document_model.dart';
+import 'package:observer_core/models/models_export.dart';
 import 'package:retrofit/dio.dart';
 
 part 'document_event.dart';
@@ -22,6 +22,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<DocumentActionCreateCalled>(_showCreateAction);
     on<DocumentActionUpdateCalled>(_showUpdateAction);
     on<DocumentsAreCalled>(_requestAllDocuments);
+    on<DocumentsFilteredAreCalled>(_requestFilteredDocuments);
     on<DocumentIsCalled>(_requestOneDocument);
     on<OneDocumentToUpload>(_uploadOneDocument);
     on<MultipleDocumentsToUpload>(_uploadMultipleDocuments);
@@ -40,7 +41,38 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   }
 
   FutureOr<void> _requestAllDocuments(DocumentsAreCalled event, Emitter<DocumentState> emit) async {
-    // TODO: implement event handler
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.documentsEndPoint,
+      ),
+    );
+
+    await DocumentHandler.withReponse(
+      responses: responses,
+      ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
+      ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
+    );
+  }
+
+  FutureOr<void> _requestFilteredDocuments(DocumentsFilteredAreCalled event, Emitter<DocumentState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.documentsEndPoint,
+        filteredBy: event.filteredBy,
+      ),
+    );
+
+    await DocumentHandler.withReponse(
+      responses: responses,
+      ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
+      ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
+    );
   }
 
   FutureOr<void> _requestOneDocument(DocumentIsCalled event, Emitter<DocumentState> emit) async {
@@ -140,8 +172,9 @@ class DocumentHandler {
     required HttpResponse<dynamic> response,
     required Emitter<DocumentState> emit,
   }) async {
-    // final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-    // logger.f(datasJson);
+    final DocumentResponse documentResponse = DocumentResponse.fromJson(response.data as Map<String, dynamic>);
+    emit.call(DocumentsAreLoadedSuccessfully(documentResponse: documentResponse));
+    // TODO Ne pas oublier de faire le grid mode
     // final List<CategoryModel> categories = datasJson.map<CategoryModel>(CategoryModel.fromJson).toList();
     //
     // if (screenMode == ScreenMode.grid) {

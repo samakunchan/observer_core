@@ -1,13 +1,32 @@
 part of 'document_bloc.dart';
 
+/// Tout les events :
+/// - DocumentsAreCalled
+/// - DocumentsFilteredAreCalled
+/// - DocumentIsCalled
+/// - DocumentActionCreateCalled
+/// - DocumentActionUpdateCalled
+/// - OneDocumentToUpload
+/// - MultipleDocumentsToUpload
+/// - DocumentsFormReset
+/// - DocumentsInProgress
+/// - DocumentsDeleted
 abstract class DocumentEvent extends Equatable {
   const DocumentEvent();
 }
 
 class DocumentsAreCalled extends DocumentEvent {
-  const DocumentsAreCalled();
   @override
   List<Object?> get props => [];
+}
+
+class DocumentsFilteredAreCalled extends DocumentEvent {
+  const DocumentsFilteredAreCalled({required this.filteredBy});
+
+  final DocumentFilteredType filteredBy;
+
+  @override
+  List<Object?> get props => [filteredBy];
 }
 
 class DocumentIsCalled extends DocumentEvent {

@@ -1,5 +1,14 @@
 part of 'document_bloc.dart';
 
+/// # Tout les states actuellement
+/// - DocumentInitial
+/// - DocumentsAreLoading
+/// - DocumentToCreateForm
+/// - DocumentToUpdateForm
+/// - DocumentsFormIsProcessing
+/// - DocumentsHaveFailures
+/// - DocumentFormIsSubmittedSuccessfully
+/// - DocumentFormIsDeletedSuccessfully
 abstract class DocumentState extends Equatable {
   const DocumentState();
 }
@@ -12,6 +21,15 @@ final class DocumentInitial extends DocumentState {
 final class DocumentsAreLoading extends DocumentState {
   @override
   List<Object> get props => [];
+}
+
+final class DocumentsAreLoadedSuccessfully extends DocumentState {
+  const DocumentsAreLoadedSuccessfully({required this.documentResponse});
+
+  final DocumentResponse documentResponse;
+
+  @override
+  List<Object> get props => [documentResponse];
 }
 
 final class DocumentToCreateForm extends DocumentState {

@@ -3,4 +3,4 @@ library;
 
 /// BLOC
 /// BLOC - DOCUMENT
-export 'bloc/document_bloc.dart';
+export 'bloc/main/document_bloc.dart';
