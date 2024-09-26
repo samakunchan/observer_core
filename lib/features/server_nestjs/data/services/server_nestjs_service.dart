@@ -133,6 +133,12 @@ abstract class ServerNestjsService {
     @Header('Authorization') required String authorization,
   });
 
+  @GET('documents/all/{folder}')
+  Future<HttpResponse<dynamic>> getDocumentsFilteredBy({
+    @Header('Authorization') required String authorization,
+    @Path('folder') required String folder,
+  });
+
   @POST('documents/upload')
   Future<HttpResponse<dynamic>> upsertOneDocument({
     @Header('Authorization') required String authorization,
