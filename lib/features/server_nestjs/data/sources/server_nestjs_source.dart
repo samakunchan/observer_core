@@ -145,7 +145,10 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           );
         case MainProject.projectsEndPoint:
           return await remoteService.deleteProject(
-              authorization: 'Bearer ${params.accessToken}', contentType: MainProject.defaultContentType, id: params.body);
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            id: params.body,
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
