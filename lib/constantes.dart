@@ -66,6 +66,12 @@ class MenuText {
   /// Value = "documents"
   static String documents = 'documents';
 
+  /// Value = "images"
+  static String images = 'images';
+
+  /// Value = "PDF"
+  static String pdf = 'PDF';
+
   /// Value = "paramètres"
   static String settings = 'paramètres';
 
