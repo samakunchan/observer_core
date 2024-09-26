@@ -53,8 +53,14 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           return await remoteService.getLegals(
             authorization: 'Bearer ${params.accessToken}',
           );
-        case '/documents':
-        case '/documents/all':
+        case MainProject.documentsEndPoint:
+        case '${MainProject.documentsEndPoint}/all':
+          if (params.filteredBy != null) {
+            return await remoteService.getDocumentsFilteredBy(
+              authorization: 'Bearer ${params.accessToken}',
+              folder: params.filteredBy!.name,
+            );
+          }
           return await remoteService.getDocuments(
             authorization: 'Bearer ${params.accessToken}',
           );
