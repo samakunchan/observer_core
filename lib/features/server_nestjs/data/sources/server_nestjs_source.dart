@@ -95,6 +95,12 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
+        case MainProject.documentsEndPoint:
+          return await remoteService.upsertOneDocument(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            body: params.body,
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -109,12 +115,12 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
     try {
       switch (params.endPoint) {
         case MainProject.documentsUploadEndPoint:
-          return await remoteService.upsertOneDocument(
+          return await remoteService.uploadOneDocument(
             authorization: 'Bearer ${params.accessToken}',
             formData: params.formData,
           );
         case MainProject.documentsMultiUploadEndPoint:
-          return await remoteService.upsertMultipleDocuments(
+          return await remoteService.uploadMultipleDocuments(
             authorization: 'Bearer ${params.accessToken}',
             formData: params.formData,
           );
@@ -148,6 +154,18 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             id: params.body,
+          );
+        case MainProject.documentsEndPoint:
+          return await remoteService.deleteOneDocument(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            id: params.body,
+          );
+        case MainProject.documentsMultiDeleteEndPoint:
+          return await remoteService.deleteMultipleDocuments(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            body: params.body,
           );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
