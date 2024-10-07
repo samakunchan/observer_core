@@ -9,11 +9,10 @@ class DocumentsTotalSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<DocumentBloc, DocumentState, int>(
-      selector: whenWeLoadCategoriesFromLocal,
+      selector: whenDocumentsHaveTotal,
       builder: builder,
     );
   }
 
-  static int whenWeLoadCategoriesFromLocal(DocumentState state) =>
-      state is DocumentsAreLoadedSuccessfully ? state.documentResponse.total : -1;
+  static int whenDocumentsHaveTotal(DocumentState state) => state is DocumentsAreLoadedSuccessfully ? state.documentResponse.total : -1;
 }

@@ -10,11 +10,11 @@ class DocumentSelectedSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<DocumentInfosBloc, DocumentInfosState, DocumentModel>(
-      selector: whenWeLoadCategoriesFromLocal,
+      selector: whenOneDocumentIsSelected,
       builder: builder,
     );
   }
 
-  static DocumentModel whenWeLoadCategoriesFromLocal(DocumentInfosState state) =>
+  static DocumentModel whenOneDocumentIsSelected(DocumentInfosState state) =>
       state is DocumentInfosIsSelected ? state.documentSelected : DocumentModel.empty;
 }

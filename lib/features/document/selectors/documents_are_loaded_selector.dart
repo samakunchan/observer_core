@@ -9,10 +9,10 @@ class DocumentsAreLoadedSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<DocumentBloc, DocumentState, bool>(
-      selector: whenWeLoadCategoriesFromLocal,
+      selector: whenDocumentsAreLoadedSuccessfully,
       builder: builder,
     );
   }
 
-  static bool whenWeLoadCategoriesFromLocal(DocumentState state) => state is DocumentsAreLoadedSuccessfully;
+  static bool whenDocumentsAreLoadedSuccessfully(DocumentState state) => state is DocumentsAreLoadedSuccessfully;
 }
