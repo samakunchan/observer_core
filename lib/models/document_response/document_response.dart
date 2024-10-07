@@ -12,4 +12,6 @@ class DocumentResponse with _$DocumentResponse {
   }) = _DocumentResponse;
 
   factory DocumentResponse.fromJson(Map<String, dynamic> json) => _$DocumentResponseFromJson(json);
+
+  static const DocumentResponse empty = DocumentResponse(total: -1, results: []);
 }
