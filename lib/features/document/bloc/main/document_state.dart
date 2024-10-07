@@ -24,9 +24,10 @@ final class DocumentsAreLoading extends DocumentState {
 }
 
 final class DocumentsAreLoadedSuccessfully extends DocumentState {
-  const DocumentsAreLoadedSuccessfully({required this.documentResponse});
+  const DocumentsAreLoadedSuccessfully({required this.documentResponse, this.screenMode = ScreenMode.grid});
 
   final DocumentResponse documentResponse;
+  final ScreenMode screenMode;
 
   @override
   List<Object> get props => [documentResponse];

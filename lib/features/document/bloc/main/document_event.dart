@@ -11,13 +11,34 @@ part of 'document_bloc.dart';
 /// - DocumentsFormReset
 /// - DocumentsInProgress
 /// - DocumentsDeleted
+/// - DocumentsReloaded
 abstract class DocumentEvent extends Equatable {
   const DocumentEvent();
 }
 
-class DocumentsAreCalled extends DocumentEvent {
+class DocumentsInGridAreCalled extends DocumentEvent {
+  const DocumentsInGridAreCalled({
+    this.isFetchingApi = true,
+    this.documentResponse = DocumentResponse.empty,
+  });
+
+  final DocumentResponse documentResponse;
+  final bool isFetchingApi;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [isFetchingApi, documentResponse];
+}
+
+class DocumentsInListAreCalled extends DocumentEvent {
+  const DocumentsInListAreCalled({
+    this.isFetchingApi = true,
+    this.documentResponse = DocumentResponse.empty,
+  });
+
+  final DocumentResponse documentResponse;
+  final bool isFetchingApi;
+  @override
+  List<Object?> get props => [documentResponse, isFetchingApi];
 }
 
 class DocumentsFilteredAreCalled extends DocumentEvent {
@@ -77,7 +98,36 @@ class DocumentsInProgress extends DocumentEvent {
   List<Object?> get props => [formProcess];
 }
 
-class DocumentsDeleted extends DocumentEvent {
+class DocumentDeleted extends DocumentEvent {
+  const DocumentDeleted({required this.documentForDelete});
+
+  final DocumentModel documentForDelete;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [documentForDelete];
+}
+
+class DocumentsDeleted extends DocumentEvent {
+  const DocumentsDeleted({required this.documentIdsForDelete});
+
+  final List<int> documentIdsForDelete;
+
+  @override
+  List<Object?> get props => [documentIdsForDelete];
+}
+
+class DocumentsReloaded extends DocumentEvent {
+  const DocumentsReloaded({this.filteredBy = DocumentFilteredType.images});
+
+  final DocumentFilteredType filteredBy;
+  @override
+  List<Object?> get props => [filteredBy];
+}
+
+class DocumentsFailed extends DocumentEvent {
+  const DocumentsFailed({required this.message});
+
+  final String message;
+  @override
+  List<Object?> get props => [message];
 }
