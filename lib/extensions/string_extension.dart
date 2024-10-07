@@ -21,6 +21,19 @@ extension StringExtension on String {
     return this.split(' ').map((String text) => text.ucFirst()).toList().join(' ');
   }
 
+  /// Permet de transformer le texte du mimetype en quelque chose de plus lisible
+  /// ```dart
+  /// String text = "image/jpeg";
+  /// print(text.formatMimetype());
+  /// // "Image JPEG"
+  /// ```
+  String formatMimetype() {
+    final List<String> textSeparated = this.split('/').map((String text) => text.ucFirst()).toList();
+    final String firstPart = textSeparated.first.ucFirst();
+    final String lastPart = textSeparated.last.toUpperCase();
+    return [firstPart, lastPart].join(' ');
+  }
+
   /// Permet de colorer du text dans la console
   /// ```dart
   /// String text = "Hello world";
