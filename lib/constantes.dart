@@ -38,6 +38,9 @@ class MainProject {
   /// Endpoint = '/documents/multi-upload'
   static const String documentsMultiUploadEndPoint = '/documents/multi-upload';
 
+  /// Endpoint = '/documents/multi-upload'
+  static const String documentsMultiDeleteEndPoint = '/documents/multiple-files';
+
   /// Name = [application/json]
   static String defaultContentType = 'application/json';
 
