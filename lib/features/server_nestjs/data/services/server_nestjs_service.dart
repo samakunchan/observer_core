@@ -133,15 +133,42 @@ abstract class ServerNestjsService {
     @Header('Authorization') required String authorization,
   });
 
-  @POST('documents/upload')
+  @GET('documents/all/{folder}')
+  Future<HttpResponse<dynamic>> getDocumentsFilteredBy({
+    @Header('Authorization') required String authorization,
+    @Path('folder') required String folder,
+  });
+
+  @POST('documents')
   Future<HttpResponse<dynamic>> upsertOneDocument({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @POST('documents/upload')
+  Future<HttpResponse<dynamic>> uploadOneDocument({
     @Header('Authorization') required String authorization,
     @Body() required FormData formData,
   });
 
   @POST('documents/multi-upload')
-  Future<HttpResponse<dynamic>> upsertMultipleDocuments({
+  Future<HttpResponse<dynamic>> uploadMultipleDocuments({
     @Header('Authorization') required String authorization,
     @Body() required FormData formData,
+  });
+
+  @DELETE('documents/{id}')
+  Future<HttpResponse<dynamic>> deleteOneDocument({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Path('id') required String id,
+  });
+
+  @DELETE('documents/multiple-files')
+  Future<HttpResponse<dynamic>> deleteMultipleDocuments({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
   });
 }

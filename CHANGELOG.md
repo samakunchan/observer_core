@@ -1,11 +1,29 @@
 # Observer core
 
+## 🚀 0.15.0 - 07/10/2024
+### Nouveautés
+
+- Ajout d'un bloc pour gérer les requêtes HTTP des documents.
+- Ajout d'un bloc pour gérer les actions sur la pages des documents.
+- Ajout d'un bloc pour gérer l'affichage des infos complémentaire des documents.
+- Création d'un sélector qui retourne le total des documents.
+- Création d'un sélector qui gère la modification des documents.
+
+### Changements
+
+- Changement des paths pour les documents, parce qu'il y avait une confusion entre `upsert` et `upload`.
+
+### Correctifs
+
+- Pas de fixes.
+
+
 ## 🚀 0.14.0 - 24/09/2024
 ### Nouveautés
 
 - Ajout de l'étape de suppression d'un projet dans la source.
-- Ajout de deux états supplémentaire afin de savoir si le formulaire est en mode create ou update.
-- Ajout de deux états supplémentaire afin de savoir la page est en mode édition ou non.
+- Ajout de deux états supplémentaires afin de savoir si le formulaire est en mode create ou update.
+- Ajout de deux états supplémentaires afin de savoir la page est en mode édition ou non.
 
 ### Changements
 

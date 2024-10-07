@@ -10,6 +10,9 @@ export 'category/category_model.dart';
 /// MODEL DOCUMENT
 export 'document/document_model.dart';
 
+/// MODEL DOCUMENT
+export 'document_response/document_response.dart';
+
 /// MODEL ENVIRONMENT
 export 'environment/environment_model.dart';
 
