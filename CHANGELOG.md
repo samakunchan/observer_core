@@ -1,5 +1,22 @@
 # Observer core
 
+## 🚀 0.16.0 - 11/10/2024
+### Nouveautés
+
+- Pas de nouveautés.
+
+### Changements
+
+- Ajout d'un message obligatoire quand le token est invalide.
+- Ajout d'un nouveau state `DocumentWithErrorPage` pour montrer les érreurs dans une page.
+- Les failures seront gérer uniquement pour les listeners.
+- Ajout des states loading au début des méthodes.
+
+### Correctifs
+
+- Mise à jour du selector. Le state `CategoriesAreFilteredSuccessfully` n'était géré et causait des érreurs en front.
+
+
 ## 🚀 0.15.0 - 07/10/2024
 ### Nouveautés
 

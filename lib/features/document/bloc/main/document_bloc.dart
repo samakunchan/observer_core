@@ -10,6 +10,7 @@ import 'package:observer_core/constantes.dart';
 import 'package:observer_core/enums/enums.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
+import 'package:observer_core/utils.dart';
 import 'package:retrofit/dio.dart';
 
 part 'document_event.dart';
@@ -20,7 +21,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<DocumentsFormReset>(_resetStateForm);
     on<DocumentDeleted>(_deleteDocument);
     on<DocumentsDeleted>(_deleteMultipleDocument);
-    on<DocumentsInProgress>(_showLoader);
+    on<DocumentsInProgress>(_showFormLoader);
     on<DocumentActionCreateCalled>(_showCreateAction);
     on<DocumentActionUpdateCalled>(_showUpdateAction);
     on<DocumentsInGridAreCalled>(_requestAllDocumentsInGridView);
@@ -31,13 +32,21 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<MultipleDocumentsToUpload>(_uploadMultipleDocuments);
     on<DocumentsReloaded>(_reloadDocuments);
     on<DocumentsFailed>(_somethingWentWrong);
+    on<DocumentsErrorPageShown>(_showErrorPage);
+
+    /// Pas sure qu'on garde. A supprimer prochainement.
+    on<DocumentsOnReconnect>(_reconnection);
+  }
+
+  FutureOr<void> _reconnection(DocumentsOnReconnect event, Emitter<DocumentState> emit) async {
+    emit(DocumentInitial());
   }
 
   FutureOr<void> _resetStateForm(DocumentsFormReset event, Emitter<DocumentState> emit) async {
     emit(DocumentInitial());
   }
 
-  FutureOr<void> _showLoader(DocumentsInProgress event, Emitter<DocumentState> emit) async {
+  FutureOr<void> _showFormLoader(DocumentsInProgress event, Emitter<DocumentState> emit) async {
     emit(DocumentsFormIsProcessing(formProcess: event.formProcess));
   }
 
@@ -55,7 +64,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     //   ),
     // );
     //
-    // await DocumentHandler.withReponse(
+    // await DocumentHandler.withResponse(
     //   responses: responses,
     //   ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
     //   ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleDeleteSuccess(
@@ -81,7 +90,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       ),
     );
 
-    await DocumentHandler.withReponse(
+    await DocumentHandler.withResponse(
       responses: responses,
       ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
       ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleDeleteSuccess(
@@ -93,11 +102,10 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   }
 
   FutureOr<void> _requestAllDocumentsInGridView(DocumentsInGridAreCalled event, Emitter<DocumentState> emit) async {
+    emit.call(DocumentsAreLoading());
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
-      emit
-        ..call(DocumentsAreLoading())
-        ..call(DocumentsAreLoadedSuccessfully(documentResponse: event.documentResponse));
+      emit.call(DocumentsAreLoadedSuccessfully(documentResponse: event.documentResponse));
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
         GetParams(
@@ -106,7 +114,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
         ),
       );
 
-      await DocumentHandler.withReponse(
+      await DocumentHandler.withResponse(
         responses: responses,
         ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
         ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
@@ -115,13 +123,12 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   }
 
   FutureOr<void> _requestAllDocumentsInListView(DocumentsInListAreCalled event, Emitter<DocumentState> emit) async {
+    emit.call(DocumentsAreLoading());
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
-      emit
-        ..call(DocumentsAreLoading())
-        ..call(
-          DocumentsAreLoadedSuccessfully(documentResponse: event.documentResponse, screenMode: ScreenMode.list),
-        );
+      emit.call(
+        DocumentsAreLoadedSuccessfully(documentResponse: event.documentResponse, screenMode: ScreenMode.list),
+      );
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
         GetParams(
@@ -130,7 +137,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
         ),
       );
 
-      await DocumentHandler.withReponse(
+      await DocumentHandler.withResponse(
         responses: responses,
         ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
         ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
@@ -139,6 +146,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   }
 
   FutureOr<void> _requestFilteredDocuments(DocumentsFilteredAreCalled event, Emitter<DocumentState> emit) async {
+    emit.call(DocumentsAreLoading());
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
 
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
@@ -149,7 +157,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       ),
     );
 
-    await DocumentHandler.withReponse(
+    await DocumentHandler.withResponse(
       responses: responses,
       ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
       ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
@@ -179,7 +187,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       ),
     );
 
-    await DocumentHandler.withReponse(
+    await DocumentHandler.withResponse(
       responses: responses,
       ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
       ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleUpsertSuccess(response: response, emit: emit),
@@ -196,7 +204,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       ),
     );
 
-    await DocumentHandler.withReponse(
+    await DocumentHandler.withResponse(
       responses: responses,
       ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
       ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleUpsertSuccess(response: response, emit: emit),
@@ -232,12 +240,17 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   Future<void> _somethingWentWrong(DocumentsFailed event, Emitter<DocumentState> emit) async {
     emit.call(DocumentsHaveFailures(message: event.message));
   }
+
+  Future<void> _showErrorPage(DocumentsErrorPageShown event, Emitter<DocumentState> emit) async {
+    logger.t('On lance le state pour charger la page d‘érreur.');
+    emit.call(DocumentWithErrorPage(message: event.message));
+  }
 }
 
 class DocumentHandler {
   const DocumentHandler._();
 
-  static Future<void> withReponse({
+  static Future<void> withResponse({
     required Either<Failure, HttpResponse<dynamic>> responses,
     required ValueChanged<Failure> ifFailure,
     required ValueChanged<HttpResponse<dynamic>> ifSuccess,
@@ -273,7 +286,7 @@ class DocumentHandler {
       case ForbiddenFailure():
         return emit.call(DocumentsHaveFailures(message: failure.message));
       case IDontKnowWhatImDoingFailure():
-        return emit.call(const DocumentsHaveFailures());
+        return emit.call(const DocumentsHaveFailures(message: ErrorMessage.noErrorMessageHandled));
       default:
         return emit.call(DocumentsAreLoading());
     }

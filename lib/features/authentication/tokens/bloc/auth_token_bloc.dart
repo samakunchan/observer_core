@@ -18,7 +18,7 @@ class AuthTokenBloc extends Bloc<AuthTokenEvent, AuthTokenState> {
   }
 
   FutureOr<void> _onInValidToken(AuthTokenInValidDetected event, Emitter<AuthTokenState> emit) async {
-    emit.call(AuthTokenInvalid());
+    emit.call(AuthTokenInvalid(message: event.message));
   }
 
   FutureOr<void> _onTestValidityToken(AuthTokenTestAvailability event, Emitter<AuthTokenState> emit) async {
