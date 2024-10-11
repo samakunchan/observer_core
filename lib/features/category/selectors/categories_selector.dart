@@ -24,18 +24,29 @@ class CategoriesSelector extends StatelessWidget {
   }
 
   List<CategoryModel> _getListCategories(CategoryState state) {
-    if (state is CategoriesAreLoadedSuccessfully) {
-      final List<CategoryModel> categoryProjects =
-          state.categories.where((CategoryModel category) => category.environment?.title == 'Portfolio').toList();
+    switch (state) {
+      case CategoriesAreLoadedSuccessfully():
+        final List<CategoryModel> categoryProjects =
+            state.categories.where((CategoryModel category) => category.environment?.title == 'Portfolio').toList();
 
-      final CategoryModel selectedCategory =
-          categoryProjects.where((CategoryModel category) => category.id == idCategoryProject).toList().first;
+        final CategoryModel selectedCategory =
+            categoryProjects.where((CategoryModel category) => category.id == idCategoryProject).toList().first;
 
-      onInit(selectedCategory);
+        onInit(selectedCategory);
 
-      return categoryProjects;
-    } else {
-      return [];
+        return categoryProjects;
+      case CategoriesAreFilteredSuccessfully():
+        final List<CategoryModel> categoryProjects =
+            state.categories.where((CategoryModel category) => category.environment?.title == 'Portfolio').toList();
+
+        final CategoryModel selectedCategory =
+            categoryProjects.where((CategoryModel category) => category.id == idCategoryProject).toList().first;
+
+        onInit(selectedCategory);
+
+        return categoryProjects;
+      default:
+        return [];
     }
   }
 }

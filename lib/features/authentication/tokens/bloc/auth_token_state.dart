@@ -15,8 +15,12 @@ final class AuthTokenValid extends AuthTokenState {
 }
 
 final class AuthTokenInvalid extends AuthTokenState {
+  const AuthTokenInvalid({required this.message});
+
+  final String message;
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }
 
 final class AuthTokenValidityIsTested extends AuthTokenState {

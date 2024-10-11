@@ -66,7 +66,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       ),
     );
 
-    await ProjectHandler.withReponse(
+    await ProjectHandler.withResponse(
       responses: responses,
       ifFailure: (Failure failure) => ProjectHandler.handleAllFailures(failure: failure, emit: emit),
       ifSuccess: (HttpResponse<dynamic> response) => ProjectHandler.handleDeleteSuccess(response: response, emit: emit),
@@ -110,7 +110,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       ),
     );
 
-    await DocumentHandler.withReponse(
+    await ProjectHandler.withResponse(
       responses: responses,
       ifFailure: (Failure failure) => ProjectHandler.handleAllFailures(failure: failure, emit: emit),
       ifSuccess: (HttpResponse<dynamic> response) => ProjectHandler.handleUpsertSuccess(response: response, emit: emit),
@@ -150,7 +150,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
 class ProjectHandler {
   const ProjectHandler._();
 
-  static Future<void> withReponse({
+  static Future<void> withResponse({
     required Either<Failure, HttpResponse<dynamic>> responses,
     required ValueChanged<Failure> ifFailure,
     required ValueChanged<HttpResponse<dynamic>> ifSuccess,

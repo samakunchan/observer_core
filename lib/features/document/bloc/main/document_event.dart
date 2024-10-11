@@ -131,3 +131,25 @@ class DocumentsFailed extends DocumentEvent {
   @override
   List<Object?> get props => [message];
 }
+
+class DocumentsErrorPageShown extends DocumentEvent {
+  const DocumentsErrorPageShown({this.message = ErrorMessage.noErrorMessageHandled});
+
+  /// Tout les messages d'érreurs:
+  /// - [ErrorMessage.noErrorMessageHandled]
+  /// - [ErrorMessage.networkOfflineMessage]
+  /// - [ErrorMessage.serverFailureMessage]
+  /// - [ErrorMessage.cacheFailureMessage]
+  /// - [ErrorMessage.notFoundMessage]
+  /// - [ErrorMessage.unAuthorizationMessage]
+  /// - [ErrorMessage.forbiddenMessage]
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class DocumentsOnReconnect extends DocumentEvent {
+  @override
+  List<Object?> get props => [];
+}

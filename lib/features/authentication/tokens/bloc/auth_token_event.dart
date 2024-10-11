@@ -12,10 +12,12 @@ class AuthTokenValidDetected extends AuthTokenEvent {
 }
 
 class AuthTokenInValidDetected extends AuthTokenEvent {
-  const AuthTokenInValidDetected();
+  const AuthTokenInValidDetected({required this.message});
+
+  final String message;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [message];
 }
 
 class AuthTokenTestAvailability extends AuthTokenEvent {
