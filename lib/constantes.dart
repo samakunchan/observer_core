@@ -80,6 +80,9 @@ class MenuText {
 
   /// Value = "authentification"
   static String auth = 'authentification';
+
+  /// Value = "Services"
+  static String services = 'Services';
 }
 
 class ErrorMessage {
