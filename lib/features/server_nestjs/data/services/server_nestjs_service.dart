@@ -171,4 +171,9 @@ abstract class ServerNestjsService {
     @Header('Content-Type') required String contentType,
     @Body() required String body,
   });
+
+  @GET('proposed-services/all')
+  Future<HttpResponse<dynamic>> getProposedServices({
+    @Header('Authorization') required String authorization,
+  });
 }

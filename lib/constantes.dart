@@ -32,6 +32,9 @@ class MainProject {
   /// Endpoint = /documents
   static const String documentsEndPoint = '/documents';
 
+  /// Endpoint = /documents
+  static const String services = '/proposed-services';
+
   /// Endpoint = '/documents/upload'
   static const String documentsUploadEndPoint = '/documents/upload';
 

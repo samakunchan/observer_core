@@ -64,6 +64,11 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           return await remoteService.getDocuments(
             authorization: 'Bearer ${params.accessToken}',
           );
+        case MainProject.services:
+        case '${MainProject.services}/all':
+          return await remoteService.getProposedServices(
+            authorization: 'Bearer ${params.accessToken}',
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
