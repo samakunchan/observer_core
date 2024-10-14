@@ -29,7 +29,7 @@ export 'picture/picture_model.dart';
 export 'project/project_model.dart';
 
 /// MODEL PROPOSED SERVICES
-export 'proposed_service/proposed_service.dart';
+export 'proposed_service/proposed_service_model.dart';
 
 /// MODEL REPRESENTANT
 export 'representant/representant_model.dart';

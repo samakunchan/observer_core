@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'proposed_service.dart';
+part of 'proposed_service_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ProposedServiceImpl _$$ProposedServiceImplFromJson(
+_$ProposedServiceModelImpl _$$ProposedServiceModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$ProposedServiceImpl(
+    _$ProposedServiceModelImpl(
       title: json['title'] as String,
       content: json['content'] as String,
       icon: json['icon'] as String,
@@ -19,8 +19,8 @@ _$ProposedServiceImpl _$$ProposedServiceImplFromJson(
       id: (json['id'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$ProposedServiceImplToJson(
-        _$ProposedServiceImpl instance) =>
+Map<String, dynamic> _$$ProposedServiceModelImplToJson(
+        _$ProposedServiceModelImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
       'content': instance.content,
