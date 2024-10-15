@@ -23,8 +23,6 @@ mixin _$SiegeModel {
   String get siret => throw _privateConstructorUsedError;
   @JsonKey(name: 'numero_voie')
   int get streetNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: 'indice_repetition')
-  String? get indiceRepetition => throw _privateConstructorUsedError;
   @JsonKey(name: 'type_voie')
   String get streetType => throw _privateConstructorUsedError;
   @JsonKey(name: 'libelle_voie')
@@ -47,6 +45,8 @@ mixin _$SiegeModel {
   String get lat => throw _privateConstructorUsedError;
   @JsonKey(name: 'longitude')
   String get lng => throw _privateConstructorUsedError;
+  @JsonKey(name: 'indice_repetition')
+  String? get indiceRepetition => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
 
   /// Serializes this SiegeModel to a JSON map.
@@ -68,7 +68,6 @@ abstract class $SiegeModelCopyWith<$Res> {
   $Res call(
       {String siret,
       @JsonKey(name: 'numero_voie') int streetNumber,
-      @JsonKey(name: 'indice_repetition') String? indiceRepetition,
       @JsonKey(name: 'type_voie') String streetType,
       @JsonKey(name: 'libelle_voie') String streetLabel,
       @JsonKey(name: 'complement_adresse') String additionnalAddressInfos,
@@ -80,6 +79,7 @@ abstract class $SiegeModelCopyWith<$Res> {
       @JsonKey(name: 'code_pays') String countryCode,
       @JsonKey(name: 'latitude') String lat,
       @JsonKey(name: 'longitude') String lng,
+      @JsonKey(name: 'indice_repetition') String? indiceRepetition,
       int? id});
 }
 
@@ -100,7 +100,6 @@ class _$SiegeModelCopyWithImpl<$Res, $Val extends SiegeModel>
   $Res call({
     Object? siret = null,
     Object? streetNumber = null,
-    Object? indiceRepetition = freezed,
     Object? streetType = null,
     Object? streetLabel = null,
     Object? additionnalAddressInfos = null,
@@ -112,6 +111,7 @@ class _$SiegeModelCopyWithImpl<$Res, $Val extends SiegeModel>
     Object? countryCode = null,
     Object? lat = null,
     Object? lng = null,
+    Object? indiceRepetition = freezed,
     Object? id = freezed,
   }) {
     return _then(_value.copyWith(
@@ -123,10 +123,6 @@ class _$SiegeModelCopyWithImpl<$Res, $Val extends SiegeModel>
           ? _value.streetNumber
           : streetNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      indiceRepetition: freezed == indiceRepetition
-          ? _value.indiceRepetition
-          : indiceRepetition // ignore: cast_nullable_to_non_nullable
-              as String?,
       streetType: null == streetType
           ? _value.streetType
           : streetType // ignore: cast_nullable_to_non_nullable
@@ -171,6 +167,10 @@ class _$SiegeModelCopyWithImpl<$Res, $Val extends SiegeModel>
           ? _value.lng
           : lng // ignore: cast_nullable_to_non_nullable
               as String,
+      indiceRepetition: freezed == indiceRepetition
+          ? _value.indiceRepetition
+          : indiceRepetition // ignore: cast_nullable_to_non_nullable
+              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -190,7 +190,6 @@ abstract class _$$SiegeModelImplCopyWith<$Res>
   $Res call(
       {String siret,
       @JsonKey(name: 'numero_voie') int streetNumber,
-      @JsonKey(name: 'indice_repetition') String? indiceRepetition,
       @JsonKey(name: 'type_voie') String streetType,
       @JsonKey(name: 'libelle_voie') String streetLabel,
       @JsonKey(name: 'complement_adresse') String additionnalAddressInfos,
@@ -202,6 +201,7 @@ abstract class _$$SiegeModelImplCopyWith<$Res>
       @JsonKey(name: 'code_pays') String countryCode,
       @JsonKey(name: 'latitude') String lat,
       @JsonKey(name: 'longitude') String lng,
+      @JsonKey(name: 'indice_repetition') String? indiceRepetition,
       int? id});
 }
 
@@ -220,7 +220,6 @@ class __$$SiegeModelImplCopyWithImpl<$Res>
   $Res call({
     Object? siret = null,
     Object? streetNumber = null,
-    Object? indiceRepetition = freezed,
     Object? streetType = null,
     Object? streetLabel = null,
     Object? additionnalAddressInfos = null,
@@ -232,6 +231,7 @@ class __$$SiegeModelImplCopyWithImpl<$Res>
     Object? countryCode = null,
     Object? lat = null,
     Object? lng = null,
+    Object? indiceRepetition = freezed,
     Object? id = freezed,
   }) {
     return _then(_$SiegeModelImpl(
@@ -243,10 +243,6 @@ class __$$SiegeModelImplCopyWithImpl<$Res>
           ? _value.streetNumber
           : streetNumber // ignore: cast_nullable_to_non_nullable
               as int,
-      indiceRepetition: freezed == indiceRepetition
-          ? _value.indiceRepetition
-          : indiceRepetition // ignore: cast_nullable_to_non_nullable
-              as String?,
       streetType: null == streetType
           ? _value.streetType
           : streetType // ignore: cast_nullable_to_non_nullable
@@ -291,6 +287,10 @@ class __$$SiegeModelImplCopyWithImpl<$Res>
           ? _value.lng
           : lng // ignore: cast_nullable_to_non_nullable
               as String,
+      indiceRepetition: freezed == indiceRepetition
+          ? _value.indiceRepetition
+          : indiceRepetition // ignore: cast_nullable_to_non_nullable
+              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -305,7 +305,6 @@ class _$SiegeModelImpl implements _SiegeModel {
   const _$SiegeModelImpl(
       {required this.siret,
       @JsonKey(name: 'numero_voie') required this.streetNumber,
-      @JsonKey(name: 'indice_repetition') this.indiceRepetition,
       @JsonKey(name: 'type_voie') required this.streetType,
       @JsonKey(name: 'libelle_voie') required this.streetLabel,
       @JsonKey(name: 'complement_adresse')
@@ -318,6 +317,7 @@ class _$SiegeModelImpl implements _SiegeModel {
       @JsonKey(name: 'code_pays') required this.countryCode,
       @JsonKey(name: 'latitude') required this.lat,
       @JsonKey(name: 'longitude') required this.lng,
+      @JsonKey(name: 'indice_repetition') this.indiceRepetition,
       this.id});
 
   factory _$SiegeModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -328,9 +328,6 @@ class _$SiegeModelImpl implements _SiegeModel {
   @override
   @JsonKey(name: 'numero_voie')
   final int streetNumber;
-  @override
-  @JsonKey(name: 'indice_repetition')
-  final String? indiceRepetition;
   @override
   @JsonKey(name: 'type_voie')
   final String streetType;
@@ -365,11 +362,14 @@ class _$SiegeModelImpl implements _SiegeModel {
   @JsonKey(name: 'longitude')
   final String lng;
   @override
+  @JsonKey(name: 'indice_repetition')
+  final String? indiceRepetition;
+  @override
   final int? id;
 
   @override
   String toString() {
-    return 'SiegeModel(siret: $siret, streetNumber: $streetNumber, indiceRepetition: $indiceRepetition, streetType: $streetType, streetLabel: $streetLabel, additionnalAddressInfos: $additionnalAddressInfos, address1: $address1, address2: $address2, zipCode: $zipCode, city: $city, country: $country, countryCode: $countryCode, lat: $lat, lng: $lng, id: $id)';
+    return 'SiegeModel(siret: $siret, streetNumber: $streetNumber, streetType: $streetType, streetLabel: $streetLabel, additionnalAddressInfos: $additionnalAddressInfos, address1: $address1, address2: $address2, zipCode: $zipCode, city: $city, country: $country, countryCode: $countryCode, lat: $lat, lng: $lng, indiceRepetition: $indiceRepetition, id: $id)';
   }
 
   @override
@@ -380,8 +380,6 @@ class _$SiegeModelImpl implements _SiegeModel {
             (identical(other.siret, siret) || other.siret == siret) &&
             (identical(other.streetNumber, streetNumber) ||
                 other.streetNumber == streetNumber) &&
-            (identical(other.indiceRepetition, indiceRepetition) ||
-                other.indiceRepetition == indiceRepetition) &&
             (identical(other.streetType, streetType) ||
                 other.streetType == streetType) &&
             (identical(other.streetLabel, streetLabel) ||
@@ -400,6 +398,8 @@ class _$SiegeModelImpl implements _SiegeModel {
                 other.countryCode == countryCode) &&
             (identical(other.lat, lat) || other.lat == lat) &&
             (identical(other.lng, lng) || other.lng == lng) &&
+            (identical(other.indiceRepetition, indiceRepetition) ||
+                other.indiceRepetition == indiceRepetition) &&
             (identical(other.id, id) || other.id == id));
   }
 
@@ -409,7 +409,6 @@ class _$SiegeModelImpl implements _SiegeModel {
       runtimeType,
       siret,
       streetNumber,
-      indiceRepetition,
       streetType,
       streetLabel,
       additionnalAddressInfos,
@@ -421,6 +420,7 @@ class _$SiegeModelImpl implements _SiegeModel {
       countryCode,
       lat,
       lng,
+      indiceRepetition,
       id);
 
   /// Create a copy of SiegeModel
@@ -443,7 +443,6 @@ abstract class _SiegeModel implements SiegeModel {
   const factory _SiegeModel(
       {required final String siret,
       @JsonKey(name: 'numero_voie') required final int streetNumber,
-      @JsonKey(name: 'indice_repetition') final String? indiceRepetition,
       @JsonKey(name: 'type_voie') required final String streetType,
       @JsonKey(name: 'libelle_voie') required final String streetLabel,
       @JsonKey(name: 'complement_adresse')
@@ -456,6 +455,7 @@ abstract class _SiegeModel implements SiegeModel {
       @JsonKey(name: 'code_pays') required final String countryCode,
       @JsonKey(name: 'latitude') required final String lat,
       @JsonKey(name: 'longitude') required final String lng,
+      @JsonKey(name: 'indice_repetition') final String? indiceRepetition,
       final int? id}) = _$SiegeModelImpl;
 
   factory _SiegeModel.fromJson(Map<String, dynamic> json) =
@@ -466,9 +466,6 @@ abstract class _SiegeModel implements SiegeModel {
   @override
   @JsonKey(name: 'numero_voie')
   int get streetNumber;
-  @override
-  @JsonKey(name: 'indice_repetition')
-  String? get indiceRepetition;
   @override
   @JsonKey(name: 'type_voie')
   String get streetType;
@@ -502,6 +499,9 @@ abstract class _SiegeModel implements SiegeModel {
   @override
   @JsonKey(name: 'longitude')
   String get lng;
+  @override
+  @JsonKey(name: 'indice_repetition')
+  String? get indiceRepetition;
   @override
   int? get id;
 

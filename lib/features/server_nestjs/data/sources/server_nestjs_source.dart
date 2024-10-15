@@ -64,6 +64,11 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           return await remoteService.getDocuments(
             authorization: 'Bearer ${params.accessToken}',
           );
+        case MainProject.services:
+        case '${MainProject.services}/all':
+          return await remoteService.getProposedServices(
+            authorization: 'Bearer ${params.accessToken}',
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -97,6 +102,13 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           );
         case MainProject.documentsEndPoint:
           return await remoteService.upsertOneDocument(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            body: params.body,
+          );
+        case MainProject.services:
+        case '${MainProject.services}/all':
+          return await remoteService.upsertOneService(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
@@ -166,6 +178,12 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
+          );
+        case MainProject.services:
+          return await remoteService.deleteOneService(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            id: params.body,
           );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));

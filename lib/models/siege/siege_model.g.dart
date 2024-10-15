@@ -10,7 +10,6 @@ _$SiegeModelImpl _$$SiegeModelImplFromJson(Map<String, dynamic> json) =>
     _$SiegeModelImpl(
       siret: json['siret'] as String,
       streetNumber: (json['numero_voie'] as num).toInt(),
-      indiceRepetition: json['indice_repetition'] as String?,
       streetType: json['type_voie'] as String,
       streetLabel: json['libelle_voie'] as String,
       additionnalAddressInfos: json['complement_adresse'] as String,
@@ -22,6 +21,7 @@ _$SiegeModelImpl _$$SiegeModelImplFromJson(Map<String, dynamic> json) =>
       countryCode: json['code_pays'] as String,
       lat: json['latitude'] as String,
       lng: json['longitude'] as String,
+      indiceRepetition: json['indice_repetition'] as String?,
       id: (json['id'] as num?)?.toInt(),
     );
 
@@ -29,7 +29,6 @@ Map<String, dynamic> _$$SiegeModelImplToJson(_$SiegeModelImpl instance) =>
     <String, dynamic>{
       'siret': instance.siret,
       'numero_voie': instance.streetNumber,
-      'indice_repetition': instance.indiceRepetition,
       'type_voie': instance.streetType,
       'libelle_voie': instance.streetLabel,
       'complement_adresse': instance.additionnalAddressInfos,
@@ -41,5 +40,6 @@ Map<String, dynamic> _$$SiegeModelImplToJson(_$SiegeModelImpl instance) =>
       'code_pays': instance.countryCode,
       'latitude': instance.lat,
       'longitude': instance.lng,
+      'indice_repetition': instance.indiceRepetition,
       'id': instance.id,
     };

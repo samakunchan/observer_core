@@ -1,5 +1,21 @@
 # Observer core
 
+## 🚀 0.17.0 - 15/10/2024
+### Nouveautés
+
+- Création d'un model et d'un DTO pour le service.
+- Création d'un bloc pour gérer le state management.
+- Configuration des requêtes HTTP afin d'avoir le CRUD.
+
+### Changements
+
+- Ajout de messages d'érreurs pour un cas de failure de la feature document.
+- Suppression du mot clé `this` inutile pour les extensions.
+
+### Correctifs
+
+- Remise en place d'un override manquant.
+
 ## 🚀 0.16.0 - 11/10/2024
 ### Nouveautés
 

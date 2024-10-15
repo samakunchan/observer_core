@@ -19,5 +19,8 @@ export 'environment/feature_environment_export.dart';
 /// PROJECTS
 export 'project/feature_project_export.dart';
 
+/// PROJECTS
+export 'proposed_services/proposed_services_export.dart';
+
 /// SERVER NESTJS
 export 'server_nestjs/feature_server_nestjs_export.dart';
