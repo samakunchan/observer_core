@@ -132,11 +132,13 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     if (!event.isFetchingApi) {
       emit
         ..call(CategoryIsLoading())
-        ..call(CategoriesAreLoadedSuccessfully(
-          categories: event.categories,
-          screenMode: ScreenMode.list,
-          selectedId: 1,
-        ));
+        ..call(
+          CategoriesAreLoadedSuccessfully(
+            categories: event.categories,
+            screenMode: ScreenMode.list,
+            selectedId: 1,
+          ),
+        );
     } else {
       final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
         GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
