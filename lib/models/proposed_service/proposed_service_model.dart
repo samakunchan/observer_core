@@ -8,10 +8,10 @@ class ProposedServiceModel with _$ProposedServiceModel {
   const factory ProposedServiceModel({
     required String title,
     required String content,
-    required String icon,
     required bool isPublished,
     required String createdAt,
     required String updatedAt,
+    String? icon,
     String? deletedAt,
     int? id,
   }) = _ProposedServiceModel;
