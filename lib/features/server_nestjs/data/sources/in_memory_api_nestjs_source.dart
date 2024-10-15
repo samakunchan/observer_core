@@ -67,7 +67,7 @@ class InMemoryApiNestjsSource implements AbstractInMemoryApiNestjsSource {
   }
 
   @override
-  Future<HttpResponse> search(SearchParams params) async {
+  Future<HttpResponse<dynamic>> search(SearchParams params) async {
     try {
       switch (params.endPoint) {
         case MainProject.environmentsSearchEndPoint:

@@ -286,7 +286,7 @@ class DocumentHandler {
       case ForbiddenFailure():
         return emit.call(DocumentsHaveFailures(message: failure.message));
       case IDontKnowWhatImDoingFailure():
-        return emit.call(const DocumentsHaveFailures(message: ErrorMessage.noErrorMessageHandled));
+        return emit.call(const DocumentsHaveFailures());
       default:
         return emit.call(DocumentsAreLoading());
     }

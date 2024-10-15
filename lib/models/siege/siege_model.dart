@@ -28,7 +28,6 @@ class SiegeModel with _$SiegeModel {
   const factory SiegeModel({
     required String siret,
     @JsonKey(name: 'numero_voie') required int streetNumber,
-    @JsonKey(name: 'indice_repetition') String? indiceRepetition,
     @JsonKey(name: 'type_voie') required String streetType,
     @JsonKey(name: 'libelle_voie') required String streetLabel,
     @JsonKey(name: 'complement_adresse') required String additionnalAddressInfos,
@@ -40,6 +39,7 @@ class SiegeModel with _$SiegeModel {
     @JsonKey(name: 'code_pays') required String countryCode,
     @JsonKey(name: 'latitude') required String lat,
     @JsonKey(name: 'longitude') required String lng,
+    @JsonKey(name: 'indice_repetition') String? indiceRepetition,
     int? id,
   }) = _SiegeModel;
 

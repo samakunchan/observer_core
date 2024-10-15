@@ -18,7 +18,7 @@ extension StringExtension on String {
   /// // "Jeudi 12 Septembre 2024"
   /// ```
   String capitalize() {
-    return this.split(' ').map((String text) => text.ucFirst()).toList().join(' ');
+    return split(' ').map((String text) => text.ucFirst()).toList().join(' ');
   }
 
   /// Permet de transformer le texte du mimetype en quelque chose de plus lisible
@@ -28,7 +28,7 @@ extension StringExtension on String {
   /// // "Image JPEG"
   /// ```
   String formatMimetype() {
-    final List<String> textSeparated = this.split('/').map((String text) => text.ucFirst()).toList();
+    final List<String> textSeparated = split('/').map((String text) => text.ucFirst()).toList();
     final String firstPart = textSeparated.first.ucFirst();
     final String lastPart = textSeparated.last.toUpperCase();
     return [firstPart, lastPart].join(' ');

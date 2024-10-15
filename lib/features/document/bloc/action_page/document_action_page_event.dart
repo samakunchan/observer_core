@@ -5,6 +5,7 @@ sealed class DocumentActionPageEvent extends Equatable {
 }
 
 class DocumentPageEditableActivated extends DocumentActionPageEvent {
+  @override
   List<Object?> get props => [];
 }
 

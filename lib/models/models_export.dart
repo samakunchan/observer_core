@@ -28,6 +28,9 @@ export 'picture/picture_model.dart';
 /// MODEL PROJECT
 export 'project/project_model.dart';
 
+/// MODEL PROPOSED SERVICES
+export 'proposed_service/proposed_service_model.dart';
+
 /// MODEL REPRESENTANT
 export 'representant/representant_model.dart';
 
