@@ -19,3 +19,6 @@ export 'projects/project_dto.dart';
 
 /// PROPOSED SERVICE DTO
 export 'proposed_service_dto/proposed_service_dto.dart';
+
+/// PROPOSED SKILLS
+export 'skills/skills_dto.dart';
