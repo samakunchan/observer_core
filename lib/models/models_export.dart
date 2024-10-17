@@ -39,3 +39,6 @@ export 'search/search_model.dart';
 
 /// MODEL SIEGE
 export 'siege/siege_model.dart';
+
+/// MODEL SKILL
+export 'skill/skill_model.dart';
