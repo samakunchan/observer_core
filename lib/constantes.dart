@@ -95,6 +95,9 @@ class MenuText {
 
   /// Value = "Technos"
   static String skills = 'Technos';
+
+  /// Value = "Arguments"
+  static String reasons = 'Arguments';
 }
 
 class ErrorMessage {
