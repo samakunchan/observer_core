@@ -38,6 +38,9 @@ class MainProject {
   /// Endpoint = /skills
   static const String skills = '/skills';
 
+  /// Endpoint = /reasons
+  static const String reasons = '/reasons';
+
   /// Endpoint = '/documents/upload'
   static const String documentsUploadEndPoint = '/documents/upload';
 
