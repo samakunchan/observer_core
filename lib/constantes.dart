@@ -32,8 +32,11 @@ class MainProject {
   /// Endpoint = /documents
   static const String documentsEndPoint = '/documents';
 
-  /// Endpoint = /documents
+  /// Endpoint = /proposed-services
   static const String services = '/proposed-services';
+
+  /// Endpoint = /skills
+  static const String skills = '/skills';
 
   /// Endpoint = '/documents/upload'
   static const String documentsUploadEndPoint = '/documents/upload';
@@ -86,6 +89,9 @@ class MenuText {
 
   /// Value = "Services"
   static String services = 'Services';
+
+  /// Value = "Technos"
+  static String skills = 'Technos';
 }
 
 class ErrorMessage {
