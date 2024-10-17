@@ -1,5 +1,21 @@
 # Observer core
 
+## 🚀 0.18.0 - 17/10/2024
+### Nouveautés
+
+- Création d'un model et d'un DTO pour les skills.
+- Création d'un bloc pour gérer le state management.
+- Configuration des requêtes HTTP afin d'avoir le CRUD.
+
+### Changements
+
+- Ajout de deux fichiers supplémentaires dans le gitignore.
+
+### Correctifs
+
+- Pas de correctifs.
+
+
 ## 🚀 0.17.0 - 15/10/2024
 ### Nouveautés
 
