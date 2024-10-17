@@ -69,6 +69,11 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           return await remoteService.getProposedServices(
             authorization: 'Bearer ${params.accessToken}',
           );
+        case MainProject.skills:
+        case '${MainProject.skills}/all':
+          return await remoteService.getSkills(
+            authorization: 'Bearer ${params.accessToken}',
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -109,6 +114,13 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
         case MainProject.services:
         case '${MainProject.services}/all':
           return await remoteService.upsertOneService(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            body: params.body,
+          );
+        case MainProject.skills:
+        case '${MainProject.skills}/all':
+          return await remoteService.upsertOneSkill(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
@@ -181,6 +193,12 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           );
         case MainProject.services:
           return await remoteService.deleteOneService(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            id: params.body,
+          );
+        case MainProject.skills:
+          return await remoteService.deleteOneSkill(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             id: params.body,
