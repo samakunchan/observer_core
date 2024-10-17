@@ -209,4 +209,23 @@ abstract class ServerNestjsService {
     @Header('Content-Type') required String contentType,
     @Path('id') required String id,
   });
+
+  @GET('reasons/all')
+  Future<HttpResponse<dynamic>> getReasons({
+    @Header('Authorization') required String authorization,
+  });
+
+  @POST('reasons')
+  Future<HttpResponse<dynamic>> upsertOneReason({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @DELETE('reasons/{id}')
+  Future<HttpResponse<dynamic>> deleteOneReason({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Path('id') required String id,
+  });
 }

@@ -31,6 +31,9 @@ export 'project/project_model.dart';
 /// MODEL PROPOSED SERVICES
 export 'proposed_service/proposed_service_model.dart';
 
+/// MODEL REASON
+export 'reason/reason_model.dart';
+
 /// MODEL REPRESENTANT
 export 'representant/representant_model.dart';
 

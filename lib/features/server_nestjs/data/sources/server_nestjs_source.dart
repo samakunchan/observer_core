@@ -74,6 +74,11 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           return await remoteService.getSkills(
             authorization: 'Bearer ${params.accessToken}',
           );
+        case MainProject.reasons:
+        case '${MainProject.reasons}/all':
+          return await remoteService.getReasons(
+            authorization: 'Bearer ${params.accessToken}',
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -125,28 +130,12 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
             contentType: MainProject.defaultContentType,
             body: params.body,
           );
-        default:
-          throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
-      }
-    } on DioException catch (e) {
-      throw handleAllException(e);
-    }
-  }
-
-  /// Le service [ServerNestjsService] exécute les requêtes ['POST'] pour les fichiers.
-  @override
-  Future<HttpResponse<dynamic>> uploadFile(UploadFormDataParams params) async {
-    try {
-      switch (params.endPoint) {
-        case MainProject.documentsUploadEndPoint:
-          return await remoteService.uploadOneDocument(
+        case MainProject.reasons:
+        case '${MainProject.reasons}/all':
+          return await remoteService.upsertOneReason(
             authorization: 'Bearer ${params.accessToken}',
-            formData: params.formData,
-          );
-        case MainProject.documentsMultiUploadEndPoint:
-          return await remoteService.uploadMultipleDocuments(
-            authorization: 'Bearer ${params.accessToken}',
-            formData: params.formData,
+            contentType: MainProject.defaultContentType,
+            body: params.body,
           );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
@@ -202,6 +191,35 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             id: params.body,
+          );
+        case MainProject.reasons:
+          return await remoteService.deleteOneReason(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            id: params.body,
+          );
+        default:
+          throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+      }
+    } on DioException catch (e) {
+      throw handleAllException(e);
+    }
+  }
+
+  /// Le service [ServerNestjsService] exécute les requêtes ['POST'] pour les fichiers.
+  @override
+  Future<HttpResponse<dynamic>> uploadFile(UploadFormDataParams params) async {
+    try {
+      switch (params.endPoint) {
+        case MainProject.documentsUploadEndPoint:
+          return await remoteService.uploadOneDocument(
+            authorization: 'Bearer ${params.accessToken}',
+            formData: params.formData,
+          );
+        case MainProject.documentsMultiUploadEndPoint:
+          return await remoteService.uploadMultipleDocuments(
+            authorization: 'Bearer ${params.accessToken}',
+            formData: params.formData,
           );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
