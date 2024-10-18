@@ -1,6 +1,9 @@
 /// DTOS
 library;
 
+/// ABOUTS DTO
+export 'abouts/abouts_dto.dart';
+
 /// CATEGORIES DTO
 export 'categories/category_upsert_dto.dart';
 
