@@ -1,6 +1,9 @@
 /// LIBRARY FEATURES
 library;
 
+/// ABOUT ME
+export 'about_me/about_me_export.dart';
+
 /// ARTICLES
 export 'article/feature_article_export.dart';
 

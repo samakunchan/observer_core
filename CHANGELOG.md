@@ -1,5 +1,21 @@
 # Observer core
 
+## 🚀 0.20.0 - 18/10/2024
+### Nouveautés
+
+- Création d'un model et d'un DTO pour about me.
+- Création d'un bloc pour gérer le state management.
+- Configuration des requêtes HTTP afin d'avoir le CRUD.
+
+### Changements
+
+- Pas de changements.
+
+### Correctifs
+
+- Pas de correctifs.
+
+
 ## 🚀 0.19.0 - 17/10/2024
 ### Nouveautés
 

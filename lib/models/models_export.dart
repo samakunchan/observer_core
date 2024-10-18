@@ -1,6 +1,9 @@
 /// LIBRARY MODELS
 library;
 
+/// MODEL ABOUT ME
+export 'about_me/about_me_model.dart';
+
 /// MODEL ARTICLE
 export 'article/article_model.dart';
 
