@@ -79,6 +79,11 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           return await remoteService.getReasons(
             authorization: 'Bearer ${params.accessToken}',
           );
+        case MainProject.aboutme:
+        case '${MainProject.aboutme}/all':
+          return await remoteService.getDatasAboutMe(
+            authorization: 'Bearer ${params.accessToken}',
+          );
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -133,6 +138,13 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
         case MainProject.reasons:
         case '${MainProject.reasons}/all':
           return await remoteService.upsertOneReason(
+            authorization: 'Bearer ${params.accessToken}',
+            contentType: MainProject.defaultContentType,
+            body: params.body,
+          );
+        case MainProject.aboutme:
+        case '${MainProject.aboutme}/all':
+          return await remoteService.upsertAbouts(
             authorization: 'Bearer ${params.accessToken}',
             contentType: MainProject.defaultContentType,
             body: params.body,
