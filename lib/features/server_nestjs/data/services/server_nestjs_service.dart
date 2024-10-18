@@ -228,4 +228,16 @@ abstract class ServerNestjsService {
     @Header('Content-Type') required String contentType,
     @Path('id') required String id,
   });
+
+  @GET('abouts/all')
+  Future<HttpResponse<dynamic>> getDatasAboutMe({
+    @Header('Authorization') required String authorization,
+  });
+
+  @POST('abouts')
+  Future<HttpResponse<dynamic>> upsertAbouts({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
 }
