@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:observer_core/features/authentication/dependency_injection.dart' as dependency_injection_token;
-import 'package:observer_core/features/server_nestjs/dependency_injection.dart' as dependency_injection_server;
-import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
+import 'package:observer_core/server_nestjs/dependency_injection.dart' as dependency_injection_server;
+import 'package:observer_core/server_nestjs/feature_server_nestjs_export.dart';
 
 class ServerFeature {
   const ServerFeature._();

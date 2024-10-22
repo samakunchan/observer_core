@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
-import 'package:observer_core/enums/enums.dart';
+import 'package:observer_core/enums/enums_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
 import 'package:retrofit/retrofit.dart';

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
+import 'package:observer_core/server_nestjs/feature_server_nestjs_export.dart';
 import 'package:retrofit/dio.dart';
 
 /// Détails des méthodes à implementer :
