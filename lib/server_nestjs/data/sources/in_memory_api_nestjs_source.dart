@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/features/features_export.dart';
-import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
+import 'package:observer_core/server_nestjs/feature_server_nestjs_export.dart';
 import 'package:retrofit/dio.dart';
 
 /// Class a instancier ou injecter dans un [GetIt] afin d'être utiliser <br>

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:observer_core/features/server_nestjs/feature_server_nestjs_export.dart';
+import 'package:observer_core/server_nestjs/feature_server_nestjs_export.dart';
 
 class BaseRepository {
   /// Méthode qui va exécuter le callback de l'[ServerNestjsSource]. <br>
