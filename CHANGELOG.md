@@ -32,6 +32,7 @@
 
 - Pas de correctifs.
 
+
 ## 🚀 0.20.0 - 18/10/2024
 ### Nouveautés
 
@@ -95,6 +96,7 @@
 ### Correctifs
 
 - Remise en place d'un override manquant.
+
 
 ## 🚀 0.16.0 - 11/10/2024
 ### Nouveautés
@@ -191,6 +193,7 @@
 ### Correctifs
 
 - Pas de fixes.
+
 
 ## 🚀 0.11.0 - 16/09/2024
 ### Nouveautés
