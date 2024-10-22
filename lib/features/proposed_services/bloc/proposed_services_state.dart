@@ -1,6 +1,6 @@
 part of 'proposed_services_bloc.dart';
 
-sealed class ProposedServicesState extends Equatable {
+abstract class ProposedServicesState extends Equatable {
   const ProposedServicesState();
 }
 

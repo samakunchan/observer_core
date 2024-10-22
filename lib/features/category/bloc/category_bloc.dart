@@ -18,20 +18,15 @@ part 'category_state.dart';
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
     on<CategoriesInitialized>(_reInitilizeCategories);
-    on<CategoriesInGridTriggered>(_showAllCategoriesInGridView);
-    on<CategoriesInGridTriggeredInMemory>(_showAllCategoriesInMemoryInGridView);
-    on<CategoriesInListTriggered>(_showAllCategoriesListView);
-    on<CategoriesInListTriggeredInMemory>(_showAllCategoriesInMemoryListView);
+    on<CategoriesInGridRequested>(_showAllCategoriesInGridView);
+    on<CategoriesInGridRequestedInMemory>(_showAllCategoriesInMemoryInGridView);
+    on<CategoriesInListRequested>(_showAllCategoriesListView);
+    on<CategoriesInListRequestedInMemory>(_showAllCategoriesInMemoryListView);
     on<CategoriesReloaded>(_reloadCategories);
     on<CategoryDeleted>(_deleteCategory);
     on<CategoryFiltered>(_filterCategories);
     on<CategorySubmitted>(_upsertCategory);
     on<CategoriesSelected>(_selectAndShowOneCategorie);
-    on<CategoriesTested>(_testCategory);
-  }
-
-  Future<void> _testCategory(CategoriesTested event, Emitter<CategoryState> emit) async {
-    emit.call(const CategoryIsDeletedSuccessfully(categoryDeleted: CategoryModel.empty));
   }
 
   Future<void> _reInitilizeCategories(CategoriesInitialized event, Emitter<CategoryState> emit) async {
@@ -39,7 +34,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   /// GRID VIEW API
-  Future<void> _showAllCategoriesInGridView(CategoriesInGridTriggered event, Emitter<CategoryState> emit) async {
+  Future<void> _showAllCategoriesInGridView(CategoriesInGridRequested event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
@@ -68,7 +63,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   /// GRID VIEW LOCAL
-  Future<void> _showAllCategoriesInMemoryInGridView(CategoriesInGridTriggeredInMemory event, Emitter<CategoryState> emit) async {
+  Future<void> _showAllCategoriesInMemoryInGridView(CategoriesInGridRequestedInMemory event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
@@ -97,7 +92,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   /// List VIEW API
-  Future<void> _showAllCategoriesListView(CategoriesInListTriggered event, Emitter<CategoryState> emit) async {
+  Future<void> _showAllCategoriesListView(CategoriesInListRequested event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
@@ -127,7 +122,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   }
 
   /// List VIEW LOCAL
-  Future<void> _showAllCategoriesInMemoryListView(CategoriesInListTriggeredInMemory event, Emitter<CategoryState> emit) async {
+  Future<void> _showAllCategoriesInMemoryListView(CategoriesInListRequestedInMemory event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
@@ -282,21 +277,21 @@ class CategoryHandler {
   static Future<void> handleAllFailures({required Failure failure, required Emitter<CategoryState> emit}) async {
     switch (failure) {
       case ServerFailure():
-        return emit.call(CategoriesAreNotLoaded(message: failure.message));
+        return emit.call(CategoriesHaveFailures(message: failure.message));
       case CacheFailure():
-        return emit.call(CategoriesAreNotLoaded(message: failure.message));
+        return emit.call(CategoriesHaveFailures(message: failure.message));
       case BadRequestFailure():
-        return emit.call(CategoriesAreNotLoaded(message: failure.message));
+        return emit.call(CategoriesHaveFailures(message: failure.message));
       case NetworkFailure():
-        return emit.call(CategoriesAreNotLoaded(message: failure.message));
+        return emit.call(CategoriesHaveFailures(message: failure.message));
       case NotFoundFailure():
-        return emit.call(CategoriesAreNotLoaded(message: failure.message));
+        return emit.call(CategoriesHaveFailures(message: failure.message));
       case UnAuthorizedFailure():
-        return emit.call(CategoriesAreNotLoaded(message: failure.message));
+        return emit.call(CategoriesHaveFailures(message: failure.message));
       case ForbiddenFailure():
-        return emit.call(CategoriesAreNotLoaded(message: failure.message));
+        return emit.call(CategoriesHaveFailures(message: failure.message));
       case IDontKnowWhatImDoingFailure():
-        return emit.call(const CategoriesAreNotLoaded());
+        return emit.call(const CategoriesHaveFailures());
       default:
         return emit.call(CategoryIsLoading());
     }

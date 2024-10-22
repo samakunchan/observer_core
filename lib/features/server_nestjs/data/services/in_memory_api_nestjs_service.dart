@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/models/environment/environment_model.dart';
+import 'package:observer_core/utils.dart';
 import 'package:retrofit/dio.dart';
 
 abstract class InMemoryApiNestjsService {
@@ -43,7 +44,6 @@ class _InMemoryApiNestjsService implements InMemoryApiNestjsService {
     );
   }
 
-  // TODO Faire la même chose avec les données in memory concernant le search normal et strict.
   @override
   Future<HttpResponse<dynamic>> searchEnvironments({required String body}) async {
     final String environmentsInString = await _secureStorage.read(key: 'ENVIRONMENTS') ?? '[]';
@@ -54,6 +54,8 @@ class _InMemoryApiNestjsService implements InMemoryApiNestjsService {
     final List<EnvironmentModel> environementFiltered = environments.where((EnvironmentModel env) {
       return env.title == '';
     }).toList();
+
+    logger.i('InMemoryApiNestjsService - $environementFiltered');
 
     return HttpResponse<dynamic>(
       <String, dynamic>{'message': 'success de l‘ajout dans le storage'},

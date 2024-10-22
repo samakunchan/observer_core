@@ -27,7 +27,6 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<DocumentsInGridAreCalled>(_requestAllDocumentsInGridView);
     on<DocumentsInListAreCalled>(_requestAllDocumentsInListView);
     on<DocumentsFilteredAreCalled>(_requestFilteredDocuments);
-    on<DocumentIsCalled>(_requestOneDocument);
     on<OneDocumentToUpload>(_uploadOneDocument);
     on<MultipleDocumentsToUpload>(_uploadMultipleDocuments);
     on<DocumentsReloaded>(_reloadDocuments);
@@ -164,10 +163,6 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     );
   }
 
-  FutureOr<void> _requestOneDocument(DocumentIsCalled event, Emitter<DocumentState> emit) async {
-    // TODO: implement event handler
-  }
-
   FutureOr<void> _showCreateAction(DocumentActionCreateCalled event, Emitter<DocumentState> emit) async {
     emit.call(const DocumentToCreateForm());
   }
@@ -243,7 +238,8 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
 
   Future<void> _showErrorPage(DocumentsErrorPageShown event, Emitter<DocumentState> emit) async {
     logger.t('On lance le state pour charger la page d‘érreur.');
-    emit.call(DocumentWithErrorPage(message: event.message));
+    emit.call(DocumentsHaveFailures(message: event.message));
+    // emit.call(DocumentWithErrorPage(message: event.message));
   }
 }
 
@@ -312,7 +308,7 @@ class DocumentHandler {
     required HttpResponse<dynamic> response,
     required Emitter<DocumentState> emit,
   }) async {
-    if (response.data.runtimeType == List) {
+    if ((response.data as List).runtimeType == List) {
       final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
       final List<DocumentModel> documents = datasJson.map(DocumentModel.fromJson).toList();
 
