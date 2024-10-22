@@ -63,3 +63,5 @@ class BadRequestFailure extends Failure {
 }
 
 class IDontKnowWhatImDoingFailure extends Failure {}
+
+class NothingWorkDoingFailure extends Failure {}

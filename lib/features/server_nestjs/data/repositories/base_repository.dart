@@ -37,6 +37,8 @@ class BaseRepository {
       return Left(BadRequestFailure(message: e.message ?? ''));
     } on IDontKnowWhatImDoingException {
       return Left(IDontKnowWhatImDoingFailure());
+    } catch (e) {
+      return Left(NothingWorkDoingFailure());
     }
   }
 
@@ -62,6 +64,8 @@ class BaseRepository {
       return Left(BadRequestFailure(message: e.message ?? ''));
     } on IDontKnowWhatImDoingException {
       return Left(IDontKnowWhatImDoingFailure());
+    } catch (e) {
+      return Left(NothingWorkDoingFailure());
     }
   }
 }

@@ -9,13 +9,8 @@ class CategoriesInitialized extends CategoryEvent {
   List<Object?> get props => [];
 }
 
-class CategoriesTested extends CategoryEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-class CategoriesInGridTriggeredInMemory extends CategoryEvent {
-  const CategoriesInGridTriggeredInMemory({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+class CategoriesInGridRequestedInMemory extends CategoryEvent {
+  const CategoriesInGridRequestedInMemory({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
 
   final List<CategoryModel> categories;
   final bool isFetchingApi;
@@ -24,8 +19,8 @@ class CategoriesInGridTriggeredInMemory extends CategoryEvent {
   List<Object?> get props => [categories, isFetchingApi];
 }
 
-class CategoriesInGridTriggered extends CategoryEvent {
-  const CategoriesInGridTriggered({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+class CategoriesInGridRequested extends CategoryEvent {
+  const CategoriesInGridRequested({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
 
   final List<CategoryModel> categories;
   final bool isFetchingApi;
@@ -34,8 +29,8 @@ class CategoriesInGridTriggered extends CategoryEvent {
   List<Object?> get props => [categories, isFetchingApi];
 }
 
-class CategoriesInListTriggeredInMemory extends CategoryEvent {
-  const CategoriesInListTriggeredInMemory({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+class CategoriesInListRequestedInMemory extends CategoryEvent {
+  const CategoriesInListRequestedInMemory({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
 
   final List<CategoryModel> categories;
   final bool isFetchingApi;
@@ -44,8 +39,8 @@ class CategoriesInListTriggeredInMemory extends CategoryEvent {
   List<Object?> get props => [categories, isFetchingApi];
 }
 
-class CategoriesInListTriggered extends CategoryEvent {
-  const CategoriesInListTriggered({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+class CategoriesInListRequested extends CategoryEvent {
+  const CategoriesInListRequested({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
 
   final List<CategoryModel> categories;
   final bool isFetchingApi;

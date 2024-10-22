@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
 import 'package:observer_core/features/features_export.dart';
@@ -41,9 +41,11 @@ class AboutMeBloc extends Bloc<AboutMeEvent, AboutMeState> {
         responses.fold((Failure failure) => null, (HttpResponse<dynamic> response) {
           final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
           final List<AboutMeModel> aboutMeModel = datasJson.map<AboutMeModel>(AboutMeModel.fromJson).toList();
-          emit.call(AboutMeIsLoadedSuccessfully(
-            aboutMe: aboutMeModel.isNotEmpty ? aboutMeModel.first : AboutMeModel.emptyDatas,
-          ));
+          emit.call(
+            AboutMeIsLoadedSuccessfully(
+              aboutMe: aboutMeModel.isNotEmpty ? aboutMeModel.first : AboutMeModel.emptyDatas,
+            ),
+          );
         });
       default:
         emit.call(AboutMeIsLoading());

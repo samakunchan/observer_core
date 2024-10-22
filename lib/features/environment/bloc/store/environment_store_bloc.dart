@@ -14,12 +14,12 @@ part 'environment_store_state.dart';
 
 class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreState> {
   EnvironmentStoreBloc() : super(EnvironmentStoreInitial()) {
-    on<EnvironmentsStoreTriggered>(_openEnvironmentsStore);
-    on<EnvironmentsStoreInMemoryTriggered>(_openEnvironmentsInMemoryStore);
+    on<EnvironmentsStoreRequested>(_openEnvironmentsStore);
+    on<EnvironmentsStoreInMemoryRequested>(_openEnvironmentsInMemoryStore);
     on<EnvironmentsStoreReloaded>(_reloadEnvironmentsStore);
   }
 
-  Future<void> _openEnvironmentsStore(EnvironmentsStoreTriggered event, Emitter<EnvironmentStoreState> emit) async {
+  Future<void> _openEnvironmentsStore(EnvironmentsStoreRequested event, Emitter<EnvironmentStoreState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     if (!event.isFetchingApi) {
       emit
@@ -39,7 +39,7 @@ class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreS
     }
   }
 
-  Future<void> _openEnvironmentsInMemoryStore(EnvironmentsStoreInMemoryTriggered event, Emitter<EnvironmentStoreState> emit) async {
+  Future<void> _openEnvironmentsInMemoryStore(EnvironmentsStoreInMemoryRequested event, Emitter<EnvironmentStoreState> emit) async {
     if (!event.isFetchingApi) {
       emit
         ..call(EnvironmentStoreIsLoading())

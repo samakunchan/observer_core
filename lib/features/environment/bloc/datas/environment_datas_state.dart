@@ -13,6 +13,10 @@ class EnvironmentDatasIsSusscessfullyLoaded extends EnvironmentDatasState {
 
   final List<EnvironmentModel> environments;
   final List<EnvironmentModel> filteredEnvironments;
+
+  /// Le selectedId est de valeur 1 et à été ajouter à la main.
+  /// Avant je devais faire la différenciation entre les articles et projets (construit de manière identiques)
+  /// Ce n'est plus le cas aujourd'hui (pour le moment). Il n'est pas à exclure de construire une autre page de la même manière.
   final int selectedId;
 
   @override

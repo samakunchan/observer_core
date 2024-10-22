@@ -72,8 +72,8 @@ class CategoriesInMemoryAreFilteredSuccessfully extends CategoryState {
   List<Object> get props => [categories, screenMode];
 }
 
-class CategoriesAreNotLoaded extends CategoryState {
-  const CategoriesAreNotLoaded({this.message = ErrorMessage.noErrorMessageHandled});
+class CategoriesHaveFailures extends CategoryState {
+  const CategoriesHaveFailures({this.message = ErrorMessage.noErrorMessageHandled});
 
   /// Tout les messages d'érreurs:
   /// - [ErrorMessage.noErrorMessageHandled]

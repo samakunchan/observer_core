@@ -1,6 +1,67 @@
 import 'package:flutter/cupertino.dart';
 import 'package:macos_ui/macos_ui.dart';
 
+enum ApiUrl {
+  /// Domain = http://localhost:3005
+  domain(value: 'http://localhost:3005'),
+
+  /// Endpoint = /articles
+  articlesEndPoint(value: '/articles'),
+
+  /// Endpoint = /projects
+  projectsEndPoint(value: '/projects'),
+
+  /// Endpoint = /environments
+  environmentsEndPoint(value: '/environments'),
+
+  /// Endpoint = /environments/search
+  environmentsSearchEndPoint(value: '/environments/search'),
+
+  /// Endpoint = /categories
+  categoriesEndPoint(value: '/categories'),
+
+  /// Endpoint = /organisations
+  organisationsEndPoint(value: '/organisations'),
+
+  /// Endpoint = /legals
+  legalsEndPoint(value: '/legals'),
+
+  /// Endpoint = /documents
+  documentsEndPoint(value: '/documents'),
+
+  /// Endpoint = /proposed-services
+  servicesEndPoint(value: '/proposed-services'),
+
+  /// Endpoint = /skills
+  skillsEndPoint(value: '/skills'),
+
+  /// Endpoint = /reasons
+  reasonsEndPoint(value: '/reasons'),
+
+  /// Endpoint = /abouts
+  aboutmeEndPoint(value: '/abouts'),
+
+  /// Endpoint = /documents/upload
+  documentsUploadEndPoint(value: '/documents/upload'),
+
+  /// Endpoint = /documents/multi-upload
+  documentsMultiUploadEndPoint(value: 'documents/multi-upload'),
+
+  /// Endpoint = /documents/multiple-files
+  documentsMultiDeleteEndPoint(value: 'documents/multiple-files'),
+
+  /// Content-Type = application/json
+  defaultContentType(value: 'application/json'),
+
+  /// Content-Type = multipart/form-data
+  formDataContentType(value: 'multipart/form-data'),
+  ;
+
+  const ApiUrl({required this.value});
+
+  final String value;
+}
+
 class MainProject {
   /// Value = "dashboard papangue"
   static String title = 'dashboard papangue';
@@ -59,51 +120,55 @@ class MainProject {
   static String formDataContentType = 'multipart/form-data';
 }
 
-class MenuText {
-  /// Value = "environnements"
-  static String environments = 'environnements';
+enum MenuTextType {
+  /// Value : 'environnements'
+  environments(value: 'environnements'),
 
-  /// Value = "categories"
-  static String categories = 'categories';
+  /// Value : 'categories'
+  categories(value: 'categories'),
 
-  /// Value = "projets"
-  static String projects = 'projets';
+  /// Value : 'projets'
+  projects(value: 'projets'),
 
-  /// Value = "articles"
-  static String articles = 'articles';
+  /// Value : 'articles'
+  articles(value: 'articles'),
 
-  /// Value = "organisation"
-  static String organisation = 'organisation';
+  /// Value : 'organisation'
+  organisation(value: 'organisation'),
 
-  /// Value = "juridiques"
-  static String legals = 'juridiques';
+  /// Value : 'juridiques'
+  legals(value: 'juridiques'),
 
-  /// Value = "documents"
-  static String documents = 'documents';
+  /// Value : 'documents'
+  documents(value: 'documents'),
 
-  /// Value = "images"
-  static String images = 'images';
+  /// Value : 'images'
+  images(value: 'images'),
 
-  /// Value = "PDF"
-  static String pdf = 'PDF';
+  /// Value : 'PDF'
+  pdf(value: 'PDF'),
 
-  /// Value = "paramètres"
-  static String settings = 'paramètres';
+  /// Value : 'paramètres'
+  settings(value: 'paramètres'),
 
-  /// Value = "authentification"
-  static String auth = 'authentification';
+  /// Value : 'authentification'
+  auth(value: 'authentification'),
 
-  /// Value = "Services"
-  static String services = 'Services';
+  /// Value : 'Services'
+  services(value: 'Services'),
 
-  /// Value = "Technos"
-  static String skills = 'Technos';
+  /// Value : 'Technos'
+  skills(value: 'Technos'),
 
-  /// Value = "Arguments"
-  static String reasons = 'Arguments';
+  /// Value : 'Arguments'
+  reasons(value: 'Arguments'),
 
-  /// Value = "A propos de moi"
-  static String aboutme = 'A propos de moi';
+  /// Value : ''A propos de moi''
+  aboutme(value: 'A propos de moi'),
+  ;
+
+  const MenuTextType({required this.value});
+  final String value;
 }
 
 class ErrorMessage {
@@ -135,10 +200,18 @@ class KWidget {
       mouseCursor: SystemMouseCursors.click,
       icon: MacosIcon(
         CupertinoIcons.sidebar_left,
-        color: MacosTheme.brightnessOf(context).resolve(const Color.fromRGBO(0, 0, 0, 0.5), const Color.fromRGBO(255, 255, 255, 0.5)),
+        color: MacosTheme.brightnessOf(context).resolve(
+          const Color.fromRGBO(0, 0, 0, 0.5),
+          const Color.fromRGBO(255, 255, 255, 0.5),
+        ),
         size: 20,
       ),
-      boxConstraints: const BoxConstraints(minHeight: 20, minWidth: 20, maxWidth: 48, maxHeight: 38),
+      boxConstraints: const BoxConstraints(
+        minHeight: 20,
+        minWidth: 20,
+        maxWidth: 48,
+        maxHeight: 38,
+      ),
       onPressed: () => MacosWindowScope.of(context).toggleSidebar(),
     );
   }
@@ -150,7 +223,11 @@ class KWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const MacosIcon(CupertinoIcons.lock, color: CupertinoColors.link, size: 80),
+            const MacosIcon(
+              CupertinoIcons.lock,
+              color: CupertinoColors.link,
+              size: 80,
+            ),
             Text(message),
           ],
         ),
