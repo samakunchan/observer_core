@@ -1,6 +1,6 @@
 part of 'skill_bloc.dart';
 
-sealed class SkillState extends Equatable {
+abstract class SkillState extends Equatable {
   const SkillState();
 }
 

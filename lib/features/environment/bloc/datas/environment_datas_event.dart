@@ -4,8 +4,8 @@ abstract class EnvironmentDatasEvent extends Equatable {
   const EnvironmentDatasEvent();
 }
 
-class EnvironmentDatasInMemoryTriggered extends EnvironmentDatasEvent {
-  const EnvironmentDatasInMemoryTriggered({this.environments = EnvironmentModel.emptyList});
+class EnvironmentDatasRequested extends EnvironmentDatasEvent {
+  const EnvironmentDatasRequested({this.environments = EnvironmentModel.emptyList});
 
   final List<EnvironmentModel> environments;
 
@@ -13,8 +13,8 @@ class EnvironmentDatasInMemoryTriggered extends EnvironmentDatasEvent {
   List<Object?> get props => [environments];
 }
 
-class EnvironmentDatasTriggered extends EnvironmentDatasEvent {
-  const EnvironmentDatasTriggered({this.environments = EnvironmentModel.emptyList});
+class EnvironmentDatasInMemoryRequested extends EnvironmentDatasEvent {
+  const EnvironmentDatasInMemoryRequested({this.environments = EnvironmentModel.emptyList});
 
   final List<EnvironmentModel> environments;
 
@@ -22,8 +22,8 @@ class EnvironmentDatasTriggered extends EnvironmentDatasEvent {
   List<Object?> get props => [environments];
 }
 
-class EnvironmentErrorsTriggered extends EnvironmentDatasEvent {
-  const EnvironmentErrorsTriggered({this.message = ErrorMessage.noErrorMessageHandled});
+class EnvironmentDatasErrorsRequested extends EnvironmentDatasEvent {
+  const EnvironmentDatasErrorsRequested({this.message = ErrorMessage.noErrorMessageHandled});
 
   /// Tout les messages d'érreurs:
   /// - [ErrorMessage.noErrorMessageHandled]

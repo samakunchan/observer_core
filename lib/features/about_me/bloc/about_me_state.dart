@@ -1,6 +1,6 @@
 part of 'about_me_bloc.dart';
 
-sealed class AboutMeState extends Equatable {
+abstract class AboutMeState extends Equatable {
   const AboutMeState();
 }
 

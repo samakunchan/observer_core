@@ -1,5 +1,23 @@
 # Observer core
 
+## 🚀 0.21.0 - 22/10/2024
+### Nouveautés
+
+- Pas de nouveautés.
+
+### Changements
+
+- Ajout d'un selector pour le badge offline en fonction du `store close` ou `in_memory`.
+- Ajout de règle linter pour les fichiers `freezed`.
+- Ajout des enums dans le fichier constante.
+- Remplacement des mots-clés `sealed` pour `abstract`.
+- Création d'une nouvelle `failure` pour informer que rien ne marche (dans le cas ou toutes les exceptions ne sont pas géré).
+- Harmonisation des events pour les environnements et catégories.
+
+### Correctifs
+
+- Pas de correctifs.
+
 ## 🚀 0.20.0 - 18/10/2024
 ### Nouveautés
 

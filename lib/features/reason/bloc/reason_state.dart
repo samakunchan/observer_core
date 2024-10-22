@@ -1,6 +1,6 @@
 part of 'reason_bloc.dart';
 
-sealed class ReasonState extends Equatable {
+abstract class ReasonState extends Equatable {
   const ReasonState();
 }
 
