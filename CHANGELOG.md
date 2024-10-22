@@ -1,5 +1,19 @@
 # Observer core
 
+## 🔨 0.21.1 - 22/10/2024
+### Nouveautés
+
+- Pas de nouveautés.
+
+### Changements
+
+- Pas de changements.
+
+### Correctifs
+
+- Ajout de l'enum menu dans le dossiers enums.
+
+
 ## 🚀 0.21.0 - 22/10/2024
 ### Nouveautés
 
@@ -135,7 +149,7 @@
 - Pas de fixes.
 
 
-## 🚀 0.13.1 - 24/09/2024
+## 🔨 0.13.1 - 24/09/2024
 ### Nouveautés
 
 - Pas de nouveautés.
@@ -283,7 +297,7 @@
 - Pas de fixes.
 
 
-## 🚀 0.5.1 - 08/08/2024
+## 🔨 0.5.1 - 08/08/2024
 ### Nouveautés
 
 - Pas de nouveautés.
