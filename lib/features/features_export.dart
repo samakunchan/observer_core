@@ -1,6 +1,9 @@
 /// LIBRARY FEATURES
 library;
 
+/// SERVER NESTJS
+export '../server_nestjs/feature_server_nestjs_export.dart';
+
 /// ABOUT ME
 export 'about_me/about_me_export.dart';
 
@@ -27,9 +30,6 @@ export 'proposed_services/proposed_services_export.dart';
 
 /// REASONS
 export 'reason/reason_export.dart';
-
-/// SERVER NESTJS
-export 'server_nestjs/feature_server_nestjs_export.dart';
 
 /// SERVER NESTJS
 export 'skill/skill_export.dart';

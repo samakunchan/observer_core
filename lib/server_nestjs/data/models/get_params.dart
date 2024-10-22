@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:observer_core/enums/enums.dart';
+import 'package:observer_core/enums/enums_export.dart';
 
 /// # Récupération des données.
 /// ## Récupération d'une liste
