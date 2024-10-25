@@ -50,8 +50,16 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+
+  # Code generation
   json_serializable: ^6.7.1
-  build_runner: ^2.4.12
+  build_runner: ^2.4.13
+
+  # Linters
+  flutter_lints: ^2.0.0
   very_good_analysis: ^5.0.0+1
   analyzer: ^6.7.0
+
+  # Tests
+  test: ^1.25.7
+  mockito: ^5.4.4

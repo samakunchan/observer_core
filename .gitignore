@@ -31,3 +31,5 @@ build/
 
 ADR.md
 t.md
+
+/coverage
