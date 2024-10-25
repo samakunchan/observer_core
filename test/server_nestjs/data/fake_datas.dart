@@ -1,3 +1,5 @@
+import 'package:observer_core/features/features_export.dart';
+
 final List<Map<String, dynamic>> fakeDatasProjects = List<Map<String, dynamic>>.of([
   <String, dynamic>{
     'id': 7,
@@ -66,3 +68,14 @@ const String error503Message = 'Connection refused';
 final Map<String, dynamic> fakeDeleteResponse = <String, dynamic>{
   'message': 'Ok',
 };
+
+const AuthTokenModel fakeAuthToken = AuthTokenModel(
+  accessToken: 'accessToken',
+  expiresIn: 0,
+  refreshToken: 'refreshToken',
+  tokenType: 'tokenType',
+  idToken: 'idToken',
+  notBeforePolicy: 0,
+  sessionState: 'sessionState',
+  scope: 'scope',
+);
