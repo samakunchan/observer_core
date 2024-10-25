@@ -32,7 +32,11 @@ class BaseRepository {
         return Left(UnAuthorizedFailure());
       }
     } on ForbiddenException catch (e) {
-      return Left(ForbiddenFailure(message: e.httpError.description));
+      if (e.httpError.description.isNotEmpty) {
+        return Left(ForbiddenFailure(message: e.httpError.description));
+      } else {
+        return Left(ForbiddenFailure());
+      }
     } on DioException catch (e) {
       return Left(BadRequestFailure(message: e.message ?? ''));
     } on IDontKnowWhatImDoingException {
