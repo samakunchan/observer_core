@@ -53,7 +53,7 @@ void main() {
         test('Then it should perform a GET request.', () async {
           /// Assert
           verify(
-            repository.getResponses(
+            mockSource.get(
               const GetParams(
                 accessToken: 'accessToken',
                 endPoint: 'endPoint',
@@ -108,7 +108,7 @@ void main() {
         test('Then it should perform a POST request.', () async {
           /// Assert
           verify(
-            repository.upsertOne(
+            mockSource.upsert(
               const UpsertParams(
                 accessToken: 'accessToken',
                 endPoint: 'endPoint',
@@ -164,7 +164,7 @@ void main() {
         test('Then it should perform a DELETE request', () async {
           /// Assert
           verify(
-            repository.deleteOne(
+            mockSource.delete(
               const DeleteParams(
                 accessToken: 'accessToken',
                 endPoint: 'endPoint',
@@ -542,7 +542,7 @@ void main() {
         test('Then it should perform a POST request.', () async {
           /// Assert
           verify(
-            repository.upsertOne(
+            mockSource.upsert(
               const UpsertParams(
                 accessToken: 'accessToken',
                 endPoint: 'endPoint',
