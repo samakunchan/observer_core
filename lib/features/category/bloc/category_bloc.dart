@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
@@ -17,7 +16,7 @@ part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitial()) {
-    on<CategoriesInitialized>(_reInitilizeCategories);
+    on<CategoriesInitialized>(_reInitializeCategories);
     on<CategoriesInGridRequested>(_showAllCategoriesInGridView);
     on<CategoriesInGridRequestedInMemory>(_showAllCategoriesInMemoryInGridView);
     on<CategoriesInListRequested>(_showAllCategoriesListView);
@@ -26,137 +25,73 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     on<CategoryDeleted>(_deleteCategory);
     on<CategoryFiltered>(_filterCategories);
     on<CategorySubmitted>(_upsertCategory);
-    on<CategoriesSelected>(_selectAndShowOneCategorie);
+    on<CategorySelected>(_selectAndShowOneCategory);
   }
 
-  Future<void> _reInitilizeCategories(CategoriesInitialized event, Emitter<CategoryState> emit) async {
+  Future<void> _reInitializeCategories(CategoriesInitialized event, Emitter<CategoryState> emit) async {
     emit.call(CategoryInitial());
   }
 
   /// GRID VIEW API
   Future<void> _showAllCategoriesInGridView(CategoriesInGridRequested event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    if (!event.isFetchingApi) {
-      emit
-        ..call(CategoryIsLoading())
-        ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, selectedId: 1));
-    } else {
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
-      );
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
+    );
 
-      switch (responses) {
-        case Left():
-          await responses.fold(
-            (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
-            (HttpResponse<dynamic> response) => null,
-          );
-        case Right():
-          await responses.fold(
-            (Failure failure) => null,
-            (HttpResponse<dynamic> response) => CategoryHandler.handleAllSuccess(response: response, emit: emit),
-          );
-        default:
-          emit.call(CategoryIsLoading());
-      }
+    const CategoryHandler categoryHandler = CategoryHandler();
+    switch (responses) {
+      case Left():
+        await categoryHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await CategoryHandler.handleAllSuccess(response: responses.value, emit: emit);
     }
   }
 
   /// GRID VIEW LOCAL
   Future<void> _showAllCategoriesInMemoryInGridView(CategoriesInGridRequestedInMemory event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    if (!event.isFetchingApi) {
-      emit
-        ..call(CategoryIsLoading())
-        ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, selectedId: 1));
-    } else {
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
-        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
-      );
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
+      GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
+    );
 
-      switch (responses) {
-        case Left():
-          await responses.fold(
-            (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
-            (HttpResponse<dynamic> response) => null,
-          );
-        case Right():
-          await responses.fold(
-            (Failure failure) => null,
-            (HttpResponse<dynamic> response) => CategoryHandler.handleAllSuccess(response: response, emit: emit),
-          );
-        default:
-          emit.call(CategoryIsLoading());
-      }
+    switch (responses) {
+      case Right():
+        await CategoryHandler.handleAllSuccessForInMemory(response: responses.value, emit: emit);
     }
   }
 
   /// List VIEW API
   Future<void> _showAllCategoriesListView(CategoriesInListRequested event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    if (!event.isFetchingApi) {
-      emit
-        ..call(CategoryIsLoading())
-        ..call(CategoriesAreLoadedSuccessfully(categories: event.categories, screenMode: ScreenMode.list, selectedId: 1));
-    } else {
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
-      );
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
+    );
 
-      switch (responses) {
-        case Left():
-          await responses.fold(
-            (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
-            (HttpResponse<dynamic> response) => null,
-          );
-        case Right():
-          await responses.fold(
-            (Failure failure) => null,
-            (HttpResponse<dynamic> response) =>
-                CategoryHandler.handleAllSuccess(response: response, emit: emit, screenMode: ScreenMode.list),
-          );
-        default:
-          emit.call(CategoryIsLoading());
-      }
+    const CategoryHandler categoryHandler = CategoryHandler();
+    switch (responses) {
+      case Left():
+        await categoryHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await CategoryHandler.handleAllSuccess(response: responses.value, emit: emit, screenMode: ScreenMode.list);
     }
   }
 
   /// List VIEW LOCAL
   Future<void> _showAllCategoriesInMemoryListView(CategoriesInListRequestedInMemory event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    if (!event.isFetchingApi) {
-      emit
-        ..call(CategoryIsLoading())
-        ..call(
-          CategoriesAreLoadedSuccessfully(
-            categories: event.categories,
-            screenMode: ScreenMode.list,
-            selectedId: 1,
-          ),
-        );
-    } else {
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
-        GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
-      );
 
-      switch (responses) {
-        case Left():
-          await responses.fold(
-            (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
-            (HttpResponse<dynamic> response) => null,
-          );
-        case Right():
-          await responses.fold(
-            (Failure failure) => null,
-            (HttpResponse<dynamic> response) => _handleAllSuccessForInMemory(response: response, emit: emit),
-          );
-        default:
-          emit.call(CategoryIsLoading());
-      }
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
+      GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
+    );
+
+    switch (responses) {
+      case Right():
+        await CategoryHandler.handleAllSuccessForInMemory(response: responses.value, emit: emit);
     }
   }
 
-  Future<void> _selectAndShowOneCategorie(CategoriesSelected event, Emitter<CategoryState> emit) async {
+  Future<void> _selectAndShowOneCategory(CategorySelected event, Emitter<CategoryState> emit) async {
     emit.call(
       CategoriesAreFilteredSuccessfully(
         categories: event.categories,
@@ -172,19 +107,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       GetParams(endPoint: MainProject.categoriesEndPoint, accessToken: authTokenModel.accessToken),
     );
 
+    const CategoryHandler categoryHandler = CategoryHandler();
     switch (responses) {
       case Left():
-        await responses.fold(
-          (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
-          (HttpResponse<dynamic> response) => null,
-        );
+        await categoryHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
-        await responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => CategoryHandler.handleAllSuccess(response: response, emit: emit),
-        );
-      default:
-        emit.call(CategoryIsLoading());
+        await CategoryHandler.handleAllSuccess(response: responses.value, emit: emit);
     }
   }
 
@@ -201,17 +129,17 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         body: jsonEncode(categoryDeleteDTO),
       ),
     );
-
-    await CategoryHandler.withReponse(
-      responses: responses,
-      ifFailure: (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => CategoryHandler.handleDeleteSuccess(
-        response: response,
-        emit: emit,
-        categoryDeleted: event.categoryForDelete,
-      ),
-    );
-    emit.call(CategoryIsRemovedSuccessfully());
+    const CategoryHandler categoryHandler = CategoryHandler();
+    switch (responses) {
+      case Left():
+        await categoryHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await CategoryHandler.handleDeleteSuccess(
+          response: responses.value,
+          emit: emit,
+          categoryDeleted: event.categoryForDelete,
+        );
+    }
   }
 
   FutureOr<void> _filterCategories(CategoryFiltered event, Emitter<CategoryState> emit) async {
@@ -237,43 +165,20 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       ),
     );
 
-    await CategoryHandler.withReponse(
-      responses: responses,
-      ifFailure: (Failure failure) => CategoryHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => CategoryHandler.handleUpsertSuccess(response: response, emit: emit),
-    );
-  }
-
-  Future<void> _handleAllSuccessForInMemory({required HttpResponse<dynamic> response, required Emitter<CategoryState> emit}) async {
-    final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-    final List<CategoryModel> categories = datasJson.map<CategoryModel>(CategoryModel.fromJson).toList();
-    emit.call(CategoriesInMemoryAreLoadedSuccessfully(categories: categories));
+    const CategoryHandler categoryHandler = CategoryHandler();
+    switch (responses) {
+      case Left():
+        await categoryHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await CategoryHandler.handleUpsertSuccess(response: responses.value, emit: emit);
+    }
   }
 }
 
 class CategoryHandler {
-  const CategoryHandler._();
+  const CategoryHandler();
 
-  static Future<void> withReponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static Future<void> handleAllFailures({required Failure failure, required Emitter<CategoryState> emit}) async {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<CategoryState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(CategoriesHaveFailures(message: failure.message));
@@ -301,7 +206,8 @@ class CategoryHandler {
     required Emitter<CategoryState> emit,
     ScreenMode screenMode = ScreenMode.grid,
   }) async {
-    final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
+    final List<dynamic> list = response.data as List<dynamic>;
+    final List<Map<String, dynamic>> datasJson = list.map((e) => e as Map<String, dynamic>).toList();
     final List<CategoryModel> categories = datasJson.map<CategoryModel>(CategoryModel.fromJson).toList();
 
     if (screenMode == ScreenMode.grid) {
@@ -311,6 +217,12 @@ class CategoryHandler {
     }
 
     await storeCategories(categories: categories);
+  }
+
+  static Future<void> handleAllSuccessForInMemory({required HttpResponse<dynamic> response, required Emitter<CategoryState> emit}) async {
+    final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
+    final List<CategoryModel> categories = datasJson.map<CategoryModel>(CategoryModel.fromJson).toList();
+    emit.call(CategoriesInMemoryAreLoadedSuccessfully(categories: categories));
   }
 
   static Future<void> handleUpsertSuccess({
@@ -337,13 +249,5 @@ class CategoryHandler {
     required CategoryModel categoryDeleted,
   }) async {
     emit.call(CategoryIsDeletedSuccessfully(categoryDeleted: categoryDeleted));
-  }
-
-  static Future<void> handleSearchSuccess({
-    required HttpResponse<dynamic> response,
-    required Emitter<CategoryState> emit,
-  }) async {
-    debugPrint(response.data.toString());
-    // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
   }
 }

@@ -10,43 +10,47 @@ class CategoriesInitialized extends CategoryEvent {
 }
 
 class CategoriesInGridRequestedInMemory extends CategoryEvent {
-  const CategoriesInGridRequestedInMemory({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+  const CategoriesInGridRequestedInMemory({
+    this.categories = CategoryModel.emptyList,
+  });
 
   final List<CategoryModel> categories;
-  final bool isFetchingApi;
 
   @override
-  List<Object?> get props => [categories, isFetchingApi];
+  List<Object?> get props => [categories];
 }
 
 class CategoriesInGridRequested extends CategoryEvent {
-  const CategoriesInGridRequested({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+  const CategoriesInGridRequested({
+    this.categories = CategoryModel.emptyList,
+  });
 
   final List<CategoryModel> categories;
-  final bool isFetchingApi;
 
   @override
-  List<Object?> get props => [categories, isFetchingApi];
+  List<Object?> get props => [categories];
 }
 
 class CategoriesInListRequestedInMemory extends CategoryEvent {
-  const CategoriesInListRequestedInMemory({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+  const CategoriesInListRequestedInMemory({
+    this.categories = CategoryModel.emptyList,
+  });
 
   final List<CategoryModel> categories;
-  final bool isFetchingApi;
 
   @override
-  List<Object?> get props => [categories, isFetchingApi];
+  List<Object?> get props => [categories];
 }
 
 class CategoriesInListRequested extends CategoryEvent {
-  const CategoriesInListRequested({this.categories = CategoryModel.emptyList, this.isFetchingApi = true});
+  const CategoriesInListRequested({
+    this.categories = CategoryModel.emptyList,
+  });
 
   final List<CategoryModel> categories;
-  final bool isFetchingApi;
 
   @override
-  List<Object?> get props => [categories, isFetchingApi];
+  List<Object?> get props => [categories];
 }
 
 class CategoriesReloaded extends CategoryEvent {
@@ -89,8 +93,8 @@ class CategoryFiltered extends CategoryEvent {
   List<Object?> get props => [categories, filterInText, screenMode];
 }
 
-class CategoriesSelected extends CategoryEvent {
-  const CategoriesSelected({
+class CategorySelected extends CategoryEvent {
+  const CategorySelected({
     required this.categories,
     required this.filterId,
     this.filteredCategories = CategoryModel.emptyList,
@@ -103,11 +107,11 @@ class CategoriesSelected extends CategoryEvent {
   List<Object?> get props => [categories, filterId];
 }
 
-class CategoriesOnSearch extends CategoryEvent {
-  const CategoriesOnSearch({required this.input, this.strictMode = false});
-  final String input;
-  final bool strictMode;
-
-  @override
-  List<Object?> get props => [input];
-}
+// class CategoriesOnSearch extends CategoryEvent {
+//   const CategoriesOnSearch({required this.input, this.strictMode = false});
+//   final String input;
+//   final bool strictMode;
+//
+//   @override
+//   List<Object?> get props => [input];
+// }
