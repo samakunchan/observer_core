@@ -5,6 +5,7 @@ library;
 export 'abouts/abouts_dto.dart';
 
 /// CATEGORIES DTO
+export 'categories/category_delete_dto.dart';
 export 'categories/category_upsert_dto.dart';
 
 /// DATES

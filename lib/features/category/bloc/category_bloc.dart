@@ -191,15 +191,14 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   Future<void> _deleteCategory(CategoryDeleted event, Emitter<CategoryState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
     emit.call(CategoryIsLoading());
+    final CategoryDeleteDTO categoryDeleteDTO = CategoryDeleteDTO.fromJson({
+      'categoriesIds': [event.categoryForDelete.id],
+    });
     final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.deleteOne(
       DeleteParams(
         accessToken: authTokenModel.accessToken,
         endPoint: MainProject.categoriesEndPoint,
-        body: jsonEncode(
-          {
-            'categoriesIds': [event.categoryForDelete.id],
-          },
-        ),
+        body: jsonEncode(categoryDeleteDTO),
       ),
     );
 
