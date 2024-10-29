@@ -18,12 +18,12 @@ class CategoriesSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<CategoryBloc, CategoryState, List<CategoryModel>>(
-      selector: _getListCategories,
+      selector: getListCategories,
       builder: builder,
     );
   }
 
-  List<CategoryModel> _getListCategories(CategoryState state) {
+  List<CategoryModel> getListCategories(CategoryState state) {
     switch (state) {
       case CategoriesAreLoadedSuccessfully():
         final List<CategoryModel> categoryProjects =

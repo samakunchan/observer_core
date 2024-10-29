@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/features/category/bloc/category_bloc.dart';
 
-class CategoriesAreLoadedSelector extends StatelessWidget {
-  const CategoriesAreLoadedSelector({required this.builder, super.key});
+class CategoriesOfflineSelector extends StatelessWidget {
+  const CategoriesOfflineSelector({required this.builder, super.key});
   final Widget Function(BuildContext, bool) builder;
 
   @override
