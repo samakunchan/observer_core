@@ -16,6 +16,7 @@ export 'documents/multiple_documents_upsert_dto.dart';
 export 'documents/one_document_upsert_dto.dart';
 
 /// ENVIRONMENTS DTO
+export 'environments/environment_delete_dto.dart';
 export 'environments/environment_upsert_dto.dart';
 
 /// PROJECT DTO
