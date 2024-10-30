@@ -73,11 +73,11 @@ class EnvironmentDatasIsDeletedSuccessfully extends EnvironmentDatasState {
   List<Object> get props => [];
 }
 
-class EnvironmentDatasIsSearchSuccessfully extends EnvironmentDatasState {
-  const EnvironmentDatasIsSearchSuccessfully({required this.searchModel});
-
-  final SearchModel searchModel;
-
-  @override
-  List<Object> get props => [searchModel];
-}
+// class EnvironmentDatasIsSearchSuccessfully extends EnvironmentDatasState {
+//   const EnvironmentDatasIsSearchSuccessfully({required this.searchModel});
+//
+//   final SearchModel searchModel;
+//
+//   @override
+//   List<Object> get props => [searchModel];
+// }

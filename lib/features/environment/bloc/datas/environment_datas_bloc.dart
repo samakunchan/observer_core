@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
@@ -21,7 +20,7 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
     on<EnvironmentDatasSelected>(_selectAndShowOneEnvironment);
     on<EnvironmentDatasSubmitted>(_upsertEnvironmentDatas);
     on<EnvironmentDatasDeleted>(_deleteEnvironmentDatas);
-    on<EnvironmentDatasOnSearch>(_searchEnvironmentDatas);
+    // on<EnvironmentDatasOnSearch>(_searchEnvironmentDatas);
   }
 
   Future<void> _showEnvironmentsDatas(EnvironmentDatasRequested event, Emitter<EnvironmentDatasState> emit) async {
@@ -69,31 +68,35 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
       ),
     );
 
-    await EnvironementDatasHandler.withReponse(
-      responses: responses,
-      ifFailure: (Failure failure) => EnvironementDatasHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => EnvironementDatasHandler.handleUpsertSuccess(response: response, emit: emit),
-    );
+    const EnvironmentDatasHandler environmentDatasHandler = EnvironmentDatasHandler();
+    switch (responses) {
+      case Left():
+        await environmentDatasHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await EnvironmentDatasHandler.handleUpsertSuccess(response: responses.value, emit: emit);
+    }
   }
 
-  Future<void> _searchEnvironmentDatas(EnvironmentDatasOnSearch event, Emitter<EnvironmentDatasState> emit) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-
-    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.search(
-      SearchParams(
-        accessToken: authTokenModel.accessToken,
-        endPoint: MainProject.environmentsSearchEndPoint,
-        strictMode: event.strictMode,
-        input: event.input,
-      ),
-    );
-
-    await EnvironementDatasHandler.withReponse(
-      responses: responses,
-      ifFailure: (Failure failure) => EnvironementDatasHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => EnvironementDatasHandler.handleSearchSuccess(response: response, emit: emit),
-    );
-  }
+  // Future<void> _searchEnvironmentDatas(EnvironmentDatasOnSearch event, Emitter<EnvironmentDatasState> emit) async {
+  //   final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+  //
+  //   final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.search(
+  //     SearchParams(
+  //       accessToken: authTokenModel.accessToken,
+  //       endPoint: MainProject.environmentsSearchEndPoint,
+  //       strictMode: event.strictMode,
+  //       input: event.input,
+  //     ),
+  //   );
+  //
+  //   const EnvironmentDatasHandler environmentDatasHandler = EnvironmentDatasHandler();
+  //   switch (responses) {
+  //     case Left():
+  //       await environmentDatasHandler.handleAllFailures(failure: responses.value, emit: emit);
+  //     case Right():
+  //       await EnvironmentDatasHandler.handleSearchSuccess(response: responses.value, emit: emit);
+  //   }
+  // }
 
   Future<void> _deleteEnvironmentDatas(EnvironmentDatasDeleted event, Emitter<EnvironmentDatasState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
@@ -106,37 +109,20 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
       ),
     );
 
-    await EnvironementDatasHandler.withReponse(
-      responses: responses,
-      ifFailure: (Failure failure) => EnvironementDatasHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => EnvironementDatasHandler.handleDeleteSuccess(response: response, emit: emit),
-    );
+    const EnvironmentDatasHandler environmentDatasHandler = EnvironmentDatasHandler();
+    switch (responses) {
+      case Left():
+        await environmentDatasHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await EnvironmentDatasHandler.handleDeleteSuccess(response: responses.value, emit: emit);
+    }
   }
 }
 
-class EnvironementDatasHandler {
-  const EnvironementDatasHandler._();
+class EnvironmentDatasHandler {
+  const EnvironmentDatasHandler();
 
-  static Future<void> withReponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static Future<void> handleAllFailures({required Failure failure, required Emitter<EnvironmentDatasState> emit}) async {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<EnvironmentDatasState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(EnvironmentDatasHasFailure(message: failure.message));
@@ -159,22 +145,6 @@ class EnvironementDatasHandler {
     }
   }
 
-  static Future<void> handleAllSuccess({
-    required HttpResponse<dynamic> response,
-    required Emitter<EnvironmentDatasState> emit,
-  }) async {
-    final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-    final List<EnvironmentModel> environments = datasJson.map<EnvironmentModel>(EnvironmentModel.fromJson).toList();
-
-    emit.call(
-      EnvironmentDatasIsSusscessfullyLoaded(
-        environments: environments,
-        filteredEnvironments: environments.where((EnvironmentModel environment) => environment.id == 1).toList(),
-        selectedId: 1,
-      ),
-    );
-  }
-
   static Future<void> handleUpsertSuccess({
     required HttpResponse<dynamic> response,
     required Emitter<EnvironmentDatasState> emit,
@@ -189,11 +159,11 @@ class EnvironementDatasHandler {
     emit.call(EnvironmentDatasIsDeletedSuccessfully());
   }
 
-  static Future<void> handleSearchSuccess({
-    required HttpResponse<dynamic> response,
-    required Emitter<EnvironmentDatasState> emit,
-  }) async {
-    debugPrint(response.data.toString());
-    // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
-  }
+  // static Future<void> handleSearchSuccess({
+  //   required HttpResponse<dynamic> response,
+  //   required Emitter<EnvironmentDatasState> emit,
+  // }) async {
+  //   debugPrint(response.data.toString());
+  //   // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
+  // }
 }
