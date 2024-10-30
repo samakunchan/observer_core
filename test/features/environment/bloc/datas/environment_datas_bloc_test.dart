@@ -28,10 +28,12 @@ class UnExpectedFailure extends Failure {}
 void main() {
   late GetParams getParams;
   late DeleteParams deleteParams;
+  late UpsertParams upsertParams;
   late SearchParams searchParams;
   late MockAbstractAuthTokenSource mockAbstractAuthTokenSource;
   late MockAbstractServerNestjsRepository mockAbstractServerNestjsRepository;
   late MockAbstractInMemoryApiNestjsRepository mockAbstractInMemoryApiNestjsRepository;
+  late EnvironmentUpsertDTO environmentUpsertDTO;
   late EnvironmentDeleteDTO environmentDeleteDTO;
   EnvironmentAssociatedModel environmentAssociatedModel = EnvironmentAssociatedModel.fromJson(
     <String, dynamic>{
@@ -358,7 +360,7 @@ void main() {
         });
 
         blocTest<EnvironmentDatasBloc, EnvironmentDatasState>(
-          'Then it should give a [EnvironmentDatasHasFailure] state.',
+          'Then it should give a [EnvironmentDatasIsSusscessfullyLoaded] state.',
           build: EnvironmentDatasBloc.new,
 
           /// Act
@@ -370,35 +372,73 @@ void main() {
           ],
         );
       });
+    });
 
-      /// SELECTED
-      group('When event [EnvironmentDatasSelected] is detected.', () {
+    /// UPSERT
+    group('Given the fact a form is submitted', () {
+      group('When event [EnvironmentDatasSubmitted] is detected.', () {
+        setUp(() {
+          mockEnvironmentDatasBloc = MockEnvironmentDatasBloc();
+
+          environmentUpsertDTO = EnvironmentUpsertDTO.fromJson(
+            <String, dynamic>{
+              'title': 'fake-title',
+            },
+          );
+
+          upsertParams = UpsertParams(
+            endPoint: MainProject.environmentsEndPoint,
+            accessToken: authTokenModel.accessToken,
+            body: jsonEncode(environmentUpsertDTO),
+          );
+
+          /// Arrange API
+          when(
+            mockAbstractServerNestjsRepository.upsertOne(
+              upsertParams,
+            ),
+          ).thenAnswer(
+            (_) => Future<Either<Failure, HttpResponse<dynamic>>>.value(
+              Right(
+                HttpResponse(
+                  fakeEnvModel.toJson(),
+                  Response(
+                    requestOptions: RequestOptions(),
+                    statusCode: 201,
+                    data: fakeEnvModel.toJson(),
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
         test('Then the props should contain a list of environments.', () {
           /// Arrange
           whenListen(
             mockEnvironmentDatasBloc,
             Stream.fromIterable([]),
-            initialState: EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+            initialState: const EnvironmentDatasFormIsSubmittedSuccessfully(id: 999),
           );
 
           /// Act
-          final EnvironmentDatasEvent event = EnvironmentDatasSelected(environments: fakeEnvs, filterId: 1);
+          final EnvironmentDatasEvent event = EnvironmentDatasSubmitted(environmentForUpsert: environmentUpsertDTO);
           mockEnvironmentDatasBloc.add(event);
 
           /// Assert
-          expect(event.props, equals([fakeEnvs, 1]));
+          expect(event.props, equals([environmentUpsertDTO]));
         });
 
         blocTest<EnvironmentDatasBloc, EnvironmentDatasState>(
-          'Then it should give a [EnvironmentDatasHasFailure] state.',
+          'Then it should give a [EnvironmentDatasFormIsSubmittedSuccessfully] state.',
           build: EnvironmentDatasBloc.new,
 
           /// Act
-          act: (EnvironmentDatasBloc bloc) => bloc.add(EnvironmentDatasSelected(environments: fakeEnvs, filterId: 1)),
+          act: (EnvironmentDatasBloc bloc) => bloc.add(EnvironmentDatasSubmitted(environmentForUpsert: environmentUpsertDTO)),
 
           /// Assert
           expect: () => <EnvironmentDatasState>[
-            EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+            EnvironmentDatasIsSubmitting(),
+            const EnvironmentDatasFormIsSubmittedSuccessfully(id: 999),
           ],
         );
       });
