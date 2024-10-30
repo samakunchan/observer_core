@@ -5,23 +5,21 @@ abstract class EnvironmentStoreEvent extends Equatable {
 }
 
 class EnvironmentsStoreRequested extends EnvironmentStoreEvent {
-  const EnvironmentsStoreRequested({this.environments = EnvironmentModel.emptyList, this.isFetchingApi = true});
+  const EnvironmentsStoreRequested({this.environments = EnvironmentModel.emptyList});
 
   final List<EnvironmentModel> environments;
-  final bool isFetchingApi;
 
   @override
-  List<Object?> get props => [environments, isFetchingApi];
+  List<Object?> get props => [environments];
 }
 
 class EnvironmentsStoreInMemoryRequested extends EnvironmentStoreEvent {
-  const EnvironmentsStoreInMemoryRequested({this.environments = EnvironmentModel.emptyList, this.isFetchingApi = true});
+  const EnvironmentsStoreInMemoryRequested({this.environments = EnvironmentModel.emptyList});
 
   final List<EnvironmentModel> environments;
-  final bool isFetchingApi;
 
   @override
-  List<Object?> get props => [environments, isFetchingApi];
+  List<Object?> get props => [environments];
 }
 
 class EnvironmentsStoreReloaded extends EnvironmentStoreEvent {

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/features/features_export.dart';
@@ -21,41 +20,34 @@ class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreS
 
   Future<void> _openEnvironmentsStore(EnvironmentsStoreRequested event, Emitter<EnvironmentStoreState> emit) async {
     final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    if (!event.isFetchingApi) {
-      emit
-        ..call(EnvironmentStoreIsLoading())
-        ..call(EnvironmentsStoreIsOpen(environments: event.environments, selectedId: 3));
-    } else {
-      emit.call(EnvironmentStoreIsLoading());
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
-      );
 
-      await EnvironementStoreHandler.withReponse(
-        responses: responses,
-        ifFailure: (Failure failure) => EnvironementStoreHandler.handleAllFailures(failure: failure, emit: emit),
-        ifSuccess: (HttpResponse<dynamic> response) => EnvironementStoreHandler.handleAllSuccess(response: response, emit: emit),
-      );
+    emit.call(EnvironmentStoreIsLoading());
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
+    );
+
+    const EnvironmentStoreHandler environmentStoreHandler = EnvironmentStoreHandler();
+    switch (responses) {
+      case Left():
+        await environmentStoreHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await EnvironmentStoreHandler.handleAllSuccess(response: responses.value, emit: emit);
     }
   }
 
   Future<void> _openEnvironmentsInMemoryStore(EnvironmentsStoreInMemoryRequested event, Emitter<EnvironmentStoreState> emit) async {
-    if (!event.isFetchingApi) {
-      emit
-        ..call(EnvironmentStoreIsLoading())
-        ..call(EnvironmentsStoreIsOpen(environments: event.environments, selectedId: 3));
-    } else {
-      final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-      emit.call(EnvironmentStoreIsLoading());
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
-        GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
-      );
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+    emit.call(EnvironmentStoreIsLoading());
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGLocalRepository.getResponses(
+      GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
+    );
 
-      await EnvironementStoreHandler.withReponse(
-        responses: responses,
-        ifFailure: (Failure failure) => EnvironementStoreHandler.handleAllFailures(failure: failure, emit: emit),
-        ifSuccess: (HttpResponse<dynamic> response) => EnvironementStoreHandler.handleAllSuccessInMemory(response: response, emit: emit),
-      );
+    const EnvironmentStoreHandler environmentStoreHandler = EnvironmentStoreHandler();
+    switch (responses) {
+      case Left():
+        await environmentStoreHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await EnvironmentStoreHandler.handleAllSuccessInMemory(response: responses.value, emit: emit);
     }
   }
 
@@ -66,54 +58,37 @@ class EnvironmentStoreBloc extends Bloc<EnvironmentStoreEvent, EnvironmentStoreS
       GetParams(endPoint: MainProject.environmentsEndPoint, accessToken: authTokenModel.accessToken),
     );
 
-    await EnvironementStoreHandler.withReponse(
-      responses: responses,
-      ifFailure: (Failure failure) => EnvironementStoreHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => EnvironementStoreHandler.handleAllSuccess(response: response, emit: emit),
-    );
+    const EnvironmentStoreHandler environmentStoreHandler = EnvironmentStoreHandler();
+    switch (responses) {
+      case Left():
+        await environmentStoreHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await EnvironmentStoreHandler.handleAllSuccessInMemory(response: responses.value, emit: emit);
+    }
   }
 }
 
-class EnvironementStoreHandler {
-  const EnvironementStoreHandler._();
+class EnvironmentStoreHandler {
+  const EnvironmentStoreHandler();
 
-  static Future<void> withReponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static Future<void> handleAllFailures({required Failure failure, required Emitter<EnvironmentStoreState> emit}) async {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<EnvironmentStoreState> emit}) async {
     switch (failure) {
       case ServerFailure():
-        return emit.call(EnvironementsStoreIsClosed(message: failure.message));
+        return emit.call(EnvironmentsStoreIsClosed(message: failure.message));
       case CacheFailure():
-        return emit.call(EnvironementsStoreIsClosed(message: failure.message));
+        return emit.call(EnvironmentsStoreIsClosed(message: failure.message));
       case BadRequestFailure():
-        return emit.call(EnvironementsStoreIsClosed(message: failure.message));
+        return emit.call(EnvironmentsStoreIsClosed(message: failure.message));
       case NetworkFailure():
-        return emit.call(EnvironementsStoreIsClosed(message: failure.message));
+        return emit.call(EnvironmentsStoreIsClosed(message: failure.message));
       case NotFoundFailure():
-        return emit.call(EnvironementsStoreIsClosed(message: failure.message));
+        return emit.call(EnvironmentsStoreIsClosed(message: failure.message));
       case UnAuthorizedFailure():
-        return emit.call(EnvironementsStoreIsClosed(message: failure.message));
+        return emit.call(EnvironmentsStoreIsClosed(message: failure.message));
       case ForbiddenFailure():
-        return emit.call(EnvironementsStoreIsClosed(message: failure.message));
+        return emit.call(EnvironmentsStoreIsClosed(message: failure.message));
       case IDontKnowWhatImDoingFailure():
-        return emit.call(const EnvironementsStoreIsClosed());
+        return emit.call(const EnvironmentsStoreIsClosed());
       default:
         return emit.call(EnvironmentStoreIsLoading());
     }
