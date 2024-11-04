@@ -626,7 +626,7 @@ void testAPIFailures(
   for (final ProjectEvent event in eventsWithGetParams) {
     for (final Failure failure in failures) {
       blocTest<ProjectBloc, ProjectState>(
-        'Then it should give [DocumentsHaveFailures] state for $failure.',
+        'Then it should give [ProjectHasFailure] state for $failure.',
         build: ProjectBloc.new,
 
         /// Arrange
@@ -698,7 +698,7 @@ void testFailureUpsert(
   for (final ProjectEvent event in eventsWithUpsertParams) {
     for (final Failure failure in failures) {
       blocTest<ProjectBloc, ProjectState>(
-        'Then it should give [DocumentsHaveFailures] state for $failure.',
+        'Then it should give [ProjectHasFailure] state for $failure.',
         build: ProjectBloc.new,
 
         /// Arrange
@@ -754,7 +754,7 @@ void testFailureDelete(
   for (final ProjectEvent event in eventsWithDeleteParams) {
     for (final Failure failure in failures) {
       blocTest<ProjectBloc, ProjectState>(
-        'Then it should give [DocumentsHaveFailures] state for $failure.',
+        'Then it should give [ProjectHasFailure] state for $failure.',
         build: ProjectBloc.new,
 
         /// Arrange
