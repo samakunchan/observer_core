@@ -13,6 +13,10 @@ import 'server_nestjs_repository_test.mocks.dart';
 
 @GenerateMocks([AbstractServerNestjsSource])
 void main() {
+  late GetParams getParams;
+  late UpsertParams upsertParams;
+  late DeleteParams deleteParams;
+  late SearchParams searchParams;
   late MockAbstractServerNestjsSource mockSource;
   late Either<Failure, HttpResponse<dynamic>> responses;
   late ServerNestjsRepository repository;
@@ -24,13 +28,15 @@ void main() {
           mockSource = MockAbstractServerNestjsSource();
           repository = ServerNestjsRepository(remoteSource: mockSource);
 
+          getParams = const GetParams(
+            accessToken: 'accessToken',
+            endPoint: 'endPoint',
+          );
+
           /// Arrange
           when(
             mockSource.get(
-              const GetParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-              ),
+              getParams,
             ),
           ).thenAnswer(
             (_) async => HttpResponse(
@@ -50,14 +56,12 @@ void main() {
             ),
           );
         });
+
         test('Then it should perform a GET request.', () async {
           /// Assert
           verify(
             mockSource.get(
-              const GetParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-              ),
+              getParams,
             ),
           );
           verifyNoMoreInteractions(mockSource);
@@ -76,14 +80,16 @@ void main() {
           mockSource = MockAbstractServerNestjsSource();
           repository = ServerNestjsRepository(remoteSource: mockSource);
 
+          upsertParams = const UpsertParams(
+            accessToken: 'accessToken',
+            endPoint: 'endPoint',
+            body: '',
+          );
+
           /// Arrange
           when(
             mockSource.upsert(
-              const UpsertParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-                body: '',
-              ),
+              upsertParams,
             ),
           ).thenAnswer(
             (_) async => HttpResponse(
@@ -97,11 +103,7 @@ void main() {
 
           /// Act
           responses = await repository.upsertOne(
-            const UpsertParams(
-              accessToken: 'accessToken',
-              endPoint: 'endPoint',
-              body: '',
-            ),
+            upsertParams,
           );
         });
 
@@ -109,11 +111,7 @@ void main() {
           /// Assert
           verify(
             mockSource.upsert(
-              const UpsertParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-                body: '',
-              ),
+              upsertParams,
             ),
           );
           verifyNoMoreInteractions(mockSource);
@@ -131,15 +129,16 @@ void main() {
         setUp(() async {
           mockSource = MockAbstractServerNestjsSource();
           repository = ServerNestjsRepository(remoteSource: mockSource);
+          deleteParams = const DeleteParams(
+            accessToken: 'accessToken',
+            endPoint: 'endPoint',
+            body: '',
+          );
 
           /// Arrange
           when(
             mockSource.delete(
-              const DeleteParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-                body: '',
-              ),
+              deleteParams,
             ),
           ).thenAnswer(
             (_) async => HttpResponse(
@@ -153,11 +152,7 @@ void main() {
 
           /// Act
           responses = await repository.deleteOne(
-            const DeleteParams(
-              accessToken: 'accessToken',
-              endPoint: 'endPoint',
-              body: '',
-            ),
+            deleteParams,
           );
         });
 
@@ -165,11 +160,7 @@ void main() {
           /// Assert
           verify(
             mockSource.delete(
-              const DeleteParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-                body: '',
-              ),
+              deleteParams,
             ),
           );
           verifyNoMoreInteractions(mockSource);
@@ -182,61 +173,58 @@ void main() {
       });
     });
 
-    // group('description', () {
-    //   group('When the method uploadFormData() is called.', () {
-    //     setUp(() async {
-    //       mockSource = MockAbstractServerNestjsSource();
-    //       repository = ServerNestjsRepository(remoteSource: mockSource);
-    //
-    //       /// Arrange
-    //       when(
-    //         mockSource.uploadFile(
-    //           UploadFormDataParams(
-    //             accessToken: 'accessToken',
-    //             endPoint: 'endPoint',
-    //             formData: FormData(),
-    //           ),
-    //         ),
-    //       ).thenAnswer(
-    //         (_) async => HttpResponse(
-    //           [''],
-    //           Response(
-    //             requestOptions: RequestOptions(),
-    //             statusCode: 201,
-    //           ),
-    //         ),
-    //       );
-    //
-    //       /// Act
-    //       responses = await repository.uploadFormData(
-    //         UploadFormDataParams(
-    //           accessToken: 'accessToken',
-    //           endPoint: 'endPoint',
-    //           formData: FormData(),
-    //         ),
-    //       );
-    //     });
-    //
-    //     test('Then it should perform a POST request for upload a document', () async {
-    //       /// Assert
-    //       verify(
-    //         repository.uploadFormData(
-    //           UploadFormDataParams(
-    //             accessToken: 'accessToken',
-    //             endPoint: 'endPoint',
-    //             formData: FormData(),
-    //           ),
-    //         ),
-    //       );
-    //       verifyNoMoreInteractions(mockSource);
-    //     });
-    //
-    //     test('Then it should get a response in right side', () async {
-    //       /// Assert
-    //       expect(true, responses is Right);
-    //     });
-    //   });
-    // });
+    group('Given a SEARCH request', () {
+      group('When the method search() is called.', () {
+        setUp(() async {
+          mockSource = MockAbstractServerNestjsSource();
+          repository = ServerNestjsRepository(remoteSource: mockSource);
+
+          searchParams = const SearchParams(
+            accessToken: 'accessToken',
+            endPoint: 'endPoint',
+            input: 'fake-search',
+          );
+
+          /// Arrange
+          when(
+            mockSource.search(searchParams),
+          ).thenAnswer(
+            (_) async => HttpResponse(
+              fakeDatasProjects,
+              Response(
+                requestOptions: RequestOptions(),
+                statusCode: 200,
+              ),
+            ),
+          );
+
+          /// Act
+          responses = await repository.search(
+            searchParams,
+          );
+        });
+
+        test('Then it should perform a SEARCH request', () async {
+          /// Assert
+          verify(
+            repository.search(
+              searchParams,
+            ),
+          );
+          verifyNoMoreInteractions(mockSource);
+        });
+
+        test('Then it should get a response in right side', () async {
+          /// Assert
+          expect(true, responses is Right);
+        });
+
+        test('Then event props should correct value', () async {
+          /// Assert
+          expect(searchParams.props, ['accessToken', 'fake-search', 'endPoint']);
+        });
+      });
+    });
   });
 
   group('In a failure scenario.', () {
@@ -272,6 +260,7 @@ void main() {
             /// Assert
             expect(true, responses is Left);
           });
+
           test('a ServerFailure', () async {
             /// Arrange
             when(
@@ -526,7 +515,7 @@ void main() {
               ),
             ),
           ).thenThrow(
-            BadRequestFailure(),
+            const BadRequestFailure(),
           );
 
           /// Act
