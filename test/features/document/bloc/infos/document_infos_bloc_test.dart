@@ -27,6 +27,7 @@ class UnExpectedFailure extends Failure {}
 void main() {
   late MockDocumentInfosBloc mockDocumentInfosBloc;
   late OneDocumentUpsertDTO oneDocumentUpsertDTO;
+  late MultipleDocumentsUpsertDTO multipleDocumentsUpsertDTO;
   late UpsertParams upsertParams;
   late MockAbstractAuthTokenSource mockAbstractAuthTokenSource;
   late MockAbstractServerNestjsRepository mockAbstractServerNestjsRepository;
@@ -251,6 +252,10 @@ void main() {
             'path': 'images/image.png',
           });
 
+          multipleDocumentsUpsertDTO = MultipleDocumentsUpsertDTO.fromJson(<String, dynamic>{
+            'documents': [oneDocumentUpsertDTO.toJson()],
+          });
+
           upsertParams = UpsertParams(
             accessToken: fakeAuthToken.accessToken,
             endPoint: MainProject.documentsEndPoint,
@@ -277,6 +282,7 @@ void main() {
             ),
           );
         });
+
         test('Then props should have oneDocumentUpsertDTO.', () {
           /// Arrange
           whenListen(
@@ -291,6 +297,14 @@ void main() {
 
           /// Assert
           expect(event.props, equals([oneDocumentUpsertDTO]));
+        });
+
+        test('Then the multi DTO should be a list', () {
+          expect(multipleDocumentsUpsertDTO, isA<MultipleDocumentsUpsertDTO>());
+        });
+
+        test('Then it should be a JSON', () {
+          expect(multipleDocumentsUpsertDTO.toJson(), isA<Map<String, dynamic>>());
         });
 
         blocTest<DocumentInfosBloc, DocumentInfosState>(
