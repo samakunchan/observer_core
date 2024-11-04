@@ -514,13 +514,13 @@ void main() {
               Right(
                 HttpResponse(
                   <String, dynamic>{
-                    'message': 'Fake project delected',
+                    'message': 'Fake project deleted',
                   },
                   Response(
                     requestOptions: RequestOptions(),
                     statusCode: 200,
                     data: <String, dynamic>{
-                      'message': 'Fake project delected',
+                      'message': 'Fake project deleted',
                     },
                   ),
                 ),
