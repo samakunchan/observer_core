@@ -4,8 +4,8 @@ abstract class EnvironmentDatasState extends Equatable {
   const EnvironmentDatasState();
 }
 
-class EnvironmentDatasIsSusscessfullyLoaded extends EnvironmentDatasState {
-  const EnvironmentDatasIsSusscessfullyLoaded({
+class EnvironmentDatasIsSuccessfullyLoaded extends EnvironmentDatasState {
+  const EnvironmentDatasIsSuccessfullyLoaded({
     required this.selectedId,
     this.environments = EnvironmentModel.emptyList,
     this.filteredEnvironments = EnvironmentModel.emptyList,
@@ -23,8 +23,8 @@ class EnvironmentDatasIsSusscessfullyLoaded extends EnvironmentDatasState {
   List<Object> get props => [environments, filteredEnvironments];
 }
 
-class EnvironmentDatasIsSusscessfullyLoadedInMemory extends EnvironmentDatasState {
-  const EnvironmentDatasIsSusscessfullyLoadedInMemory({
+class EnvironmentDatasIsSuccessfullyLoadedInMemory extends EnvironmentDatasState {
+  const EnvironmentDatasIsSuccessfullyLoadedInMemory({
     required this.selectedId,
     this.environments = EnvironmentModel.emptyList,
     this.filteredEnvironments = EnvironmentModel.emptyList,

@@ -13,7 +13,7 @@ part 'environment_datas_event.dart';
 part 'environment_datas_state.dart';
 
 class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasState> {
-  EnvironmentDatasBloc() : super(const EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1)) {
+  EnvironmentDatasBloc() : super(const EnvironmentDatasIsSuccessfullyLoaded(selectedId: 1)) {
     on<EnvironmentDatasRequested>(_showEnvironmentsDatas);
     on<EnvironmentDatasInMemoryRequested>(_showEnvironmentsDatasInMemory);
     on<EnvironmentDatasErrorsRequested>(_showEnvironmentsErrors);
@@ -25,7 +25,7 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
 
   Future<void> _showEnvironmentsDatas(EnvironmentDatasRequested event, Emitter<EnvironmentDatasState> emit) async {
     emit.call(
-      EnvironmentDatasIsSusscessfullyLoaded(
+      EnvironmentDatasIsSuccessfullyLoaded(
         selectedId: 1,
         environments: event.environments,
         filteredEnvironments: event.environments.where((EnvironmentModel environment) => environment.id == 1).toList(),
@@ -35,7 +35,7 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
 
   Future<void> _showEnvironmentsDatasInMemory(EnvironmentDatasInMemoryRequested event, Emitter<EnvironmentDatasState> emit) async {
     emit.call(
-      EnvironmentDatasIsSusscessfullyLoadedInMemory(
+      EnvironmentDatasIsSuccessfullyLoadedInMemory(
         selectedId: 1,
         environments: event.environments,
         filteredEnvironments: event.environments.where((EnvironmentModel environment) => environment.id == 1).toList(),
@@ -49,7 +49,7 @@ class EnvironmentDatasBloc extends Bloc<EnvironmentDatasEvent, EnvironmentDatasS
 
   Future<void> _selectAndShowOneEnvironment(EnvironmentDatasSelected event, Emitter<EnvironmentDatasState> emit) async {
     emit.call(
-      EnvironmentDatasIsSusscessfullyLoaded(
+      EnvironmentDatasIsSuccessfullyLoaded(
         environments: event.environments,
         filteredEnvironments: event.environments.where((EnvironmentModel environment) => environment.id == event.filterId).toList(),
         selectedId: event.filterId,

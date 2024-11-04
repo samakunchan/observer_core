@@ -117,12 +117,12 @@ void main() {
         setUp(() {
           mockEnvironmentDatasBloc = MockEnvironmentDatasBloc();
         });
-        test('Then it should return [EnvironmentDatasIsSusscessfullyLoaded] state.', () {
+        test('Then it should return [EnvironmentDatasIsSuccessfullyLoaded] state.', () {
           /// Arrange
           whenListen(
             mockEnvironmentDatasBloc,
             Stream.fromIterable([]),
-            initialState: EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+            initialState: EnvironmentDatasIsSuccessfullyLoaded(selectedId: 1, environments: fakeEnvs),
           );
 
           /// Act
@@ -132,7 +132,7 @@ void main() {
           expect(
             mockEnvironmentDatasBloc.state,
             equals(
-              EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+              EnvironmentDatasIsSuccessfullyLoaded(selectedId: 1, environments: fakeEnvs),
             ),
           );
         });
@@ -195,7 +195,7 @@ void main() {
           whenListen(
             mockEnvironmentDatasBloc,
             Stream.fromIterable([]),
-            initialState: const EnvironmentDatasIsSusscessfullyLoadedInMemory(selectedId: 1),
+            initialState: const EnvironmentDatasIsSuccessfullyLoadedInMemory(selectedId: 1),
           );
 
           /// Act
@@ -221,7 +221,7 @@ void main() {
 
           /// Assert
           expect: () => <EnvironmentDatasState>[
-            EnvironmentDatasIsSusscessfullyLoadedInMemory(environments: fakeEnvs, selectedId: 1),
+            EnvironmentDatasIsSuccessfullyLoadedInMemory(environments: fakeEnvs, selectedId: 1),
           ],
         );
       });
@@ -280,7 +280,7 @@ void main() {
           whenListen(
             mockEnvironmentDatasBloc,
             Stream.fromIterable([]),
-            initialState: EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+            initialState: EnvironmentDatasIsSuccessfullyLoaded(selectedId: 1, environments: fakeEnvs),
           );
 
           /// Act
@@ -300,7 +300,7 @@ void main() {
 
           /// Assert
           expect: () => <EnvironmentDatasState>[
-            EnvironmentDatasIsSusscessfullyLoaded(
+            EnvironmentDatasIsSuccessfullyLoaded(
               selectedId: 1,
               environments: fakeEnvs,
               filteredEnvironments: fakeEnvs.where((EnvironmentModel environment) => environment.id == 1).toList(),
@@ -316,7 +316,7 @@ void main() {
           whenListen(
             mockEnvironmentDatasBloc,
             Stream.fromIterable([]),
-            initialState: EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+            initialState: EnvironmentDatasIsSuccessfullyLoaded(selectedId: 1, environments: fakeEnvs),
           );
 
           /// Act
@@ -348,7 +348,7 @@ void main() {
           whenListen(
             mockEnvironmentDatasBloc,
             Stream.fromIterable([]),
-            initialState: EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+            initialState: EnvironmentDatasIsSuccessfullyLoaded(selectedId: 1, environments: fakeEnvs),
           );
 
           /// Act
@@ -368,7 +368,7 @@ void main() {
 
           /// Assert
           expect: () => <EnvironmentDatasState>[
-            EnvironmentDatasIsSusscessfullyLoaded(selectedId: 1, filteredEnvironments: [], environments: fakeEnvs),
+            EnvironmentDatasIsSuccessfullyLoaded(selectedId: 1, environments: fakeEnvs),
           ],
         );
       });
@@ -383,6 +383,13 @@ void main() {
           environmentUpsertDTO = EnvironmentUpsertDTO.fromJson(
             <String, dynamic>{
               'title': 'fake-title',
+              'categories': <Map<String, dynamic>>[
+                <String, dynamic>{
+                  'title': 'Titre de la catégorie',
+                  'content': 'Description de la catégorie',
+                  'environment': 3,
+                },
+              ],
             },
           );
 
@@ -492,6 +499,7 @@ void main() {
             /// Assert
             expect(searchResponse.results.isNotEmpty, true);
             expect(environmentAssociatedModel.toJson(), isA<Map<String, dynamic>>());
+            expect(searchResponse.toJson(), isA<Map<String, dynamic>>());
           });
         });
       });
@@ -503,8 +511,15 @@ void main() {
         setUp(() {
           mockEnvironmentDatasBloc = MockEnvironmentDatasBloc();
           environmentDeleteDTO = EnvironmentDeleteDTO.fromJson(<String, dynamic>{
-            'title': 'fake-title',
             'id': 999,
+            'title': 'fake-title',
+            'categories': <Map<String, dynamic>>[
+              <String, dynamic>{
+                'title': 'Titre de la catégorie',
+                'content': 'Description de la catégorie',
+                // 'environment': 3,
+              },
+            ],
           });
           deleteParams = DeleteParams(
             endPoint: MainProject.environmentsEndPoint,
