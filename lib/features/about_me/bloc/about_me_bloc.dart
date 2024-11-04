@@ -30,9 +30,10 @@ class AboutMeBloc extends Bloc<AboutMeEvent, AboutMeState> {
       ),
     );
 
+    const AboutMeHandler aboutMeHandler = AboutMeHandler();
     switch (responses) {
       case Left():
-        AboutMeHandler.handleAllFailures(failure: responses.value, emit: emit);
+        await aboutMeHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
         final List<Map<String, dynamic>> datasJson = (responses.value.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
         final List<AboutMeModel> aboutMeModel = datasJson.map<AboutMeModel>(AboutMeModel.fromJson).toList();
@@ -54,9 +55,11 @@ class AboutMeBloc extends Bloc<AboutMeEvent, AboutMeState> {
         body: jsonEncode(event.aboutsDTO.toJson()),
       ),
     );
+
+    const AboutMeHandler aboutMeHandler = AboutMeHandler();
     switch (responses) {
       case Left():
-        AboutMeHandler.handleAllFailures(failure: responses.value, emit: emit);
+        await aboutMeHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
         await AboutMeHandler.handleUpsertSuccess(response: responses.value, emit: emit);
     }
@@ -64,9 +67,9 @@ class AboutMeBloc extends Bloc<AboutMeEvent, AboutMeState> {
 }
 
 class AboutMeHandler {
-  const AboutMeHandler._();
+  const AboutMeHandler();
 
-  static void handleAllFailures({required Failure failure, required Emitter<AboutMeState> emit}) {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<AboutMeState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(AboutMeHasFailure(message: failure.message));
@@ -97,14 +100,14 @@ class AboutMeHandler {
     emit.call(AboutMeIsSubmittingSuccessfully(aboutMe: aboutMeModel));
   }
 
-  static Future<void> storeAboutMe({required AboutMeModel aboutMe}) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
-      UpsertParams(
-        endPoint: MainProject.aboutme,
-        accessToken: authTokenModel.accessToken,
-        body: jsonEncode(aboutMe),
-      ),
-    );
-  }
+  // static Future<void> storeAboutMe({required AboutMeModel aboutMe}) async {
+  //   final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+  //   await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
+  //     UpsertParams(
+  //       endPoint: MainProject.aboutme,
+  //       accessToken: authTokenModel.accessToken,
+  //       body: jsonEncode(aboutMe),
+  //     ),
+  //   );
+  // }
 }
