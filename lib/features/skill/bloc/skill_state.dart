@@ -23,11 +23,6 @@ final class SkillsAreLoadedSuccessfully extends SkillState {
   List<Object> get props => [skills];
 }
 
-final class SkillIsSubmitting extends SkillState {
-  @override
-  List<Object> get props => [];
-}
-
 final class SkillIsSubmittingSuccessfully extends SkillState {
   const SkillIsSubmittingSuccessfully({required this.skill, this.status = UpsertFormType.create});
 
@@ -58,9 +53,4 @@ final class SkillsHaveFailure extends SkillState {
 
   @override
   List<Object?> get props => [message];
-}
-
-final class SkillReloaded extends SkillState {
-  @override
-  List<Object> get props => [];
 }

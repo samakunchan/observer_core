@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
@@ -33,20 +32,14 @@ class SkillBloc extends Bloc<SkillEvent, SkillState> {
       ),
     );
 
+    const SkillsHandler skillsHandler = SkillsHandler();
     switch (responses) {
       case Left():
-        responses.fold(
-          (Failure failure) => SkillsHandler.handleAllFailures(failure: failure, emit: emit),
-          (HttpResponse<dynamic> response) => null,
-        );
+        await skillsHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
-        responses.fold((Failure failure) => null, (HttpResponse<dynamic> response) {
-          final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-          final List<SkillModel> skills = datasJson.map<SkillModel>(SkillModel.fromJson).toList();
-          emit.call(SkillsAreLoadedSuccessfully(skills: skills));
-        });
-      default:
-        emit.call(SkillsAreLoading());
+        final List<Map<String, dynamic>> datasJson = (responses.value.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
+        final List<SkillModel> skills = datasJson.map<SkillModel>(SkillModel.fromJson).toList();
+        emit.call(SkillsAreLoadedSuccessfully(skills: skills));
     }
   }
 
@@ -61,15 +54,17 @@ class SkillBloc extends Bloc<SkillEvent, SkillState> {
       ),
     );
 
-    await SkillsHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => SkillsHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => SkillsHandler.handleUpsertSuccess(
-        response: response,
-        emit: emit,
-        status: event.skillsDTO.id != null ? UpsertFormType.update : UpsertFormType.create,
-      ),
-    );
+    const SkillsHandler skillsHandler = SkillsHandler();
+    switch (responses) {
+      case Left():
+        await skillsHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await SkillsHandler.handleUpsertSuccess(
+          response: responses.value,
+          emit: emit,
+          status: event.skillsDTO.id != null ? UpsertFormType.update : UpsertFormType.create,
+        );
+    }
   }
 
   Future<void> _deleteASkill(SkillDeleted event, Emitter<SkillState> emit) async {
@@ -83,11 +78,13 @@ class SkillBloc extends Bloc<SkillEvent, SkillState> {
       ),
     );
 
-    await SkillsHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => SkillsHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => SkillsHandler.handleDeleteSuccess(response: response, emit: emit),
-    );
+    const SkillsHandler skillsHandler = SkillsHandler();
+    switch (responses) {
+      case Left():
+        await skillsHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await SkillsHandler.handleDeleteSuccess(response: responses.value, emit: emit);
+    }
   }
 
   Future<void> _updateSkills(SkillsUpdated event, Emitter<SkillState> emit) async {
@@ -96,28 +93,9 @@ class SkillBloc extends Bloc<SkillEvent, SkillState> {
 }
 
 class SkillsHandler {
-  const SkillsHandler._();
+  const SkillsHandler();
 
-  static Future<void> withResponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static void handleAllFailures({required Failure failure, required Emitter<SkillState> emit}) {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<SkillState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(SkillsHaveFailure(message: failure.message));
@@ -149,16 +127,16 @@ class SkillsHandler {
     emit.call(SkillIsSubmittingSuccessfully(skill: skill, status: status));
   }
 
-  static Future<void> storeSkills({required List<SkillModel> skills}) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
-      UpsertParams(
-        endPoint: MainProject.skills,
-        accessToken: authTokenModel.accessToken,
-        body: jsonEncode(skills),
-      ),
-    );
-  }
+  // static Future<void> storeSkills({required List<SkillModel> skills}) async {
+  //   final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+  //   await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
+  //     UpsertParams(
+  //       endPoint: MainProject.skills,
+  //       accessToken: authTokenModel.accessToken,
+  //       body: jsonEncode(skills),
+  //     ),
+  //   );
+  // }
 
   static Future<void> handleDeleteSuccess({
     required HttpResponse<dynamic> response,
@@ -166,12 +144,12 @@ class SkillsHandler {
   }) async {
     emit.call(SkillIsRemovedSuccessfully());
   }
-
-  static Future<void> handleSearchSuccess({
-    required HttpResponse<dynamic> response,
-    required Emitter<SkillState> emit,
-  }) async {
-    debugPrint(response.data.toString());
-    // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
-  }
+  //
+  // static Future<void> handleSearchSuccess({
+  //   required HttpResponse<dynamic> response,
+  //   required Emitter<SkillState> emit,
+  // }) async {
+  //   debugPrint(response.data.toString());
+  //   // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
+  // }
 }
