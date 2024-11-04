@@ -63,6 +63,7 @@ void main() {
   };
   final ProjectModel projectModel = ProjectModel.fromJson(fakeJsonProject);
   late List<ProjectModel> fakeProjects;
+  late DateDTO dateDTO;
 
   /// Instanciation
   authTokenModel = fakeAuthToken;
@@ -386,14 +387,18 @@ void main() {
     group('Given the fact a project is submitted successfully.', () {
       group('When event [ProjectSubmitted] is detected.', () {
         setUp(() {
+          dateDTO = DateDTO.fromJson(<String, dynamic>{
+            'dateTime': DateTime.now().toIso8601String(),
+            'dateFormated': '2024-01-01',
+          });
           mockProjectBloc = MockProjectBloc();
           projectDTOForUpsert = ProjectDTO.fromJson({
             'title': 'fake-title',
             'shortDescription': 'fake-description',
             'fullDescription': 'fake-description',
             'client': 'fake-client',
-            'dateDebutProjet': 'YYYY-MM-DD',
-            'dateFinProjet': 'YYYY-MM-DD',
+            'dateDebutProjet': dateDTO.dateFormated,
+            'dateFinProjet': dateDTO.dateFormated,
             'category': 3,
             'picturesProject': [
               {
@@ -442,6 +447,11 @@ void main() {
 
           /// Assert
           expect(event.props, equals([projectDTOForUpsert]));
+        });
+
+        test('Then the date should be a DTO', () {
+          expect(dateDTO, isA<DateDTO>());
+          expect(dateDTO.toJson(), isA<Map<String, dynamic>>());
         });
 
         blocTest<ProjectBloc, ProjectState>(
