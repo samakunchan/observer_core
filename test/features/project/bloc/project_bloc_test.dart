@@ -64,6 +64,7 @@ void main() {
   final ProjectModel projectModel = ProjectModel.fromJson(fakeJsonProject);
   late List<ProjectModel> fakeProjects;
   late DateDTO dateDTO;
+  late PictureModel pictureModel;
 
   /// Instanciation
   authTokenModel = fakeAuthToken;
@@ -391,6 +392,8 @@ void main() {
             'dateTime': DateTime.now().toIso8601String(),
             'dateFormated': '2024-01-01',
           });
+
+          pictureModel = PictureModel.fromJson(PictureModel.oneDefaultPicture.toJson());
           mockProjectBloc = MockProjectBloc();
           projectDTOForUpsert = ProjectDTO.fromJson({
             'title': 'fake-title',
@@ -422,11 +425,21 @@ void main() {
             (_) => Future<Either<Failure, HttpResponse<dynamic>>>.value(
               Right(
                 HttpResponse(
-                  fakeJsonProject,
+                  <String, dynamic>{
+                    ...fakeJsonProject,
+                    'picturesProject': [
+                      pictureModel.toJson(),
+                    ],
+                  },
                   Response(
                     requestOptions: RequestOptions(),
                     statusCode: 201,
-                    data: fakeJsonProject,
+                    data: <String, dynamic>{
+                      ...fakeJsonProject,
+                      'picturesProject': [
+                        pictureModel.toJson(),
+                      ],
+                    },
                   ),
                 ),
               ),
