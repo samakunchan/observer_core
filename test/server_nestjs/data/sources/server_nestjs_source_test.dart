@@ -237,6 +237,7 @@ void main() {
                 expect(404, e.httpError.statusCode);
                 expect('NotFoundException', e.httpError.errorName);
                 expect(ErrorMessage.notFoundMessage, e.httpError.description);
+                expect(e.httpError.toJson(), isA<Map<String, dynamic>>());
               }
             }
           });
