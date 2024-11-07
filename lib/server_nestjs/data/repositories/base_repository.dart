@@ -20,7 +20,7 @@ class BaseRepository {
 
       return Right(remote);
     } on ServerException {
-      return Left(ServerFailure());
+      return const Left(ServerFailure());
     } on BadRequestException catch (e) {
       return Left(BadRequestFailure(message: e.httpError.description));
     } on NotFoundException catch (e) {
@@ -29,13 +29,13 @@ class BaseRepository {
       if (e.httpError.description.isNotEmpty) {
         return Left(UnAuthorizedFailure(message: e.httpError.description));
       } else {
-        return Left(UnAuthorizedFailure());
+        return const Left(UnAuthorizedFailure());
       }
     } on ForbiddenException catch (e) {
       if (e.httpError.description.isNotEmpty) {
         return Left(ForbiddenFailure(message: e.httpError.description));
       } else {
-        return Left(ForbiddenFailure());
+        return const Left(ForbiddenFailure());
       }
     } on DioException catch (e) {
       return Left(BadRequestFailure(message: e.message ?? ''));
@@ -51,16 +51,16 @@ class BaseRepository {
       final T remote = await getConcrete();
       return Right(remote);
     } on ServerException {
-      return Left(ServerFailure());
+      return const Left(ServerFailure());
     } on BadRequestException catch (e) {
       return Left(BadRequestFailure(message: e.httpError.description));
     } on NotFoundException {
-      return Left(NotFoundFailure());
+      return const Left(NotFoundFailure());
     } on UnAuthorizedException catch (e) {
       if (e.httpError.description.isNotEmpty) {
         return Left(UnAuthorizedFailure(message: e.httpError.description));
       } else {
-        return Left(UnAuthorizedFailure());
+        return const Left(UnAuthorizedFailure());
       }
     } on ForbiddenException catch (e) {
       return Left(ForbiddenFailure(message: e.httpError.description));

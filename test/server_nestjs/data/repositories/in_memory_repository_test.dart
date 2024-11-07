@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -8,33 +9,23 @@ import 'package:observer_core/models/http_error/http_error.dart';
 import 'package:observer_core/server_nestjs/feature_server_nestjs_export.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../fake_datas.dart';
-import 'server_nestjs_repository_test.mocks.dart';
+import '../sources/server_nestjs_source_test.dart';
+import 'in_memory_repository_test.mocks.dart';
 
-const List<Map<String, dynamic>> fakeResponse = [
-  <String, dynamic>{
-    'fake_id': 999,
-    'fake_results': <List<dynamic>>[],
-  }
-];
-
-@GenerateMocks([AbstractServerNestjsSource])
+@GenerateMocks([AbstractInMemoryApiNestjsSource, FlutterSecureStorage])
 void main() {
   late GetParams getParams;
   late UpsertParams upsertParams;
-  late DeleteParams deleteParams;
-  late SearchParams searchParams;
-  late UploadFormDataParams uploadFormDataParams;
-  late MockAbstractServerNestjsSource mockSource;
+  late MockAbstractInMemoryApiNestjsSource mockSource;
   late Either<Failure, HttpResponse<dynamic>> responses;
-  late ServerNestjsRepository repository;
+  late InMemoryApiNestjsRepository repository;
 
   group('In a successful scenario.', () {
     group('Given a GET request.', () {
       group('When the method getResponses() is called.', () {
         setUp(() async {
-          mockSource = MockAbstractServerNestjsSource();
-          repository = ServerNestjsRepository(remoteSource: mockSource);
+          mockSource = MockAbstractInMemoryApiNestjsSource();
+          repository = InMemoryApiNestjsRepository(inMemorySource: mockSource);
 
           getParams = const GetParams(
             accessToken: 'accessToken',
@@ -81,12 +72,12 @@ void main() {
         });
       });
     });
-
+    //
     group('Given a POST request.', () {
       group('When the method upsertOne() is called.', () {
         setUp(() async {
-          mockSource = MockAbstractServerNestjsSource();
-          repository = ServerNestjsRepository(remoteSource: mockSource);
+          mockSource = MockAbstractInMemoryApiNestjsSource();
+          repository = InMemoryApiNestjsRepository(inMemorySource: mockSource);
 
           upsertParams = const UpsertParams(
             accessToken: 'accessToken',
@@ -96,7 +87,7 @@ void main() {
 
           /// Arrange
           when(
-            mockSource.upsert(
+            mockSource.post(
               upsertParams,
             ),
           ).thenAnswer(
@@ -110,7 +101,7 @@ void main() {
           );
 
           /// Act
-          responses = await repository.upsertOne(
+          responses = await repository.upsertResponses(
             upsertParams,
           );
         });
@@ -118,7 +109,7 @@ void main() {
         test('Then it should perform a POST request.', () async {
           /// Assert
           verify(
-            mockSource.upsert(
+            mockSource.post(
               upsertParams,
             ),
           );
@@ -131,159 +122,6 @@ void main() {
         });
       });
     });
-
-    group('Given a DELETE request', () {
-      group('When the method deleteOne() is called.', () {
-        setUp(() async {
-          mockSource = MockAbstractServerNestjsSource();
-          repository = ServerNestjsRepository(remoteSource: mockSource);
-          deleteParams = const DeleteParams(
-            accessToken: 'accessToken',
-            endPoint: 'endPoint',
-            body: '',
-          );
-
-          /// Arrange
-          when(
-            mockSource.delete(
-              deleteParams,
-            ),
-          ).thenAnswer(
-            (_) async => HttpResponse(
-              fakeDeleteResponse,
-              Response(
-                requestOptions: RequestOptions(),
-                statusCode: 200,
-              ),
-            ),
-          );
-
-          /// Act
-          responses = await repository.deleteOne(
-            deleteParams,
-          );
-        });
-
-        test('Then it should perform a DELETE request', () async {
-          /// Assert
-          verify(
-            mockSource.delete(
-              deleteParams,
-            ),
-          );
-          verifyNoMoreInteractions(mockSource);
-        });
-
-        test('Then it should get a response in right side', () async {
-          /// Assert
-          expect(true, responses is Right);
-        });
-      });
-    });
-
-    group('Given a SEARCH request', () {
-      group('When the method search() is called.', () {
-        setUp(() async {
-          mockSource = MockAbstractServerNestjsSource();
-          repository = ServerNestjsRepository(remoteSource: mockSource);
-
-          searchParams = const SearchParams(
-            accessToken: 'accessToken',
-            endPoint: 'endPoint',
-            input: 'fake-search',
-          );
-
-          /// Arrange
-          when(
-            mockSource.search(searchParams),
-          ).thenAnswer(
-            (_) async => HttpResponse(
-              fakeResponse,
-              Response(
-                requestOptions: RequestOptions(),
-                statusCode: 200,
-              ),
-            ),
-          );
-
-          /// Act
-          responses = await repository.search(
-            searchParams,
-          );
-        });
-
-        test('Then it should perform a SEARCH request', () async {
-          /// Assert
-          verify(
-            repository.search(
-              searchParams,
-            ),
-          );
-          verifyNoMoreInteractions(mockSource);
-        });
-
-        test('Then it should get a response in right side', () async {
-          /// Assert
-          expect(true, responses is Right);
-        });
-
-        test('Then event props should correct value', () async {
-          /// Assert
-          expect(searchParams.props, ['accessToken', 'fake-search', 'endPoint']);
-        });
-      });
-    });
-
-    group('Given a UPLOAD request', () {
-      group('When the method uploadFormData() is called.', () {
-        setUp(() async {
-          mockSource = MockAbstractServerNestjsSource();
-          repository = ServerNestjsRepository(remoteSource: mockSource);
-
-          uploadFormDataParams = UploadFormDataParams(
-            accessToken: 'accessToken',
-            endPoint: 'endPoint',
-            formData: FormData(),
-          );
-
-          /// Arrange
-          when(
-            mockSource.uploadFile(uploadFormDataParams),
-          ).thenAnswer(
-            (_) async => HttpResponse(
-              fakeResponse,
-              Response(
-                requestOptions: RequestOptions(),
-                statusCode: 200,
-              ),
-            ),
-          );
-
-          /// Act
-          responses = await repository.uploadFormData(
-            uploadFormDataParams,
-          );
-        });
-
-        test('Then it should perform a UPLOAD request', () async {
-          /// Assert
-          verify(
-            mockSource.uploadFile(uploadFormDataParams),
-          );
-          verifyNoMoreInteractions(mockSource);
-        });
-
-        test('Then it should get a response in right side', () async {
-          /// Assert
-          expect(true, responses is Right);
-        });
-
-        test('Then event props should correct value', () async {
-          /// Assert
-          expect(searchParams.props, ['accessToken', 'fake-search', 'endPoint']);
-        });
-      });
-    });
   });
 
   group('In a failure scenario.', () {
@@ -291,8 +129,8 @@ void main() {
       group('When the method getResponses() is called.', () {
         group('Then it should get', () {
           setUp(() async {
-            mockSource = MockAbstractServerNestjsSource();
-            repository = ServerNestjsRepository(remoteSource: mockSource);
+            mockSource = MockAbstractInMemoryApiNestjsSource();
+            repository = InMemoryApiNestjsRepository(inMemorySource: mockSource);
           });
 
           test('a response in left side.', () async {
@@ -631,12 +469,12 @@ void main() {
     group('Given a POST request.', () {
       group('When the method upsertOne() is called.', () {
         setUp(() async {
-          mockSource = MockAbstractServerNestjsSource();
-          repository = ServerNestjsRepository(remoteSource: mockSource);
+          mockSource = MockAbstractInMemoryApiNestjsSource();
+          repository = InMemoryApiNestjsRepository(inMemorySource: mockSource);
 
           /// Arrange
           when(
-            mockSource.upsert(
+            mockSource.post(
               const UpsertParams(
                 accessToken: 'accessToken',
                 endPoint: 'endPoint',
@@ -648,7 +486,7 @@ void main() {
           );
 
           /// Act
-          responses = await repository.upsertOne(
+          responses = await repository.upsertResponses(
             const UpsertParams(
               accessToken: 'accessToken',
               endPoint: 'endPoint',
@@ -660,7 +498,7 @@ void main() {
         test('Then it should perform a POST request.', () async {
           /// Assert
           verify(
-            mockSource.upsert(
+            mockSource.post(
               const UpsertParams(
                 accessToken: 'accessToken',
                 endPoint: 'endPoint',
@@ -672,56 +510,6 @@ void main() {
         });
 
         test('Then it should get a response in right side.', () async {
-          /// Assert
-          expect(true, responses is Left);
-        });
-      });
-    });
-
-    group('Given a DELETE request', () {
-      group('When the method deleteOne() is called.', () {
-        setUp(() async {
-          mockSource = MockAbstractServerNestjsSource();
-          repository = ServerNestjsRepository(remoteSource: mockSource);
-
-          /// Arrange
-          when(
-            mockSource.delete(
-              const DeleteParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-                body: '',
-              ),
-            ),
-          ).thenThrow(
-            BadRequestFailure(),
-          );
-
-          /// Act
-          responses = await repository.deleteOne(
-            const DeleteParams(
-              accessToken: 'accessToken',
-              endPoint: 'endPoint',
-              body: '',
-            ),
-          );
-        });
-
-        test('Then it should perform a DELETE request', () async {
-          /// Assert
-          verify(
-            repository.deleteOne(
-              const DeleteParams(
-                accessToken: 'accessToken',
-                endPoint: 'endPoint',
-                body: '',
-              ),
-            ),
-          );
-          verifyNoMoreInteractions(mockSource);
-        });
-
-        test('Then it should get a response in right side', () async {
           /// Assert
           expect(true, responses is Left);
         });
