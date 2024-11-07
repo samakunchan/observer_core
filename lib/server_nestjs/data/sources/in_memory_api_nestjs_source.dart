@@ -80,8 +80,6 @@ class InMemoryApiNestjsSource implements AbstractInMemoryApiNestjsSource {
         throw const UnAuthorizedException();
       } else if (e.toString().contains('403')) {
         throw const ForbiddenException();
-      } else if (e.toString().contains('503')) {
-        throw ServerException();
       } else if (e is NotFoundException) {
         throw const NotFoundException();
       } else {

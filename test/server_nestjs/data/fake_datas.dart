@@ -1,24 +1,5 @@
 import 'package:observer_core/features/features_export.dart';
 
-final List<Map<String, dynamic>> fakeDatasProjects = List<Map<String, dynamic>>.of([
-  <String, dynamic>{
-    'id': 7,
-    'title': 'Mon site non web',
-    'slug': 'mon-site-non-web',
-    'shortDescription': 'Refonte de site web',
-    'fullDescription': 'Refonte de site web qui était à l‘origine sous Symfony et refais en Angular',
-    'client': 'Samakunchan Technology',
-    'dateDebutProjet': '2023-01-01T00:00:00.000Z',
-    'category': 87,
-    'company': {'siren': 842127201},
-    'dateFinProjet': '2024-08-16T08:44:21.455Z',
-    'isPublicationActive': false,
-    'createdAt': '2024-08-16T08:44:21.455Z',
-    'updatedAt': '2024-08-16T08:44:21.455Z',
-    'deletedAt': null,
-  },
-]);
-
 final Map<String, dynamic> error400 = <String, dynamic>{
   'statusCode': 400,
   'errorName': 'BadRequestException',
@@ -47,6 +28,17 @@ final Map<String, dynamic> error403 = <String, dynamic>{
   'description': {
     'statusCode': 403,
     'message': 'Forbidden',
+  },
+  'path': '/custom-endpoint',
+  'date': '2024-10-24T08:24:24.198Z',
+};
+
+final Map<String, dynamic> error503 = <String, dynamic>{
+  'statusCode': 503,
+  'errorName': 'ServerException',
+  'description': {
+    'statusCode': 503,
+    'message': 'Offline',
   },
   'path': '/custom-endpoint',
   'date': '2024-10-24T08:24:24.198Z',

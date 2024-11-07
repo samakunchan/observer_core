@@ -241,7 +241,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
   Future<HttpResponse<dynamic>> search(SearchParams params) async {
     try {
       switch (params.endPoint) {
-        case '/environments/search':
+        case '${MainProject.environmentsEndPoint}/search':
           switch (params.strictMode) {
             case false:
               return await remoteService.searchEnvironments(
@@ -255,26 +255,26 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
                 contentType: MainProject.defaultContentType,
                 input: params.input,
               );
-            default:
-              throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+            // default:
+            //   throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
           }
-        case '/categories/search':
-          switch (params.strictMode) {
-            case false:
-              return await remoteService.searchCategories(
-                authorization: 'Bearer ${params.accessToken}',
-                contentType: MainProject.defaultContentType,
-                input: params.input,
-              );
-            case true:
-              return await remoteService.searchStrictCategories(
-                authorization: 'Bearer ${params.accessToken}',
-                contentType: MainProject.defaultContentType,
-                input: params.input,
-              );
-            default:
-              throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
-          }
+        // case '/categories/search':
+        //   switch (params.strictMode) {
+        //     case false:
+        //       return await remoteService.searchCategories(
+        //         authorization: 'Bearer ${params.accessToken}',
+        //         contentType: MainProject.defaultContentType,
+        //         input: params.input,
+        //       );
+        //     case true:
+        //       return await remoteService.searchStrictCategories(
+        //         authorization: 'Bearer ${params.accessToken}',
+        //         contentType: MainProject.defaultContentType,
+        //         input: params.input,
+        //       );
+        //     default:
+        //       throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+        //   }
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -304,12 +304,10 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
       throw UnAuthorizedException(httpError: httpError);
     } else if (httpError.statusCode == 403) {
       throw ForbiddenException(httpError: httpError);
-    } else if (httpError.statusCode == 503) {
-      throw ServerException();
     } else if (httpError.statusCode == 404) {
       throw NotFoundException(httpError: httpError);
-    } else if (e is NotFoundException) {
-      throw NotFoundException(httpError: httpError);
+    } else if (httpError.statusCode == 503) {
+      throw ServerException();
     } else if (e.message!.contains('Connection refused')) {
       throw ServerException();
     } else {

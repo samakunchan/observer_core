@@ -11,6 +11,13 @@ import 'package:retrofit/retrofit.dart';
 import '../fake_datas.dart';
 import 'server_nestjs_repository_test.mocks.dart';
 
+const List<Map<String, dynamic>> fakeResponse = [
+  <String, dynamic>{
+    'fake_id': 999,
+    'fake_results': <List<dynamic>>[],
+  }
+];
+
 @GenerateMocks([AbstractServerNestjsSource])
 void main() {
   late GetParams getParams;
@@ -40,7 +47,7 @@ void main() {
             ),
           ).thenAnswer(
             (_) async => HttpResponse(
-              fakeDatasProjects,
+              fakeResponse,
               Response(
                 requestOptions: RequestOptions(),
                 statusCode: 200,
@@ -93,7 +100,7 @@ void main() {
             ),
           ).thenAnswer(
             (_) async => HttpResponse(
-              fakeDatasProjects,
+              fakeResponse,
               Response(
                 requestOptions: RequestOptions(),
                 statusCode: 201,
@@ -190,7 +197,7 @@ void main() {
             mockSource.search(searchParams),
           ).thenAnswer(
             (_) async => HttpResponse(
-              fakeDatasProjects,
+              fakeResponse,
               Response(
                 requestOptions: RequestOptions(),
                 statusCode: 200,
