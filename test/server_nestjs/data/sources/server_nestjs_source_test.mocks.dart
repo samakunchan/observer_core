@@ -81,130 +81,6 @@ class MockServerNestjsService extends _i1.Mock
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
 
   @override
-  _i4.Future<_i2.HttpResponse<dynamic>> searchEnvironments({
-    required String? authorization,
-    required String? contentType,
-    String? input = r'',
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #searchEnvironments,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #input: input,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #searchEnvironments,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #input: input,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> searchStrictEnvironments({
-    required String? authorization,
-    required String? contentType,
-    String? input = r'',
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #searchStrictEnvironments,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #input: input,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #searchStrictEnvironments,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #input: input,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> upsertEnvironment({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #upsertEnvironment,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #upsertEnvironment,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> deleteEnvironment({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #deleteEnvironment,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #deleteEnvironment,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
   _i4.Future<_i2.HttpResponse<dynamic>> getCategories(
           {required String? authorization}) =>
       (super.noSuchMethod(
@@ -218,150 +94,6 @@ class MockServerNestjsService extends _i1.Mock
           this,
           Invocation.method(
             #getCategories,
-            [],
-            {#authorization: authorization},
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> searchCategories({
-    required String? authorization,
-    required String? contentType,
-    String? input = r'',
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #searchCategories,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #input: input,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #searchCategories,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #input: input,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> searchStrictCategories({
-    required String? authorization,
-    required String? contentType,
-    String? input = r'',
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #searchStrictCategories,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #input: input,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #searchStrictCategories,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #input: input,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> upsertCategory({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #upsertCategory,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #upsertCategory,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> deleteCategory({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #deleteCategory,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #deleteCategory,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getArticles(
-          {required String? authorization}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getArticles,
-          [],
-          {#authorization: authorization},
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #getArticles,
             [],
             {#authorization: authorization},
           ),
@@ -384,68 +116,6 @@ class MockServerNestjsService extends _i1.Mock
             #getProjects,
             [],
             {#authorization: authorization},
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> upsertProject({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #upsertProject,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #upsertProject,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> deleteProject({
-    required String? authorization,
-    required String? contentType,
-    required String? id,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #deleteProject,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #id: id,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #deleteProject,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #id: id,
-            },
           ),
         )),
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
@@ -539,6 +209,303 @@ class MockServerNestjsService extends _i1.Mock
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
 
   @override
+  _i4.Future<_i2.HttpResponse<dynamic>> getProposedServices(
+          {required String? authorization}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getProposedServices,
+          [],
+          {#authorization: authorization},
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #getProposedServices,
+            [],
+            {#authorization: authorization},
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> getSkills(
+          {required String? authorization}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSkills,
+          [],
+          {#authorization: authorization},
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #getSkills,
+            [],
+            {#authorization: authorization},
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> getReasons(
+          {required String? authorization}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getReasons,
+          [],
+          {#authorization: authorization},
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #getReasons,
+            [],
+            {#authorization: authorization},
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> getDatasAboutMe(
+          {required String? authorization}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDatasAboutMe,
+          [],
+          {#authorization: authorization},
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #getDatasAboutMe,
+            [],
+            {#authorization: authorization},
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> searchEnvironments({
+    required String? authorization,
+    required String? contentType,
+    String? input = r'',
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #searchEnvironments,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #input: input,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #searchEnvironments,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #input: input,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> searchStrictEnvironments({
+    required String? authorization,
+    required String? contentType,
+    String? input = r'',
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #searchStrictEnvironments,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #input: input,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #searchStrictEnvironments,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #input: input,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> searchCategories({
+    required String? authorization,
+    required String? contentType,
+    String? input = r'',
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #searchCategories,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #input: input,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #searchCategories,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #input: input,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> searchStrictCategories({
+    required String? authorization,
+    required String? contentType,
+    String? input = r'',
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #searchStrictCategories,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #input: input,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #searchStrictCategories,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #input: input,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> upsertEnvironment({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upsertEnvironment,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #upsertEnvironment,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> upsertCategory({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upsertCategory,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #upsertCategory,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> upsertProject({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upsertProject,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #upsertProject,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
   _i4.Future<_i2.HttpResponse<dynamic>> upsertOneDocument({
     required String? authorization,
     required String? contentType,
@@ -626,6 +593,223 @@ class MockServerNestjsService extends _i1.Mock
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
 
   @override
+  _i4.Future<_i2.HttpResponse<dynamic>> upsertOneService({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upsertOneService,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #upsertOneService,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> upsertOneSkill({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upsertOneSkill,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #upsertOneSkill,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> upsertOneReason({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upsertOneReason,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #upsertOneReason,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> upsertAbouts({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upsertAbouts,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #upsertAbouts,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> deleteEnvironment({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteEnvironment,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #deleteEnvironment,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> deleteCategory({
+    required String? authorization,
+    required String? contentType,
+    required String? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteCategory,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #body: body,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #deleteCategory,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #body: body,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
+  _i4.Future<_i2.HttpResponse<dynamic>> deleteProject({
+    required String? authorization,
+    required String? contentType,
+    required String? id,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteProject,
+          [],
+          {
+            #authorization: authorization,
+            #contentType: contentType,
+            #id: id,
+          },
+        ),
+        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
+            _FakeHttpResponse_0<dynamic>(
+          this,
+          Invocation.method(
+            #deleteProject,
+            [],
+            {
+              #authorization: authorization,
+              #contentType: contentType,
+              #id: id,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
+
+  @override
   _i4.Future<_i2.HttpResponse<dynamic>> deleteOneDocument({
     required String? authorization,
     required String? contentType,
@@ -688,57 +872,6 @@ class MockServerNestjsService extends _i1.Mock
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
 
   @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getProposedServices(
-          {required String? authorization}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getProposedServices,
-          [],
-          {#authorization: authorization},
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #getProposedServices,
-            [],
-            {#authorization: authorization},
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> upsertOneService({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #upsertOneService,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #upsertOneService,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
   _i4.Future<_i2.HttpResponse<dynamic>> deleteOneService({
     required String? authorization,
     required String? contentType,
@@ -764,57 +897,6 @@ class MockServerNestjsService extends _i1.Mock
               #authorization: authorization,
               #contentType: contentType,
               #id: id,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getSkills(
-          {required String? authorization}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getSkills,
-          [],
-          {#authorization: authorization},
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #getSkills,
-            [],
-            {#authorization: authorization},
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> upsertOneSkill({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #upsertOneSkill,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #upsertOneSkill,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
             },
           ),
         )),
@@ -852,57 +934,6 @@ class MockServerNestjsService extends _i1.Mock
       ) as _i4.Future<_i2.HttpResponse<dynamic>>);
 
   @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getReasons(
-          {required String? authorization}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getReasons,
-          [],
-          {#authorization: authorization},
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #getReasons,
-            [],
-            {#authorization: authorization},
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> upsertOneReason({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #upsertOneReason,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #upsertOneReason,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
   _i4.Future<_i2.HttpResponse<dynamic>> deleteOneReason({
     required String? authorization,
     required String? contentType,
@@ -928,57 +959,6 @@ class MockServerNestjsService extends _i1.Mock
               #authorization: authorization,
               #contentType: contentType,
               #id: id,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> getDatasAboutMe(
-          {required String? authorization}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getDatasAboutMe,
-          [],
-          {#authorization: authorization},
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #getDatasAboutMe,
-            [],
-            {#authorization: authorization},
-          ),
-        )),
-      ) as _i4.Future<_i2.HttpResponse<dynamic>>);
-
-  @override
-  _i4.Future<_i2.HttpResponse<dynamic>> upsertAbouts({
-    required String? authorization,
-    required String? contentType,
-    required String? body,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #upsertAbouts,
-          [],
-          {
-            #authorization: authorization,
-            #contentType: contentType,
-            #body: body,
-          },
-        ),
-        returnValue: _i4.Future<_i2.HttpResponse<dynamic>>.value(
-            _FakeHttpResponse_0<dynamic>(
-          this,
-          Invocation.method(
-            #upsertAbouts,
-            [],
-            {
-              #authorization: authorization,
-              #contentType: contentType,
-              #body: body,
             },
           ),
         )),

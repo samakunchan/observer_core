@@ -1,4 +1,3 @@
-// coverage:ignore-file
 import 'package:dio/dio.dart' hide Headers;
 import 'package:observer_core/constantes.dart';
 import 'package:retrofit/retrofit.dart';
@@ -16,6 +15,7 @@ part 'server_nestjs_service.g.dart';
 abstract class ServerNestjsService {
   factory ServerNestjsService(Dio dio, {String baseUrl}) = _ServerNestjsService;
 
+  /// GET
   @GET('')
   Future<HttpResponse<dynamic>> getHome();
 
@@ -34,89 +34,14 @@ abstract class ServerNestjsService {
     @Header('Authorization') required String authorization,
   });
 
-  @GET('environments/search')
-  Future<HttpResponse<dynamic>> searchEnvironments({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Query('input') String input = '',
-  });
-
-  @GET('environments/search/strict')
-  Future<HttpResponse<dynamic>> searchStrictEnvironments({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Query('input') String input = '',
-  });
-
-  @POST('environments')
-  Future<HttpResponse<dynamic>> upsertEnvironment({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
-  });
-
-  @DELETE('environments')
-  Future<HttpResponse<dynamic>> deleteEnvironment({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
-  });
-
   @GET('categories/all')
   Future<HttpResponse<dynamic>> getCategories({
-    @Header('Authorization') required String authorization,
-  });
-
-  @GET('categories/search')
-  Future<HttpResponse<dynamic>> searchCategories({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Query('input') String input = '',
-  });
-
-  @GET('categories/search/strict')
-  Future<HttpResponse<dynamic>> searchStrictCategories({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Query('input') String input = '',
-  });
-
-  @POST('categories')
-  Future<HttpResponse<dynamic>> upsertCategory({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
-  });
-
-  @DELETE('categories')
-  Future<HttpResponse<dynamic>> deleteCategory({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
-  });
-
-  @GET('articles/all')
-  Future<HttpResponse<dynamic>> getArticles({
     @Header('Authorization') required String authorization,
   });
 
   @GET('projects/all')
   Future<HttpResponse<dynamic>> getProjects({
     @Header('Authorization') required String authorization,
-  });
-
-  @POST('projects')
-  Future<HttpResponse<dynamic>> upsertProject({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
-  });
-
-  @DELETE('projects/{id}')
-  Future<HttpResponse<dynamic>> deleteProject({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Path('id') required String id,
   });
 
   @GET('organisations/all')
@@ -140,6 +65,77 @@ abstract class ServerNestjsService {
     @Path('folder') required String folder,
   });
 
+  @GET('proposed-services/all')
+  Future<HttpResponse<dynamic>> getProposedServices({
+    @Header('Authorization') required String authorization,
+  });
+
+  @GET('skills/all')
+  Future<HttpResponse<dynamic>> getSkills({
+    @Header('Authorization') required String authorization,
+  });
+
+  @GET('reasons/all')
+  Future<HttpResponse<dynamic>> getReasons({
+    @Header('Authorization') required String authorization,
+  });
+
+  @GET('abouts/all')
+  Future<HttpResponse<dynamic>> getDatasAboutMe({
+    @Header('Authorization') required String authorization,
+  });
+
+  /// SEARCH
+  @GET('environments/search')
+  Future<HttpResponse<dynamic>> searchEnvironments({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
+  @GET('environments/search/strict')
+  Future<HttpResponse<dynamic>> searchStrictEnvironments({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
+  @GET('categories/search')
+  Future<HttpResponse<dynamic>> searchCategories({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
+  @GET('categories/search/strict')
+  Future<HttpResponse<dynamic>> searchStrictCategories({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Query('input') String input = '',
+  });
+
+  /// POST
+  @POST('environments')
+  Future<HttpResponse<dynamic>> upsertEnvironment({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @POST('categories')
+  Future<HttpResponse<dynamic>> upsertCategory({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @POST('projects')
+  Future<HttpResponse<dynamic>> upsertProject({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
   @POST('documents')
   Future<HttpResponse<dynamic>> upsertOneDocument({
     @Header('Authorization') required String authorization,
@@ -159,6 +155,56 @@ abstract class ServerNestjsService {
     @Body() required FormData formData,
   });
 
+  @POST('proposed-services')
+  Future<HttpResponse<dynamic>> upsertOneService({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @POST('skills')
+  Future<HttpResponse<dynamic>> upsertOneSkill({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @POST('reasons')
+  Future<HttpResponse<dynamic>> upsertOneReason({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @POST('abouts')
+  Future<HttpResponse<dynamic>> upsertAbouts({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  /// DELETE
+  @DELETE('environments')
+  Future<HttpResponse<dynamic>> deleteEnvironment({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @DELETE('categories')
+  Future<HttpResponse<dynamic>> deleteCategory({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Body() required String body,
+  });
+
+  @DELETE('projects/{id}')
+  Future<HttpResponse<dynamic>> deleteProject({
+    @Header('Authorization') required String authorization,
+    @Header('Content-Type') required String contentType,
+    @Path('id') required String id,
+  });
+
   @DELETE('documents/{id}')
   Future<HttpResponse<dynamic>> deleteOneDocument({
     @Header('Authorization') required String authorization,
@@ -173,35 +219,11 @@ abstract class ServerNestjsService {
     @Body() required String body,
   });
 
-  @GET('proposed-services/all')
-  Future<HttpResponse<dynamic>> getProposedServices({
-    @Header('Authorization') required String authorization,
-  });
-
-  @POST('proposed-services')
-  Future<HttpResponse<dynamic>> upsertOneService({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
-  });
-
   @DELETE('proposed-services/{id}')
   Future<HttpResponse<dynamic>> deleteOneService({
     @Header('Authorization') required String authorization,
     @Header('Content-Type') required String contentType,
     @Path('id') required String id,
-  });
-
-  @GET('skills/all')
-  Future<HttpResponse<dynamic>> getSkills({
-    @Header('Authorization') required String authorization,
-  });
-
-  @POST('skills')
-  Future<HttpResponse<dynamic>> upsertOneSkill({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
   });
 
   @DELETE('skills/{id}')
@@ -211,34 +233,10 @@ abstract class ServerNestjsService {
     @Path('id') required String id,
   });
 
-  @GET('reasons/all')
-  Future<HttpResponse<dynamic>> getReasons({
-    @Header('Authorization') required String authorization,
-  });
-
-  @POST('reasons')
-  Future<HttpResponse<dynamic>> upsertOneReason({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
-  });
-
   @DELETE('reasons/{id}')
   Future<HttpResponse<dynamic>> deleteOneReason({
     @Header('Authorization') required String authorization,
     @Header('Content-Type') required String contentType,
     @Path('id') required String id,
-  });
-
-  @GET('abouts/all')
-  Future<HttpResponse<dynamic>> getDatasAboutMe({
-    @Header('Authorization') required String authorization,
-  });
-
-  @POST('abouts')
-  Future<HttpResponse<dynamic>> upsertAbouts({
-    @Header('Authorization') required String authorization,
-    @Header('Content-Type') required String contentType,
-    @Body() required String body,
   });
 }
