@@ -6,6 +6,7 @@ on:
       - 'fix/**'
       - 'docs/**'
       - 'ci/**'
+      - 'test/**'
 
 name: 🚀 [PUSH] Workflow pour le lancement des tests sur Observer Core
 jobs:
