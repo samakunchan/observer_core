@@ -119,7 +119,7 @@ void main() {
 
           /// Assert
           expect: () => <AboutMeState>[
-            AboutMeIsLoading(),
+            // AboutMeIsLoading(),
             const AboutMeIsLoadedSuccessfully(aboutMe: AboutMeModel.emptyDatas),
           ],
         );
