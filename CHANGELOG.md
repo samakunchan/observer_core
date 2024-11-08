@@ -1,6 +1,6 @@
 # Observer core
 
-## 🔨 0.22.0 - 08/11/2024
+## 🚀 0.22.0 - 08/11/2024
 ### Nouveautés
 
 - Création de tests unitaires.
