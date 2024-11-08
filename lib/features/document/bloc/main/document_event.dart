@@ -3,7 +3,6 @@ part of 'document_bloc.dart';
 /// Tout les events :
 /// - DocumentsAreCalled
 /// - DocumentsFilteredAreCalled
-/// - DocumentIsCalled
 /// - DocumentActionCreateCalled
 /// - DocumentActionUpdateCalled
 /// - OneDocumentToUpload
@@ -18,27 +17,23 @@ abstract class DocumentEvent extends Equatable {
 
 class DocumentsInGridAreCalled extends DocumentEvent {
   const DocumentsInGridAreCalled({
-    this.isFetchingApi = true,
     this.documentResponse = DocumentResponse.empty,
   });
 
   final DocumentResponse documentResponse;
-  final bool isFetchingApi;
 
   @override
-  List<Object?> get props => [isFetchingApi, documentResponse];
+  List<Object?> get props => [documentResponse];
 }
 
 class DocumentsInListAreCalled extends DocumentEvent {
   const DocumentsInListAreCalled({
-    this.isFetchingApi = true,
     this.documentResponse = DocumentResponse.empty,
   });
 
   final DocumentResponse documentResponse;
-  final bool isFetchingApi;
   @override
-  List<Object?> get props => [documentResponse, isFetchingApi];
+  List<Object?> get props => [documentResponse];
 }
 
 class DocumentsFilteredAreCalled extends DocumentEvent {
@@ -50,14 +45,6 @@ class DocumentsFilteredAreCalled extends DocumentEvent {
   List<Object?> get props => [filteredBy];
 }
 
-class DocumentIsCalled extends DocumentEvent {
-  const DocumentIsCalled({required this.url});
-
-  final String url;
-  @override
-  List<Object?> get props => [url];
-}
-
 class DocumentActionCreateCalled extends DocumentEvent {
   @override
   List<Object?> get props => [];
@@ -66,14 +53,6 @@ class DocumentActionCreateCalled extends DocumentEvent {
 class DocumentActionUpdateCalled extends DocumentEvent {
   @override
   List<Object?> get props => [];
-}
-
-class OneDocumentToUpload extends DocumentEvent {
-  const OneDocumentToUpload({required this.formData});
-  final FormData formData;
-
-  @override
-  List<Object?> get props => [formData];
 }
 
 class MultipleDocumentsToUpload extends DocumentEvent {
@@ -96,15 +75,6 @@ class DocumentsInProgress extends DocumentEvent {
 
   @override
   List<Object?> get props => [formProcess];
-}
-
-class DocumentDeleted extends DocumentEvent {
-  const DocumentDeleted({required this.documentForDelete});
-
-  final DocumentModel documentForDelete;
-
-  @override
-  List<Object?> get props => [documentForDelete];
 }
 
 class DocumentsDeleted extends DocumentEvent {

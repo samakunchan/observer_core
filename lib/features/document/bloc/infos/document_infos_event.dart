@@ -15,7 +15,7 @@ class DocumentInfosStarted extends DocumentInfosEvent {
   List<Object?> get props => [];
 }
 
-class DocumentInfosStoped extends DocumentInfosEvent {
+class DocumentInfosStopped extends DocumentInfosEvent {
   @override
   List<Object?> get props => [];
 }
@@ -31,8 +31,8 @@ class DocumentSelected extends DocumentInfosEvent {
   List<Object?> get props => [documentSelected];
 }
 
-class DocumentInfosEditableActived extends DocumentInfosEvent {
-  const DocumentInfosEditableActived({
+class DocumentInfosEditableActivated extends DocumentInfosEvent {
+  const DocumentInfosEditableActivated({
     required this.documentToEdit,
   });
 
@@ -42,8 +42,8 @@ class DocumentInfosEditableActived extends DocumentInfosEvent {
   List<Object?> get props => [documentToEdit];
 }
 
-class DocumentInfosEditableCanceled extends DocumentInfosEvent {
-  const DocumentInfosEditableCanceled({
+class DocumentInfosEditableCancelled extends DocumentInfosEvent {
+  const DocumentInfosEditableCancelled({
     required this.documentUpdated,
   });
 

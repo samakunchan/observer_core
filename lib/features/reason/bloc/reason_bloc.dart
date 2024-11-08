@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
@@ -33,20 +32,15 @@ class ReasonBloc extends Bloc<ReasonEvent, ReasonState> {
       ),
     );
 
+    const ReasonsHandler reasonsHandler = ReasonsHandler();
+
     switch (responses) {
       case Left():
-        responses.fold(
-          (Failure failure) => ReasonsHandler.handleAllFailures(failure: failure, emit: emit),
-          (HttpResponse<dynamic> response) => null,
-        );
+        await reasonsHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
-        responses.fold((Failure failure) => null, (HttpResponse<dynamic> response) {
-          final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-          final List<ReasonModel> reasons = datasJson.map<ReasonModel>(ReasonModel.fromJson).toList();
-          emit.call(ReasonsAreLoadedSuccessfully(reasons: reasons));
-        });
-      default:
-        emit.call(ReasonsAreLoading());
+        final List<Map<String, dynamic>> datasJson = (responses.value.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
+        final List<ReasonModel> reasons = datasJson.map<ReasonModel>(ReasonModel.fromJson).toList();
+        emit.call(ReasonsAreLoadedSuccessfully(reasons: reasons));
     }
   }
 
@@ -65,15 +59,17 @@ class ReasonBloc extends Bloc<ReasonEvent, ReasonState> {
       ),
     );
 
-    await ReasonsHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => ReasonsHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => ReasonsHandler.handleUpsertSuccess(
-        response: response,
-        emit: emit,
-        status: event.reasonsDTO.id != null ? UpsertFormType.update : UpsertFormType.create,
-      ),
-    );
+    const ReasonsHandler reasonsHandler = ReasonsHandler();
+    switch (responses) {
+      case Left():
+        await reasonsHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await ReasonsHandler.handleUpsertSuccess(
+          response: responses.value,
+          emit: emit,
+          status: event.reasonsDTO.id != null ? UpsertFormType.update : UpsertFormType.create,
+        );
+    }
   }
 
   Future<void> _deleteAReason(ReasonDeleted event, Emitter<ReasonState> emit) async {
@@ -87,37 +83,20 @@ class ReasonBloc extends Bloc<ReasonEvent, ReasonState> {
       ),
     );
 
-    await ReasonsHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => ReasonsHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => ReasonsHandler.handleDeleteSuccess(response: response, emit: emit),
-    );
+    const ReasonsHandler reasonsHandler = ReasonsHandler();
+    switch (responses) {
+      case Left():
+        await reasonsHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await ReasonsHandler.handleDeleteSuccess(response: responses.value, emit: emit);
+    }
   }
 }
 
 class ReasonsHandler {
-  const ReasonsHandler._();
+  const ReasonsHandler();
 
-  static Future<void> withResponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static void handleAllFailures({required Failure failure, required Emitter<ReasonState> emit}) {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<ReasonState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(ReasonsHaveFailure(message: failure.message));
@@ -148,17 +127,17 @@ class ReasonsHandler {
     final ReasonModel reason = ReasonModel.fromJson(response.data as Map<String, dynamic>);
     emit.call(ReasonIsSubmittingSuccessfully(reason: reason, status: status));
   }
-
-  static Future<void> storeReasons({required List<ReasonModel> skills}) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
-      UpsertParams(
-        endPoint: MainProject.skills,
-        accessToken: authTokenModel.accessToken,
-        body: jsonEncode(skills),
-      ),
-    );
-  }
+  //
+  // static Future<void> storeReasons({required List<ReasonModel> reasons}) async {
+  //   final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+  //   await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
+  //     UpsertParams(
+  //       endPoint: MainProject.reasons,
+  //       accessToken: authTokenModel.accessToken,
+  //       body: jsonEncode(reasons),
+  //     ),
+  //   );
+  // }
 
   static Future<void> handleDeleteSuccess({
     required HttpResponse<dynamic> response,
@@ -167,11 +146,11 @@ class ReasonsHandler {
     emit.call(ReasonIsRemovedSuccessfully());
   }
 
-  static Future<void> handleSearchSuccess({
-    required HttpResponse<dynamic> response,
-    required Emitter<ReasonState> emit,
-  }) async {
-    debugPrint(response.data.toString());
-    // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
-  }
+  // static Future<void> handleSearchSuccess({
+  //   required HttpResponse<dynamic> response,
+  //   required Emitter<ReasonState> emit,
+  // }) async {
+  //   debugPrint(response.data.toString());
+  //   // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
+  // }
 }

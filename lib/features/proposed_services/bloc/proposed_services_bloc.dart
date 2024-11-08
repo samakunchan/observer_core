@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
@@ -32,20 +31,14 @@ class ProposedServicesBloc extends Bloc<ProposedServicesEvent, ProposedServicesS
       ),
     );
 
+    const ProposedServicesHandler proposedServicesHandler = ProposedServicesHandler();
     switch (responses) {
       case Left():
-        responses.fold(
-          (Failure failure) => ProposedServicesHandler.handleAllFailures(failure: failure, emit: emit),
-          (HttpResponse<dynamic> response) => null,
-        );
+        await proposedServicesHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
-        responses.fold((Failure failure) => null, (HttpResponse<dynamic> response) {
-          final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-          final List<ProposedServiceModel> services = datasJson.map<ProposedServiceModel>(ProposedServiceModel.fromJson).toList();
-          emit.call(ProposedServicesAreLoadedSuccessfully(services: services));
-        });
-      default:
-        emit.call(ProposedServicesAreLoading());
+        final List<Map<String, dynamic>> datasJson = (responses.value.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
+        final List<ProposedServiceModel> services = datasJson.map<ProposedServiceModel>(ProposedServiceModel.fromJson).toList();
+        emit.call(ProposedServicesAreLoadedSuccessfully(services: services));
     }
   }
 
@@ -61,11 +54,13 @@ class ProposedServicesBloc extends Bloc<ProposedServicesEvent, ProposedServicesS
       ),
     );
 
-    await ProposedServicesHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => ProposedServicesHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => ProposedServicesHandler.handleUpsertSuccess(response: response, emit: emit),
-    );
+    const ProposedServicesHandler proposedServicesHandler = ProposedServicesHandler();
+    switch (responses) {
+      case Left():
+        await proposedServicesHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await ProposedServicesHandler.handleUpsertSuccess(response: responses.value, emit: emit);
+    }
   }
 
   Future<void> _deleteAService(ProposedServiceDeleted event, Emitter<ProposedServicesState> emit) async {
@@ -79,37 +74,20 @@ class ProposedServicesBloc extends Bloc<ProposedServicesEvent, ProposedServicesS
       ),
     );
 
-    await ProposedServicesHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => ProposedServicesHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => ProposedServicesHandler.handleDeleteSuccess(response: response, emit: emit),
-    );
+    const ProposedServicesHandler proposedServicesHandler = ProposedServicesHandler();
+    switch (responses) {
+      case Left():
+        await proposedServicesHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await ProposedServicesHandler.handleDeleteSuccess(response: responses.value, emit: emit);
+    }
   }
 }
 
 class ProposedServicesHandler {
-  const ProposedServicesHandler._();
+  const ProposedServicesHandler();
 
-  static Future<void> withResponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static void handleAllFailures({required Failure failure, required Emitter<ProposedServicesState> emit}) {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<ProposedServicesState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(ProposedServicesHaveFailure(message: failure.message));
@@ -139,16 +117,16 @@ class ProposedServicesHandler {
     emit.call(ProposedServiceIsSubmittingSuccessfully());
   }
 
-  static Future<void> storeProposedServices({required List<ProposedServiceModel> services}) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
-      UpsertParams(
-        endPoint: MainProject.services,
-        accessToken: authTokenModel.accessToken,
-        body: jsonEncode(services),
-      ),
-    );
-  }
+  // static Future<void> storeProposedServices({required List<ProposedServiceModel> services}) async {
+  //   final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+  //   await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
+  //     UpsertParams(
+  //       endPoint: MainProject.services,
+  //       accessToken: authTokenModel.accessToken,
+  //       body: jsonEncode(services),
+  //     ),
+  //   );
+  // }
 
   static Future<void> handleDeleteSuccess({
     required HttpResponse<dynamic> response,
@@ -157,11 +135,11 @@ class ProposedServicesHandler {
     emit.call(ProposedServiceIsRemovedSuccessfully());
   }
 
-  static Future<void> handleSearchSuccess({
-    required HttpResponse<dynamic> response,
-    required Emitter<ProposedServicesState> emit,
-  }) async {
-    debugPrint(response.data.toString());
-    // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
-  }
+  // static Future<void> handleSearchSuccess({
+  //   required HttpResponse<dynamic> response,
+  //   required Emitter<ProposedServicesState> emit,
+  // }) async {
+  //   debugPrint(response.data.toString());
+  //   // emit.call(EnvironmentsDatasIsSearchSuccessfully(searchModel: SearchModel.fromJson(response.data as Map<String, dynamic>)));
+  // }
 }

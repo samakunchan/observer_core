@@ -13,7 +13,6 @@ class CategoryModel with _$CategoryModel {
   ///     "title": "Un titre",
   ///     "content": "Description de la catégorie",
   ///     "projects": [],
-  ///     "articles": [],
   ///     "environment": {
   ///        "id": 3,
   ///        "title": "Titre le l'environnement associé."
@@ -24,7 +23,6 @@ class CategoryModel with _$CategoryModel {
     required String title,
     required String content,
     int? id,
-    @Default(ArticleModel.emptyList) List<ArticleModel> articles,
     @Default(ProjectModel.emptyList) List<ProjectModel> projects,
     EnvironmentAssociatedModel? environment,
   }) = _CategoryModel;

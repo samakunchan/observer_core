@@ -4,13 +4,11 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/enums/enums_export.dart';
 import 'package:observer_core/features/features_export.dart';
 import 'package:observer_core/models/models_export.dart';
-import 'package:observer_core/utils.dart';
 import 'package:retrofit/dio.dart';
 
 part 'document_event.dart';
@@ -19,7 +17,7 @@ part 'document_state.dart';
 class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   DocumentBloc() : super(DocumentInitial()) {
     on<DocumentsFormReset>(_resetStateForm);
-    on<DocumentDeleted>(_deleteDocument);
+    // on<DocumentDeleted>(_deleteDocument);
     on<DocumentsDeleted>(_deleteMultipleDocument);
     on<DocumentsInProgress>(_showFormLoader);
     on<DocumentActionCreateCalled>(_showCreateAction);
@@ -27,7 +25,7 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     on<DocumentsInGridAreCalled>(_requestAllDocumentsInGridView);
     on<DocumentsInListAreCalled>(_requestAllDocumentsInListView);
     on<DocumentsFilteredAreCalled>(_requestFilteredDocuments);
-    on<OneDocumentToUpload>(_uploadOneDocument);
+    // on<OneDocumentToUpload>(_uploadOneDocument);
     on<MultipleDocumentsToUpload>(_uploadMultipleDocuments);
     on<DocumentsReloaded>(_reloadDocuments);
     on<DocumentsFailed>(_somethingWentWrong);
@@ -49,30 +47,112 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
     emit(DocumentsFormIsProcessing(formProcess: event.formProcess));
   }
 
-  FutureOr<void> _deleteDocument(DocumentDeleted event, Emitter<DocumentState> emit) async {
-    // final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    // final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.deleteOne(
-    //   DeleteParams(
-    //     accessToken: authTokenModel.accessToken,
-    //     endPoint: MainProject.categoriesEndPoint,
-    //     body: jsonEncode(
-    //       {
-    //         'documentsIds': [event.documentForDelete.id],
-    //       },
-    //     ),
-    //   ),
-    // );
-    //
-    // await DocumentHandler.withResponse(
-    //   responses: responses,
-    //   ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-    //   ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleDeleteSuccess(
-    //     response: response,
-    //     emit: emit,
-    //     documentDeleted: event.documentForDelete,
-    //   ),
-    // );
-    // emit(const DocumentFormIsDeletedSuccessfully());
+  FutureOr<void> _requestAllDocumentsInGridView(DocumentsInGridAreCalled event, Emitter<DocumentState> emit) async {
+    emit.call(DocumentsAreLoading());
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.documentsEndPoint,
+      ),
+    );
+
+    const DocumentHandler documentHandler = DocumentHandler();
+    switch (responses) {
+      case Left():
+        await documentHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await DocumentHandler.handleAllSuccess(response: responses.value, emit: emit);
+    }
+  }
+
+  FutureOr<void> _requestAllDocumentsInListView(DocumentsInListAreCalled event, Emitter<DocumentState> emit) async {
+    emit.call(DocumentsAreLoading());
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.documentsEndPoint,
+      ),
+    );
+
+    const DocumentHandler documentHandler = DocumentHandler();
+    switch (responses) {
+      case Left():
+        await documentHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await DocumentHandler.handleAllSuccess(response: responses.value, emit: emit, screenMode: ScreenMode.list);
+    }
+  }
+
+  FutureOr<void> _requestFilteredDocuments(DocumentsFilteredAreCalled event, Emitter<DocumentState> emit) async {
+    emit.call(DocumentsAreLoading());
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.documentsEndPoint,
+        filteredBy: event.filteredBy,
+      ),
+    );
+
+    const DocumentHandler documentHandler = DocumentHandler();
+    switch (responses) {
+      case Left():
+        await documentHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await DocumentHandler.handleAllSuccess(response: responses.value, emit: emit);
+    }
+  }
+
+  Future<void> _reloadDocuments(DocumentsReloaded event, Emitter<DocumentState> emit) async {
+    emit.call(DocumentsAreLoading());
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
+      GetParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.documentsEndPoint,
+        filteredBy: event.filteredBy,
+      ),
+    );
+
+    const DocumentHandler documentHandler = DocumentHandler();
+    switch (responses) {
+      case Left():
+        await documentHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await DocumentHandler.handleAllSuccess(response: responses.value, emit: emit);
+    }
+  }
+
+  FutureOr<void> _showCreateAction(DocumentActionCreateCalled event, Emitter<DocumentState> emit) async {
+    emit.call(const DocumentToCreateForm());
+  }
+
+  FutureOr<void> _showUpdateAction(DocumentActionUpdateCalled event, Emitter<DocumentState> emit) async {
+    emit.call(const DocumentToUpdateForm());
+  }
+
+  FutureOr<void> _uploadMultipleDocuments(MultipleDocumentsToUpload event, Emitter<DocumentState> emit) async {
+    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.uploadFormData(
+      UploadFormDataParams(
+        accessToken: authTokenModel.accessToken,
+        endPoint: MainProject.documentsMultiUploadEndPoint,
+        formData: event.formData,
+      ),
+    );
+
+    const DocumentHandler documentHandler = DocumentHandler();
+    switch (responses) {
+      case Left():
+        await documentHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await DocumentHandler.handleUpsertSuccess(response: responses.value, emit: emit);
+    }
   }
 
   FutureOr<void> _deleteMultipleDocument(DocumentsDeleted event, Emitter<DocumentState> emit) async {
@@ -89,146 +169,12 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
       ),
     );
 
-    await DocumentHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleDeleteSuccess(
-        response: response,
-        emit: emit,
-      ),
-    );
-    emit(const DocumentFormIsDeletedSuccessfully());
-  }
-
-  FutureOr<void> _requestAllDocumentsInGridView(DocumentsInGridAreCalled event, Emitter<DocumentState> emit) async {
-    emit.call(DocumentsAreLoading());
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    if (!event.isFetchingApi) {
-      emit.call(DocumentsAreLoadedSuccessfully(documentResponse: event.documentResponse));
-    } else {
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        GetParams(
-          accessToken: authTokenModel.accessToken,
-          endPoint: MainProject.documentsEndPoint,
-        ),
-      );
-
-      await DocumentHandler.withResponse(
-        responses: responses,
-        ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-        ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
-      );
-    }
-  }
-
-  FutureOr<void> _requestAllDocumentsInListView(DocumentsInListAreCalled event, Emitter<DocumentState> emit) async {
-    emit.call(DocumentsAreLoading());
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    if (!event.isFetchingApi) {
-      emit.call(
-        DocumentsAreLoadedSuccessfully(documentResponse: event.documentResponse, screenMode: ScreenMode.list),
-      );
-    } else {
-      final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-        GetParams(
-          accessToken: authTokenModel.accessToken,
-          endPoint: MainProject.documentsEndPoint,
-        ),
-      );
-
-      await DocumentHandler.withResponse(
-        responses: responses,
-        ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-        ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
-      );
-    }
-  }
-
-  FutureOr<void> _requestFilteredDocuments(DocumentsFilteredAreCalled event, Emitter<DocumentState> emit) async {
-    emit.call(DocumentsAreLoading());
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-
-    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-      GetParams(
-        accessToken: authTokenModel.accessToken,
-        endPoint: MainProject.documentsEndPoint,
-        filteredBy: event.filteredBy,
-      ),
-    );
-
-    await DocumentHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
-    );
-  }
-
-  FutureOr<void> _showCreateAction(DocumentActionCreateCalled event, Emitter<DocumentState> emit) async {
-    emit.call(const DocumentToCreateForm());
-  }
-
-  FutureOr<void> _showUpdateAction(DocumentActionUpdateCalled event, Emitter<DocumentState> emit) async {
-    emit.call(const DocumentToUpdateForm());
-  }
-
-  FutureOr<void> _uploadOneDocument(OneDocumentToUpload event, Emitter<DocumentState> emit) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-
-    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.uploadFormData(
-      UploadFormDataParams(
-        accessToken: authTokenModel.accessToken,
-        endPoint: MainProject.documentsUploadEndPoint,
-        formData: event.formData,
-      ),
-    );
-
-    await DocumentHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleUpsertSuccess(response: response, emit: emit),
-    );
-  }
-
-  FutureOr<void> _uploadMultipleDocuments(MultipleDocumentsToUpload event, Emitter<DocumentState> emit) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.uploadFormData(
-      UploadFormDataParams(
-        accessToken: authTokenModel.accessToken,
-        endPoint: MainProject.documentsMultiUploadEndPoint,
-        formData: event.formData,
-      ),
-    );
-
-    await DocumentHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => DocumentHandler.handleUpsertSuccess(response: response, emit: emit),
-    );
-  }
-
-  Future<void> _reloadDocuments(DocumentsReloaded event, Emitter<DocumentState> emit) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    final Either<Failure, HttpResponse<dynamic>> responses = await ServerFeature.instanceOfPPGApiRepository.getResponses(
-      GetParams(
-        accessToken: authTokenModel.accessToken,
-        endPoint: MainProject.documentsEndPoint,
-        filteredBy: event.filteredBy,
-      ),
-    );
-
+    const DocumentHandler documentHandler = DocumentHandler();
     switch (responses) {
       case Left():
-        await responses.fold(
-          (Failure failure) => DocumentHandler.handleAllFailures(failure: failure, emit: emit),
-          (HttpResponse<dynamic> response) => null,
-        );
+        await documentHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
-        await responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => DocumentHandler.handleAllSuccess(response: response, emit: emit),
-        );
-      default:
-        emit.call(DocumentsAreLoading());
+        await DocumentHandler.handleDeleteSuccess(response: responses.value, emit: emit);
     }
   }
 
@@ -237,35 +183,14 @@ class DocumentBloc extends Bloc<DocumentEvent, DocumentState> {
   }
 
   Future<void> _showErrorPage(DocumentsErrorPageShown event, Emitter<DocumentState> emit) async {
-    logger.t('On lance le state pour charger la page d‘érreur.');
     emit.call(DocumentsHaveFailures(message: event.message));
-    // emit.call(DocumentWithErrorPage(message: event.message));
   }
 }
 
 class DocumentHandler {
-  const DocumentHandler._();
+  const DocumentHandler();
 
-  static Future<void> withResponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static Future<void> handleAllFailures({required Failure failure, required Emitter<DocumentState> emit}) async {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<DocumentState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(DocumentsHaveFailures(message: failure.message));
@@ -308,7 +233,7 @@ class DocumentHandler {
     required HttpResponse<dynamic> response,
     required Emitter<DocumentState> emit,
   }) async {
-    if ((response.data as List).runtimeType == List) {
+    if (response.data.runtimeType == List) {
       final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
       final List<DocumentModel> documents = datasJson.map(DocumentModel.fromJson).toList();
 

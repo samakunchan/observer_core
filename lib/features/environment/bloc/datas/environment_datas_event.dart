@@ -63,17 +63,17 @@ class EnvironmentDatasSubmitted extends EnvironmentDatasEvent {
 
 class EnvironmentDatasDeleted extends EnvironmentDatasEvent {
   const EnvironmentDatasDeleted({required this.environmentForDelete});
-  final EnvironmentModel environmentForDelete;
+  final EnvironmentDeleteDTO environmentForDelete;
 
   @override
   List<Object?> get props => [environmentForDelete];
 }
 
-class EnvironmentDatasOnSearch extends EnvironmentDatasEvent {
-  const EnvironmentDatasOnSearch({required this.input, this.strictMode = false});
-  final String input;
-  final bool strictMode;
-
-  @override
-  List<Object?> get props => [input];
-}
+// class EnvironmentDatasOnSearch extends EnvironmentDatasEvent {
+//   const EnvironmentDatasOnSearch({required this.input, this.strictMode = false});
+//   final String input;
+//   final bool strictMode;
+//
+//   @override
+//   List<Object?> get props => [input];
+// }

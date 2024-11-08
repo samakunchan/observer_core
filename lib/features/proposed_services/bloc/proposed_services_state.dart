@@ -55,7 +55,7 @@ final class ProposedServicesHaveFailure extends ProposedServicesState {
   List<Object?> get props => [message];
 }
 
-final class ProposedServiceReloaded extends ProposedServicesState {
-  @override
-  List<Object> get props => [];
-}
+// final class ProposedServiceReloaded extends ProposedServicesState {
+//   @override
+//   List<Object> get props => [];
+// }

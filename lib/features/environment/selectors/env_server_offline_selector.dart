@@ -16,6 +16,6 @@ class EnvServerOfflineSelector extends StatelessWidget {
   }
 
   static bool whenWeLoadEnvironmentsStoreFromLocal(EnvironmentStoreState state) =>
-      state is EnvironementsStoreIsClosed && state.message == ErrorMessage.serverFailureMessage ||
+      state is EnvironmentsStoreIsClosed && state.message == ErrorMessage.serverFailureMessage ||
       (state is EnvironmentsStoreIsOpenInMemory);
 }

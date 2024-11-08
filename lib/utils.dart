@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:intl/intl.dart';
@@ -111,27 +109,49 @@ Logger logger = Logger(
   ),
 );
 
+/// ## Exemple :
+/// ### Input
+/// ```dart
+/// final String? mimetype = getMimeType('image.png');
+/// ```
+/// ### Output
+/// ```dart
+/// image/png
+/// ```
 String? getMimeType({required String file}) {
   return lookupMimeType(file);
 }
 
-Future<MultipartFile> _getMultipartFile({required File file}) async {
-  final mimeType = lookupMimeType(file.path);
+/// ## Exemple :
+/// ### Input
+/// ```dart
+/// final File file = File('/path/to/image.png');
+/// final FormData formData = await getFormDataOneFile(file);
+/// ```
+/// ### Output
+/// ```dart
+/// FormData();
+/// ```
+// Future<FormData> getFormDataOneFile({required File file}) async {
+//   return FormData.fromMap({
+//     'file': MultipartFile.fromFile(
+//       file.path,
+//       filename: file.path.split('/').last,
+//       contentType: MediaType.parse(lookupMimeType(file.path) ?? 'application/octet-stream'),
+//     ),
+//   });
+// }
 
-  return MultipartFile.fromFile(
-    file.path,
-    filename: file.path.split('/').last,
-    contentType: MediaType.parse(mimeType ?? 'application/octet-stream'),
-  );
-}
-
-Future<FormData> getFormDataOneFile({required File file}) async {
-  final MultipartFile multipartFile = await _getMultipartFile(file: file);
-  return FormData.fromMap({
-    'file': multipartFile,
-  });
-}
-
+/// ## Exemple :
+/// ### Input
+/// ```dart
+/// final String path = '/path/to/image.png';
+/// final FormData formData = await getFormDataMultipleFile(files: [path]);
+/// ```
+/// ### Output
+/// ```dart
+/// FormData();
+/// ```
 Future<FormData> getFormDataMultipleFile({required List<String> files}) async {
   final FormData formData = FormData();
   for (final String file in files) {

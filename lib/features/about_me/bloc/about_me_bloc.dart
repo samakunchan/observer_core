@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/dtos_export.dart';
@@ -31,24 +30,18 @@ class AboutMeBloc extends Bloc<AboutMeEvent, AboutMeState> {
       ),
     );
 
+    const AboutMeHandler aboutMeHandler = AboutMeHandler();
     switch (responses) {
       case Left():
-        responses.fold(
-          (Failure failure) => AboutMeHandler.handleAllFailures(failure: failure, emit: emit),
-          (HttpResponse<dynamic> response) => null,
-        );
+        await aboutMeHandler.handleAllFailures(failure: responses.value, emit: emit);
       case Right():
-        responses.fold((Failure failure) => null, (HttpResponse<dynamic> response) {
-          final List<Map<String, dynamic>> datasJson = (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
-          final List<AboutMeModel> aboutMeModel = datasJson.map<AboutMeModel>(AboutMeModel.fromJson).toList();
-          emit.call(
-            AboutMeIsLoadedSuccessfully(
-              aboutMe: aboutMeModel.isNotEmpty ? aboutMeModel.first : AboutMeModel.emptyDatas,
-            ),
-          );
-        });
-      default:
-        emit.call(AboutMeIsLoading());
+        final List<Map<String, dynamic>> datasJson = (responses.value.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
+        final List<AboutMeModel> aboutMeModel = datasJson.map<AboutMeModel>(AboutMeModel.fromJson).toList();
+        emit.call(
+          AboutMeIsLoadedSuccessfully(
+            aboutMe: aboutMeModel.isNotEmpty ? aboutMeModel.first : AboutMeModel.emptyDatas,
+          ),
+        );
     }
   }
 
@@ -63,40 +56,20 @@ class AboutMeBloc extends Bloc<AboutMeEvent, AboutMeState> {
       ),
     );
 
-    await AboutMeHandler.withResponse(
-      responses: responses,
-      ifFailure: (Failure failure) => AboutMeHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => AboutMeHandler.handleUpsertSuccess(
-        response: response,
-        emit: emit,
-      ),
-    );
+    const AboutMeHandler aboutMeHandler = AboutMeHandler();
+    switch (responses) {
+      case Left():
+        await aboutMeHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await AboutMeHandler.handleUpsertSuccess(response: responses.value, emit: emit);
+    }
   }
 }
 
 class AboutMeHandler {
-  const AboutMeHandler._();
+  const AboutMeHandler();
 
-  static Future<void> withResponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static void handleAllFailures({required Failure failure, required Emitter<AboutMeState> emit}) {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<AboutMeState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(AboutMeHasFailure(message: failure.message));
@@ -127,14 +100,14 @@ class AboutMeHandler {
     emit.call(AboutMeIsSubmittingSuccessfully(aboutMe: aboutMeModel));
   }
 
-  static Future<void> storeAboutMe({required AboutMeModel aboutMe}) async {
-    final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
-    await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
-      UpsertParams(
-        endPoint: MainProject.aboutme,
-        accessToken: authTokenModel.accessToken,
-        body: jsonEncode(aboutMe),
-      ),
-    );
-  }
+  // static Future<void> storeAboutMe({required AboutMeModel aboutMe}) async {
+  //   final AuthTokenModel authTokenModel = await AuthenticationFeature.instanceOfSecureStorageForToken.getAuthToken();
+  //   await ServerFeature.instanceOfPPGLocalRepository.upsertResponses(
+  //     UpsertParams(
+  //       endPoint: MainProject.aboutme,
+  //       accessToken: authTokenModel.accessToken,
+  //       body: jsonEncode(aboutMe),
+  //     ),
+  //   );
+  // }
 }

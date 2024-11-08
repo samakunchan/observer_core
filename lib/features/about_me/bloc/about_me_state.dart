@@ -23,11 +23,6 @@ final class AboutMeIsLoadedSuccessfully extends AboutMeState {
   List<Object> get props => [aboutMe];
 }
 
-final class AboutMeIsSubmitting extends AboutMeState {
-  @override
-  List<Object> get props => [];
-}
-
 final class AboutMeIsSubmittingSuccessfully extends AboutMeState {
   const AboutMeIsSubmittingSuccessfully({required this.aboutMe});
 

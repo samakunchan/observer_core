@@ -22,8 +22,3 @@ final class AuthTokenInvalid extends AuthTokenState {
   @override
   List<Object> get props => [message];
 }
-
-final class AuthTokenValidityIsTested extends AuthTokenState {
-  @override
-  List<Object> get props => [];
-}
