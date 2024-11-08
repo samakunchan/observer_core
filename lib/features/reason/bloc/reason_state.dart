@@ -23,11 +23,6 @@ final class ReasonsAreLoadedSuccessfully extends ReasonState {
   List<Object> get props => [reasons];
 }
 
-final class ReasonIsSubmitting extends ReasonState {
-  @override
-  List<Object> get props => [];
-}
-
 final class ReasonIsSubmittingSuccessfully extends ReasonState {
   const ReasonIsSubmittingSuccessfully({required this.reason, this.status = UpsertFormType.create});
 
@@ -58,9 +53,4 @@ final class ReasonsHaveFailure extends ReasonState {
 
   @override
   List<Object?> get props => [message];
-}
-
-final class ReasonReloaded extends ReasonState {
-  @override
-  List<Object> get props => [];
 }

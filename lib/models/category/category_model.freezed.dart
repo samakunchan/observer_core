@@ -23,7 +23,6 @@ mixin _$CategoryModel {
   String get title => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
-  List<ArticleModel> get articles => throw _privateConstructorUsedError;
   List<ProjectModel> get projects => throw _privateConstructorUsedError;
   EnvironmentAssociatedModel? get environment =>
       throw _privateConstructorUsedError;
@@ -48,7 +47,6 @@ abstract class $CategoryModelCopyWith<$Res> {
       {String title,
       String content,
       int? id,
-      List<ArticleModel> articles,
       List<ProjectModel> projects,
       EnvironmentAssociatedModel? environment});
 
@@ -73,7 +71,6 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
     Object? title = null,
     Object? content = null,
     Object? id = freezed,
-    Object? articles = null,
     Object? projects = null,
     Object? environment = freezed,
   }) {
@@ -90,10 +87,6 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      articles: null == articles
-          ? _value.articles
-          : articles // ignore: cast_nullable_to_non_nullable
-              as List<ArticleModel>,
       projects: null == projects
           ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
@@ -133,7 +126,6 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
       {String title,
       String content,
       int? id,
-      List<ArticleModel> articles,
       List<ProjectModel> projects,
       EnvironmentAssociatedModel? environment});
 
@@ -157,7 +149,6 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
     Object? title = null,
     Object? content = null,
     Object? id = freezed,
-    Object? articles = null,
     Object? projects = null,
     Object? environment = freezed,
   }) {
@@ -174,10 +165,6 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      articles: null == articles
-          ? _value._articles
-          : articles // ignore: cast_nullable_to_non_nullable
-              as List<ArticleModel>,
       projects: null == projects
           ? _value._projects
           : projects // ignore: cast_nullable_to_non_nullable
@@ -197,11 +184,9 @@ class _$CategoryModelImpl implements _CategoryModel {
       {required this.title,
       required this.content,
       this.id,
-      final List<ArticleModel> articles = ArticleModel.emptyList,
       final List<ProjectModel> projects = ProjectModel.emptyList,
       this.environment})
-      : _articles = articles,
-        _projects = projects;
+      : _projects = projects;
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryModelImplFromJson(json);
@@ -212,15 +197,6 @@ class _$CategoryModelImpl implements _CategoryModel {
   final String content;
   @override
   final int? id;
-  final List<ArticleModel> _articles;
-  @override
-  @JsonKey()
-  List<ArticleModel> get articles {
-    if (_articles is EqualUnmodifiableListView) return _articles;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_articles);
-  }
-
   final List<ProjectModel> _projects;
   @override
   @JsonKey()
@@ -235,7 +211,7 @@ class _$CategoryModelImpl implements _CategoryModel {
 
   @override
   String toString() {
-    return 'CategoryModel(title: $title, content: $content, id: $id, articles: $articles, projects: $projects, environment: $environment)';
+    return 'CategoryModel(title: $title, content: $content, id: $id, projects: $projects, environment: $environment)';
   }
 
   @override
@@ -246,7 +222,6 @@ class _$CategoryModelImpl implements _CategoryModel {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other._articles, _articles) &&
             const DeepCollectionEquality().equals(other._projects, _projects) &&
             (identical(other.environment, environment) ||
                 other.environment == environment));
@@ -254,14 +229,8 @@ class _$CategoryModelImpl implements _CategoryModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      title,
-      content,
-      id,
-      const DeepCollectionEquality().hash(_articles),
-      const DeepCollectionEquality().hash(_projects),
-      environment);
+  int get hashCode => Object.hash(runtimeType, title, content, id,
+      const DeepCollectionEquality().hash(_projects), environment);
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -284,7 +253,6 @@ abstract class _CategoryModel implements CategoryModel {
       {required final String title,
       required final String content,
       final int? id,
-      final List<ArticleModel> articles,
       final List<ProjectModel> projects,
       final EnvironmentAssociatedModel? environment}) = _$CategoryModelImpl;
 
@@ -297,8 +265,6 @@ abstract class _CategoryModel implements CategoryModel {
   String get content;
   @override
   int? get id;
-  @override
-  List<ArticleModel> get articles;
   @override
   List<ProjectModel> get projects;
   @override

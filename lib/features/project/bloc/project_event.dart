@@ -44,11 +44,6 @@ class ProjectsFiltered extends ProjectEvent {
   List<Object?> get props => [projects];
 }
 
-class ProjectInProgress extends ProjectEvent {
-  @override
-  List<Object?> get props => [];
-}
-
 class ProjectFormReset extends ProjectEvent {
   @override
   List<Object?> get props => [];
@@ -59,7 +54,7 @@ class ProjectReloaded extends ProjectEvent {
   List<Object?> get props => [];
 }
 
-class ProjectItemEditableActived extends ProjectEvent {
+class ProjectItemEditableActivated extends ProjectEvent {
   @override
   List<Object?> get props => [];
 }

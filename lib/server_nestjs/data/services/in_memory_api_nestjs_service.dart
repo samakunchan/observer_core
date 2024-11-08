@@ -50,7 +50,7 @@ class _InMemoryApiNestjsService implements InMemoryApiNestjsService {
     final List<dynamic> environmentsResponse = jsonDecode(environmentsInString) as List<dynamic>;
 
     final List<EnvironmentModel> environments =
-        (environmentsResponse as List<Map<String, dynamic>>).map(EnvironmentModel.fromJson).toList();
+        environmentsResponse.map((data) => data as Map<String, dynamic>).toList().map(EnvironmentModel.fromJson).toList();
     final List<EnvironmentModel> environementFiltered = environments.where((EnvironmentModel env) {
       return env.title == '';
     }).toList();

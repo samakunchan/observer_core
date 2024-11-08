@@ -14,14 +14,6 @@ class ProjectIsLoading extends ProjectState {
   List<Object> get props => [];
 }
 
-class ProjectsAreNotLoaded extends ProjectState {
-  const ProjectsAreNotLoaded({this.message = ErrorMessage.noErrorMessageHandled});
-
-  final String message;
-  @override
-  List<Object> get props => [message];
-}
-
 class ProjectsShowOnGridMode extends ProjectState {
   const ProjectsShowOnGridMode({this.projects = ProjectModel.emptyList});
 
@@ -43,29 +35,9 @@ class ProjectIsRemovedSuccessfully extends ProjectState {
   List<Object> get props => [];
 }
 
-class ProjectIsNotRemoved extends ProjectState {
-  @override
-  List<Object> get props => [];
-}
-
 class ProjectFormIsSubmittedSuccessfully extends ProjectState {
   @override
   List<Object> get props => [];
-}
-
-class ProjectFormIsDeletedSuccessfully extends ProjectState {
-  const ProjectFormIsDeletedSuccessfully();
-  @override
-  List<Object> get props => [];
-}
-
-class ProjectFormIsSearchSuccessfully extends ProjectState {
-  const ProjectFormIsSearchSuccessfully({required this.searchModel});
-
-  final SearchModel searchModel;
-
-  @override
-  List<Object> get props => [searchModel];
 }
 
 class ProjectHasFailure extends ProjectState {

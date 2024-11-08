@@ -33,23 +33,18 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
           return await remoteService.getCategories(
             authorization: 'Bearer ${params.accessToken}',
           );
-        case '/articles':
-        case '/articles/all':
-          return await remoteService.getArticles(
-            authorization: 'Bearer ${params.accessToken}',
-          );
-        case '/projects':
-        case '/projects/all':
+        case MainProject.projectsEndPoint:
+        case '${MainProject.projectsEndPoint}/all':
           return await remoteService.getProjects(
             authorization: 'Bearer ${params.accessToken}',
           );
-        case '/organisations':
-        case '/organisations/all':
+        case MainProject.organisationsEndPoint:
+        case '${MainProject.organisationsEndPoint}/all':
           return await remoteService.getOrganisation(
             authorization: 'Bearer ${params.accessToken}',
           );
-        case '/legals':
-        case '/legals/all':
+        case MainProject.legalsEndPoint:
+        case '${MainProject.legalsEndPoint}/all':
           return await remoteService.getLegals(
             authorization: 'Bearer ${params.accessToken}',
           );
@@ -246,7 +241,7 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
   Future<HttpResponse<dynamic>> search(SearchParams params) async {
     try {
       switch (params.endPoint) {
-        case '/environments/search':
+        case '${MainProject.environmentsEndPoint}/search':
           switch (params.strictMode) {
             case false:
               return await remoteService.searchEnvironments(
@@ -260,26 +255,26 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
                 contentType: MainProject.defaultContentType,
                 input: params.input,
               );
-            default:
-              throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+            // default:
+            //   throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
           }
-        case '/categories/search':
-          switch (params.strictMode) {
-            case false:
-              return await remoteService.searchCategories(
-                authorization: 'Bearer ${params.accessToken}',
-                contentType: MainProject.defaultContentType,
-                input: params.input,
-              );
-            case true:
-              return await remoteService.searchStrictCategories(
-                authorization: 'Bearer ${params.accessToken}',
-                contentType: MainProject.defaultContentType,
-                input: params.input,
-              );
-            default:
-              throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
-          }
+        // case '/categories/search':
+        //   switch (params.strictMode) {
+        //     case false:
+        //       return await remoteService.searchCategories(
+        //         authorization: 'Bearer ${params.accessToken}',
+        //         contentType: MainProject.defaultContentType,
+        //         input: params.input,
+        //       );
+        //     case true:
+        //       return await remoteService.searchStrictCategories(
+        //         authorization: 'Bearer ${params.accessToken}',
+        //         contentType: MainProject.defaultContentType,
+        //         input: params.input,
+        //       );
+        //     default:
+        //       throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
+        //   }
         default:
           throw NotFoundException(httpError: HttpError.fromJson(HttpError.customNotFoundError));
       }
@@ -309,13 +304,11 @@ class ServerNestjsSource implements AbstractServerNestjsSource {
       throw UnAuthorizedException(httpError: httpError);
     } else if (httpError.statusCode == 403) {
       throw ForbiddenException(httpError: httpError);
-    } else if (httpError.statusCode == 503) {
-      throw ServerException();
     } else if (httpError.statusCode == 404) {
       throw NotFoundException(httpError: httpError);
-    } else if (e is NotFoundException) {
-      throw NotFoundException(httpError: httpError);
-    } else if (e.toString().contains('Connection refused')) {
+    } else if (httpError.statusCode == 503) {
+      throw ServerException();
+    } else if (e.message!.contains('Connection refused')) {
       throw ServerException();
     } else {
       throw IDontKnowWhatImDoingException();

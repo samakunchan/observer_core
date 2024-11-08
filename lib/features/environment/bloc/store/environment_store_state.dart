@@ -44,8 +44,8 @@ class EnvironmentsStoreIsOpenInMemory extends EnvironmentStoreState {
   List<Object> get props => [environments, filteredEnvironments];
 }
 
-class EnvironementsStoreIsClosed extends EnvironmentStoreState {
-  const EnvironementsStoreIsClosed({this.message = ErrorMessage.noErrorMessageHandled});
+class EnvironmentsStoreIsClosed extends EnvironmentStoreState {
+  const EnvironmentsStoreIsClosed({this.message = ErrorMessage.noErrorMessageHandled});
 
   /// Tout les messages d'érreurs:
   /// - [ErrorMessage.noErrorMessageHandled]

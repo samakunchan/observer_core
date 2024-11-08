@@ -58,19 +58,19 @@ class CategoriesInMemoryAreLoadedSuccessfully extends CategoryState {
   @override
   List<Object> get props => [categories, screenMode];
 }
-
-class CategoriesInMemoryAreFilteredSuccessfully extends CategoryState {
-  const CategoriesInMemoryAreFilteredSuccessfully({
-    this.categories = CategoryModel.emptyList,
-    this.screenMode = ScreenMode.grid,
-  });
-
-  final List<CategoryModel> categories;
-  final ScreenMode screenMode;
-
-  @override
-  List<Object> get props => [categories, screenMode];
-}
+//
+// class CategoriesInMemoryAreFilteredSuccessfully extends CategoryState {
+//   const CategoriesInMemoryAreFilteredSuccessfully({
+//     this.categories = CategoryModel.emptyList,
+//     this.screenMode = ScreenMode.grid,
+//   });
+//
+//   final List<CategoryModel> categories;
+//   final ScreenMode screenMode;
+//
+//   @override
+//   List<Object> get props => [categories, screenMode];
+// }
 
 class CategoriesHaveFailures extends CategoryState {
   const CategoriesHaveFailures({this.message = ErrorMessage.noErrorMessageHandled});
@@ -89,43 +89,24 @@ class CategoriesHaveFailures extends CategoryState {
   List<Object> get props => [message];
 }
 
-class CategoriesAreReLoadedSuccessfully extends CategoryState {
-  const CategoriesAreReLoadedSuccessfully({this.categories = CategoryModel.emptyList});
-
-  final List<CategoryModel> categories;
-
-  @override
-  List<Object> get props => [categories];
-}
-
-class CategoryIsRemovedSuccessfully extends CategoryState {
-  @override
-  List<Object> get props => [];
-}
-
-class CategoryIsNotRemoved extends CategoryState {
-  @override
-  List<Object> get props => [];
-}
-
-class CategoryFormIsSubmitting extends CategoryState {
-  @override
-  List<Object> get props => [];
-}
+// class CategoryFormIsSubmitting extends CategoryState {
+//   @override
+//   List<Object> get props => [];
+// }
 
 class CategoryFormIsSubmittedSuccessfully extends CategoryState {
   @override
   List<Object> get props => [];
 }
 
-class CategoriesAreSearchSuccessfully extends CategoryState {
-  const CategoriesAreSearchSuccessfully({required this.searchModel});
-
-  final SearchModel searchModel;
-
-  @override
-  List<Object> get props => [searchModel];
-}
+// class CategoriesAreSearchSuccessfully extends CategoryState {
+//   const CategoriesAreSearchSuccessfully({required this.searchModel});
+//
+//   final SearchModel searchModel;
+//
+//   @override
+//   List<Object> get props => [searchModel];
+// }
 
 class CategoryIsDeletedSuccessfully extends CategoryState {
   const CategoryIsDeletedSuccessfully({required this.categoryDeleted});

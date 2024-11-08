@@ -89,25 +89,3 @@ class DocumentFormIsDeletedSuccessfully extends DocumentState {
   @override
   List<Object> get props => [];
 }
-
-class DocumentWithErrorPage extends DocumentState {
-  const DocumentWithErrorPage({this.message = ErrorMessage.noErrorMessageHandled});
-
-  /// Tout les messages d'érreurs:
-  /// - [ErrorMessage.noErrorMessageHandled]
-  /// - [ErrorMessage.networkOfflineMessage]
-  /// - [ErrorMessage.serverFailureMessage]
-  /// - [ErrorMessage.cacheFailureMessage]
-  /// - [ErrorMessage.notFoundMessage]
-  /// - [ErrorMessage.unAuthorizationMessage]
-  /// - [ErrorMessage.forbiddenMessage]
-  final String message;
-
-  @override
-  List<Object> get props => [message];
-}
-
-class DocumentsIsReconnecting extends DocumentState {
-  @override
-  List<Object?> get props => [];
-}

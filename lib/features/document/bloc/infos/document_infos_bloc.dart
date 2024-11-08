@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:observer_core/constantes.dart';
 import 'package:observer_core/dtos/documents/one_document_upsert_dto.dart';
@@ -18,9 +17,9 @@ class DocumentInfosBloc extends Bloc<DocumentInfosEvent, DocumentInfosState> {
   DocumentInfosBloc() : super(DocumentInfosInitial()) {
     on<DocumentSelected>(_selectOneDocument);
     on<DocumentInfosStarted>(_showInfos);
-    on<DocumentInfosStoped>(_hideInfos);
-    on<DocumentInfosEditableActived>(_activeEditableInfos);
-    on<DocumentInfosEditableCanceled>(_cancelEditableInfos);
+    on<DocumentInfosStopped>(_hideInfos);
+    on<DocumentInfosEditableActivated>(_activeEditableInfos);
+    on<DocumentInfosEditableCancelled>(_cancelEditableInfos);
     on<DocumentInfosFormIsSubmitted>(_documentUpsert);
   }
 
@@ -32,15 +31,15 @@ class DocumentInfosBloc extends Bloc<DocumentInfosEvent, DocumentInfosState> {
     emit.call(DocumentInfosOn());
   }
 
-  Future<void> _hideInfos(DocumentInfosStoped event, Emitter<DocumentInfosState> emit) async {
+  Future<void> _hideInfos(DocumentInfosStopped event, Emitter<DocumentInfosState> emit) async {
     emit.call(DocumentInfosOff());
   }
 
-  Future<void> _activeEditableInfos(DocumentInfosEditableActived event, Emitter<DocumentInfosState> emit) async {
+  Future<void> _activeEditableInfos(DocumentInfosEditableActivated event, Emitter<DocumentInfosState> emit) async {
     emit.call(DocumentInfosIsEditable(documentToEdit: event.documentToEdit));
   }
 
-  Future<void> _cancelEditableInfos(DocumentInfosEditableCanceled event, Emitter<DocumentInfosState> emit) async {
+  Future<void> _cancelEditableInfos(DocumentInfosEditableCancelled event, Emitter<DocumentInfosState> emit) async {
     emit.call(DocumentInfosIsNotEditable(documentUpdated: event.documentUpdated));
   }
 
@@ -55,37 +54,21 @@ class DocumentInfosBloc extends Bloc<DocumentInfosEvent, DocumentInfosState> {
       ),
     );
 
-    await ProjectInfosHandler.withReponse(
-      responses: responses,
-      ifFailure: (Failure failure) => ProjectInfosHandler.handleAllFailures(failure: failure, emit: emit),
-      ifSuccess: (HttpResponse<dynamic> response) => ProjectInfosHandler.handleUpsertSuccess(response: response, emit: emit),
-    );
+    const ProjectInfosHandler projectInfosHandler = ProjectInfosHandler();
+
+    switch (responses) {
+      case Left():
+        await projectInfosHandler.handleAllFailures(failure: responses.value, emit: emit);
+      case Right():
+        await ProjectInfosHandler.handleUpsertSuccess(response: responses.value, emit: emit);
+    }
   }
 }
 
 class ProjectInfosHandler {
-  const ProjectInfosHandler._();
+  const ProjectInfosHandler();
 
-  static Future<void> withReponse({
-    required Either<Failure, HttpResponse<dynamic>> responses,
-    required ValueChanged<Failure> ifFailure,
-    required ValueChanged<HttpResponse<dynamic>> ifSuccess,
-  }) async {
-    switch (responses) {
-      case Left():
-        responses.fold(
-          (Failure failure) => ifFailure(failure),
-          (HttpResponse<dynamic> response) => null,
-        );
-      case Right():
-        responses.fold(
-          (Failure failure) => null,
-          (HttpResponse<dynamic> response) => ifSuccess(response),
-        );
-    }
-  }
-
-  static Future<void> handleAllFailures({required Failure failure, required Emitter<DocumentInfosState> emit}) async {
+  Future<void> handleAllFailures({required Failure failure, required Emitter<DocumentInfosState> emit}) async {
     switch (failure) {
       case ServerFailure():
         return emit.call(DocumentInfosHaveFailures(message: failure.message));
@@ -100,6 +83,8 @@ class ProjectInfosHandler {
       case UnAuthorizedFailure():
         return emit.call(DocumentInfosHaveFailures(message: failure.message));
       case ForbiddenFailure():
+        return emit.call(DocumentInfosHaveFailures(message: failure.message));
+      case NothingWorkDoingFailure():
         return emit.call(DocumentInfosHaveFailures(message: failure.message));
       case IDontKnowWhatImDoingFailure():
         return emit.call(const DocumentInfosHaveFailures());

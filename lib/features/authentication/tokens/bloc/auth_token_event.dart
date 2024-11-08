@@ -19,10 +19,3 @@ class AuthTokenInValidDetected extends AuthTokenEvent {
   @override
   List<Object?> get props => [message];
 }
-
-class AuthTokenTestAvailability extends AuthTokenEvent {
-  const AuthTokenTestAvailability();
-
-  @override
-  List<Object?> get props => [];
-}

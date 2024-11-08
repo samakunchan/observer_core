@@ -2,66 +2,67 @@ import 'package:equatable/equatable.dart';
 import 'package:observer_core/constantes.dart';
 
 abstract class Failure extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class ServerFailure extends Failure {
-  ServerFailure({this.message = ErrorMessage.serverFailureMessage});
+  const Failure({this.message = ErrorMessage.noErrorMessageHandled});
   final String message;
 
   @override
   List<Object> get props => [message];
 }
 
+class ServerFailure extends Failure {
+  const ServerFailure({super.message = ErrorMessage.serverFailureMessage});
+  @override
+  List<Object> get props => [message];
+}
+
 class CacheFailure extends Failure {
-  CacheFailure({this.message = ErrorMessage.cacheFailureMessage});
-  final String message;
+  const CacheFailure({super.message = ErrorMessage.cacheFailureMessage});
 
   @override
   List<Object> get props => [message];
 }
 
 class NetworkFailure extends Failure {
-  NetworkFailure({this.message = ErrorMessage.networkOfflineMessage});
-  final String message;
+  const NetworkFailure({super.message = ErrorMessage.networkOfflineMessage});
 
   @override
   List<Object> get props => [message];
 }
 
 class NotFoundFailure extends Failure {
-  NotFoundFailure({this.message = ErrorMessage.notFoundMessage});
-  final String message;
+  const NotFoundFailure({super.message = ErrorMessage.notFoundMessage});
 
   @override
   List<Object> get props => [message];
 }
 
 class UnAuthorizedFailure extends Failure {
-  UnAuthorizedFailure({this.message = ErrorMessage.unAuthorizationMessage});
-  final String message;
+  const UnAuthorizedFailure({super.message = ErrorMessage.unAuthorizationMessage});
 
   @override
   List<Object> get props => [message];
 }
 
 class ForbiddenFailure extends Failure {
-  ForbiddenFailure({this.message = ErrorMessage.forbiddenMessage});
-  final String message;
+  const ForbiddenFailure({super.message = ErrorMessage.forbiddenMessage});
 
   @override
   List<Object> get props => [message];
 }
 
 class BadRequestFailure extends Failure {
-  BadRequestFailure({this.message = ''});
-  final String message;
+  const BadRequestFailure({super.message = ''});
 
   @override
   List<Object> get props => [message];
 }
 
-class IDontKnowWhatImDoingFailure extends Failure {}
+class IDontKnowWhatImDoingFailure extends Failure {
+  @override
+  List<Object> get props => [message];
+}
 
-class NothingWorkDoingFailure extends Failure {}
+class NothingWorkDoingFailure extends Failure {
+  @override
+  List<Object> get props => [message];
+}
